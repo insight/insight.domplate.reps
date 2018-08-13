@@ -1,6 +1,7 @@
 {
     struct: {
         node: {
+            type: "unknown",
             value: "Hello World"
         }
     },
