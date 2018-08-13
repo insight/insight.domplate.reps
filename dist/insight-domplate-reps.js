@@ -42,7 +42,16 @@ function InsightDomplateReps(options) {
     }
 
     function repUriForNode(node) {
-        return repUriForType(node.type);
+
+        var type = node.type;
+
+        if (node.meta) {
+            if (node.meta["encoder.trimmed"]) {
+                type = "trimmed";
+            }
+        }
+
+        return repUriForType(type);
     }
 
     function InsightDomplateContext() {
@@ -69,6 +78,12 @@ function InsightDomplateReps(options) {
         function traverse(node) {
 
             loadTypes[node.type] = true;
+
+            if (node.meta) {
+                if (node.meta["encoder.trimmed"]) {
+                    loadTypes["trimmed"] = true;
+                }
+            }
 
             if (node.value) {
                 if (node.type === "array") {
