@@ -8,4 +8,7 @@ module.config = {
 }
 */
 
-require("../helpers").describeRepSuite("default/unknown", "Hello World!", "Hello World!");
+require("../helpers").describeRepSuite("default/unknown", {
+    type: "unknown",
+    value: "Hello World!"
+}, "Hello World!");

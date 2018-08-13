@@ -2,8 +2,14 @@
     struct: {
         node: {
             value: [
-                "Hello",
-                "World"
+                {
+                    type: "string",
+                    value: "Hello"
+                },
+                {
+                    type: "string",
+                    value: "World!"
+                }
             ]
         }
     },
@@ -21,7 +27,7 @@
     
             tag:
                 T.SPAN({"class": "array"}, T.SPAN("$VAR_label("),
-                    T.FOR("element", "$node,$CONST_Normal|elementIterator",
+                    T.FOR("element", "$context,$node,$CONST_Normal|elementIterator",
                         T.DIV({"class": "element", "$expandable":"$element.expandable", "_elementObject": "$element", "onclick": "$onClick"},
                             T.SPAN({"class": "value"},
                                 T.TAG("$element.tag", {"element": "$element", "node": "$element.node"})
@@ -38,7 +44,7 @@
     
             shortTag:
                 T.SPAN({"class": "array"}, T.SPAN("$VAR_label("),
-                    T.FOR("element", "$node,$CONST_Short|elementIterator",
+                    T.FOR("element", "$context,$node,$CONST_Short|elementIterator",
                         T.SPAN({"class": "element"},
                             T.SPAN({"class": "value"},
                                 T.TAG("$element.tag", {"element": "$element", "node": "$element.node"})
@@ -49,7 +55,7 @@
                 T.SPAN(")")),
     
             expandableStub:
-                T.TAG("$element,$CONST_Collapsed|getTag", {"node": "$element.node"}),
+                T.TAG("$context,$element,$CONST_Collapsed|getTag", {"node": "$element.node"}),
                 
             expandedStub:
                 T.TAG("$tag", {"node": "$node", "element": "$element"}),
@@ -62,19 +68,19 @@
                 return node.value.length || 0;
             },
     
-            getTag: function(element, type) {
+            getTag: function(context, element, type) {
                 if(type===this.CONST_Short) {
-                    return helpers.getTemplateForNode(element.node).shortTag;
+                    return context.repForNode(element.node).shortTag;
                 } else
                 if(type===this.CONST_Normal) {
                     if(element.expandable) {
                         return this.expandableStub;
                     } else {
-                        return helpers.getTemplateForNode(element.node).tag;
+                        return context.repForNode(element.node).tag;
                     }
                 } else
                 if(type===this.CONST_Collapsed) {
-                    var rep = helpers.getTemplateForNode(element.node);
+                    var rep = context.repForNode(element.node);
                     if(!rep.collapsedTag) {
                         throw "no 'collapsedTag' property in rep: " + rep.toString();
                     }
@@ -82,7 +88,7 @@
                 }
             },
     
-            elementIterator: function(node, type) {
+            elementIterator: function(context, node, type) {
                 var elements = [];
                 if(!node.value) return elements;
                 for( var i=0 ; i<node.value.length ; i++ ) {
@@ -96,7 +102,7 @@
                     if(i>2 && type==this.CONST_Short) {
                         element["tag"] = this.moreTag;
                     } else {
-                        element["tag"] = this.getTag(element, type);
+                        element["tag"] = this.getTag(context, element, type);
                     }
     
                     elements.push(element);

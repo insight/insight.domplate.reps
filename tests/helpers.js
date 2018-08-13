@@ -1,6 +1,6 @@
 #!/usr/bin/env bash.origin.test via github.com/nightwatchjs/nightwatch
 
-exports.describeRepSuite = function (repUri, value, expected) {
+exports.describeRepSuite = function (repUri, node, expected) {
 
     console.log(">>>TEST_IGNORE_LINE:^[\\d\\.]+\\s<<<");
 
@@ -8,12 +8,26 @@ exports.describeRepSuite = function (repUri, value, expected) {
 
         var reps = {};
 
-        var repId = repUri.replace(/[\/\.]/g, "_");
-
-        reps[repId] = __dirname + "/../reps/" + repUri + ".rep.js";
+        if (!Array.isArray(repUri)) {
+            repUri = [ repUri ];
+        }
+        repUri.forEach(function (repUri) {
+            reps[repUri] = __dirname + "/../reps/" + repUri + ".rep.js";
+        });
 
         require('bash.origin.workspace').LIB.BASH_ORIGIN_EXPRESS.runForTestHooks(before, after, {
             "routes": {
+                "/dist/insight-domplate-reps.js": {
+                    "@it.pinf.org.browserify#s1": {
+                        "src": __dirname + "/../lib/reps.js",
+                        "dist": __dirname + "/../dist/insight-domplate-reps.js",
+                        "format": "standalone",
+                        "expose": {
+                            "window": "insight-domplate-reps"
+                        },
+                        "prime": true
+                    }
+                },               
                 "^/reps/": {
                     "@github.com~cadorn~domplate#s1": {
                         "compile": false,
@@ -23,14 +37,13 @@ exports.describeRepSuite = function (repUri, value, expected) {
                 "/": [
                     '<head>',
                         '<script src="/reps/domplate-eval.js"></script>',
+                        '<script src="/dist/insight-domplate-reps.js"></script>',
                     '</head>',
                     '<body>',
                         '<div id="rep"></div>',
                     '</body>',
                     '<script>',
-                        'window.domplate.loadRep("/reps/' + repId + '", function (rep) {',
-                            'rep.tag.replace({ node: { value: ' + JSON.stringify(value) + ' } }, document.querySelector("#rep"));',
-                        '}, console.error);',
+                        '(new window["insight-domplate-reps"]({ repsBaseUrl: "/reps" })).renderNodeInto(' + JSON.stringify(node) + ', "#rep").catch(console.error);',
                     '</script>'
                 ].join("\n")
             }
@@ -46,7 +59,7 @@ exports.describeRepSuite = function (repUri, value, expected) {
 
             if (expected === null) {
                 client.getText('BODY #rep', function (result) {
-                    console.log("REP text from DOM:", JSON.stringify(result, null, 4));
+                    console.log("REP text from DOM:", JSON.stringify(result.value.split("\n"), null, 4) + '.join("\\n")');
                 });
             } else {
                 client.expect.element('BODY #rep').text.to.contain(expected);

@@ -8,4 +8,7 @@ module.config = {
 }
 */
 
-require("../helpers").describeRepSuite("default/constant", "Hello World!", "Hello World!");
+require("../helpers").describeRepSuite("default/constant", {
+    type: "constant",
+    value: "Hello World!"
+}, "Hello World!");

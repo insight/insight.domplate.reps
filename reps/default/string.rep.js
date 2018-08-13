@@ -10,13 +10,13 @@
         
         return {
 
-            tag: T.SPAN({"class": "text"},
+            tag: T.SPAN({"class": "string"},
                 T.FOR("line", "$node.value|lineIterator", "$line.value",
                     T.IF("$line.more", T.BR())
                 )
             ),
 
-            shortTag: T.SPAN({"class": "text"}, "$node|getValue"),
+            shortTag: T.SPAN({"class": "string"}, "$node|getValue"),
 
 
             getValue: function(node) {
