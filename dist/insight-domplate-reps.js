@@ -84,6 +84,10 @@ function InsightDomplateReps(options) {
                         traverse(pair[0]);
                         traverse(pair[1]);
                     });
+                } else if (node.type === "reference") {
+                    if (node.value.instance) {
+                        traverse(node.value.instance);
+                    }
                 }
             }
         }

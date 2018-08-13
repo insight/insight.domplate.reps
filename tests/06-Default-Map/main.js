@@ -31,13 +31,13 @@ require("../helpers").describeRepSuite([
             },
             {
                 type: "string",
-                value: "World"
+                value: "World!"
             }
         ]
     ]
 }, [
     "map(",
     "key1=>Hello,",
-    "key2=>World",
+    "key2=>World!",
     ")"
 ].join("\n"));

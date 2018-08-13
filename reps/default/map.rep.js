@@ -1,8 +1,29 @@
 {
     struct: {
         node: {
-            type: "constant",
-            value: "Hello World"
+            type: "map",
+            value: [
+                [
+                    {
+                        type: "string",
+                        value: "key1"
+                    },
+                    {
+                        type: "string",
+                        value: "Hello"
+                    }
+                ],
+                [
+                    {
+                        type: "string",
+                        value: "key2"
+                    },
+                    {
+                        type: "string",
+                        value: "World"
+                    }
+                ]
+            ]
         }
     },
     rep: function /*CodeBlock */ () {

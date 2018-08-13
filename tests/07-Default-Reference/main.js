@@ -9,23 +9,16 @@ module.config = {
 */
 
 require("../helpers").describeRepSuite([
-    "default/dictionary",
+    "default/reference",
     "default/string"
 ], {
-    type: "dictionary",
+    type: "reference",
     value: {
-        key1: {
+        instance: {
             type: "string",
-            value: "Hello"
-        },
-        key2: {
-            type: "string",
-            value: "World!"
+            value: "Hello World!"
         }
     }
 }, [
-    "dictionary(",
-    "key1:Hello,",
-    "key2:World!",
-    ")"
+    "Hello World!"
 ].join("\n"));
