@@ -22,13 +22,14 @@ function InsightDomplateReps(options) {
 
                 // TODO: Optionally check against PINF sandbox directly to see if rep is loaded
                 //       instead of letting domplate load them.
-                DOMPLATE.loadRep(options.repsBaseUrl + "/" + repUri, function (rep) {
+                var url = options.repsBaseUrl + "/" + repUri;
+                DOMPLATE.loadRep(url, function (rep) {
 
                     resolve(rep);
                 }, function (err) {
                     var error = new Error("Error loading rep for uri '" + repUri + "' from '" + url + "'!");
                     error.previous = err;
-                    reject(err);
+                    reject(error);
                 });
             });
         }
@@ -48,7 +49,15 @@ function InsightDomplateReps(options) {
         if (node.meta) {
             if (node.meta["encoder.trimmed"]) {
                 type = "trimmed";
-            }
+            } else
+                // DEPRECATED
+                if (node.meta.renderer === "structures/table") {
+                    type = "table";
+                } else
+                    // DEPRECATED
+                    if (node.meta.renderer === "structures/trace") {
+                        type = "trace";
+                    }
         }
 
         return repUriForType(type);
@@ -77,12 +86,24 @@ function InsightDomplateReps(options) {
         var loadTypes = {};
         function traverse(node) {
 
-            loadTypes[node.type] = true;
+            if (node.type) {
+                loadTypes[node.type] = true;
+            }
 
             if (node.meta) {
                 if (node.meta["encoder.trimmed"]) {
                     loadTypes["trimmed"] = true;
-                }
+                } else
+                    // DEPRECATED
+                    if (node.meta.renderer === "structures/table") {
+                        loadTypes["table"] = true;
+                        node.type = "table";
+                    } else
+                        // DEPRECATED
+                        if (node.meta.renderer === "structures/trace") {
+                            loadTypes["trace"] = true;
+                            node.type = "trace";
+                        }
             }
 
             if (node.value) {
@@ -102,6 +123,33 @@ function InsightDomplateReps(options) {
                 } else if (node.type === "reference") {
                     if (node.value.instance) {
                         traverse(node.value.instance);
+                    }
+                } else if (node.type === "table") {
+                    if (node.value.title) {
+                        traverse(node.value.title);
+                    }
+                    if (node.value.header) {
+                        node.value.header.forEach(function (node) {
+                            traverse(node);
+                        });
+                    }
+                    if (node.value.body) {
+                        node.value.body.forEach(function (row) {
+                            row.forEach(function (cell) {
+                                traverse(cell);
+                            });
+                        });
+                    }
+                } else if (node.type === "trace") {
+                    if (node.value.title) {
+                        traverse(node.value.title);
+                    }
+                    if (node.value.stack) {
+                        node.value.stack.forEach(function (frame) {
+                            frame.args.forEach(function (arg) {
+                                traverse(arg);
+                            });
+                        });
                     }
                 }
             }
