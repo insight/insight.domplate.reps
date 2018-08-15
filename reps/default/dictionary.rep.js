@@ -27,11 +27,11 @@
             tag:
                 T.SPAN({"class": "dictionary"}, T.SPAN("$node|getLabel("),
                     T.FOR("member", "$context,$node,$CONST_Normal|dictionaryIterator",
-                        T.DIV({"class": "member", "$expandable":"$member.expandable", "_memberObject": "$member", "onclick": "$onClick"},
+                        T.DIV({"class": "member", "$expandable":"$member.expandable", "_memberObject": "$member", "_context": "$context", "onclick": "$onClick"},
                             T.SPAN({"class": "name", "decorator": "$member|getMemberNameDecorator"}, "$member.name"),
                             T.SPAN({"class": "delimiter"}, ":"),
                             T.SPAN({"class": "value"},
-                                T.TAG("$member.tag", {"member": "$member", "node": "$member.node"})
+                                T.TAG("$member.tag", {"context": "$context", "member": "$member", "node": "$member.node"})
                             ),
                             T.IF("$member.more", T.SPAN({"class": "separator"}, ","))
                         )
@@ -45,7 +45,7 @@
                             T.SPAN({"class": "name"}, "$member.name"),
                             T.SPAN({"class": "delimiter"}, ":"),
                             T.SPAN({"class": "value"},
-                                T.TAG("$member.tag", {"member": "$member", "node": "$member.node"})
+                                T.TAG("$member.tag", {"context": "$context", "member": "$member", "node": "$member.node"})
                             ),
                             T.IF("$member.more", T.SPAN({"class": "separator"}, ","))
                         )
@@ -58,10 +58,10 @@
                 T.SPAN(")")),
     
             expandableStub:
-                T.TAG("$context,$member,$CONST_Collapsed|getTag", {"node": "$member.node"}),
+                T.TAG("$context,$member,$CONST_Collapsed|getTag", {"context": "$context", "node": "$member.node"}),
                 
             expandedStub:
-                T.TAG("$tag", {"node": "$node", "member": "$member"}),
+                T.TAG("$tag", {"context": "$context", "node": "$node", "member": "$member"}),
     
             moreTag:
                 T.SPAN({"class": "more"}, " ... "),
@@ -152,8 +152,7 @@
                 event.stopPropagation();
             },
             
-            toggleRow: function(row)
-            {
+            toggleRow: function(row) {
                 var valueElement = domplate.util.getElementByClass(row, "value");
                 if (domplate.util.hasClass(row, "expanded"))
                 {
@@ -161,14 +160,16 @@
                     this.expandedStub.replace({
                         "tag": this.expandableStub,
                         "member": row.memberObject,
-                        "node": row.memberObject.node
+                        "node": row.memberObject.node,
+                        "context": row.context
                     }, valueElement);
                 } else {
                     domplate.util.setClass(row, "expanded");
                     this.expandedStub.replace({
-                        "tag": helpers.getTemplateForNode(row.memberObject.node).tag,
+                        "tag": row.context.repForNode(row.memberObject.node).tag,
                         "member": row.memberObject,
-                        "node": row.memberObject.node
+                        "node": row.memberObject.node,
+                        "context": row.context
                     }, valueElement);
                 }
             }
@@ -203,13 +204,13 @@
             padding-left: 20px;
         }
         :scope SPAN.dictionary > DIV.member.expandable {
-            background-image: url(__RESOURCE__images/twisty-closed.png);
+            background-image: url(images/twisty-closed.png);
             background-repeat: no-repeat;
             background-position: 6px 2px;
             cursor: pointer;
         }
         :scope SPAN.dictionary > DIV.member.expandable.expanded {
-            background-image: url(__RESOURCE__images/twisty-open.png);
+            background-image: url(images/twisty-open.png);
         }
         
         :scope SPAN.dictionary > .member > SPAN.name {

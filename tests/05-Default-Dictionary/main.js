@@ -21,11 +21,21 @@ require("../helpers").describeRepSuite([
         key2: {
             type: "string",
             value: "World!"
+        },
+        key3: {
+            type: "dictionary",
+            value: {
+                sub1: {
+                    type: "string",
+                    value: "Sub Value!"
+                }
+            }
         }
     }
 }, [
     "dictionary(",
     "key1:Hello,",
-    "key2:World!",
+    "key2:World!,",
+    "key3:dictionary(... 1 ...)",
     ")"
 ].join("\n"));
