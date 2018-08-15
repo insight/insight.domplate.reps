@@ -1,7 +1,7 @@
 insight.domplate.reps
 =====================
 
-> Object representations for visualizing language primitives.
+> [Domplate](https://github.com/domplate/domplate) object representations for visualizing language primitives.
 
 TODO:
 
