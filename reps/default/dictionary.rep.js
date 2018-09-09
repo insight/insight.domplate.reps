@@ -12,7 +12,8 @@
                     value: "World"
                 }
             }
-        }
+        },
+        member: {}
     },
     rep: function /*CodeBlock */ () {
 
@@ -59,13 +60,13 @@
     
             expandableStub:
                 T.TAG("$context,$member,$CONST_Collapsed|getTag", {"context": "$context", "node": "$member.node"}),
-                
+
             expandedStub:
                 T.TAG("$tag", {"context": "$context", "node": "$node", "member": "$member"}),
-    
+
             moreTag:
                 T.SPAN({"class": "more"}, " ... "),
-            
+
             getLabel: function(node) {
                 return "dictionary";
             },
@@ -95,8 +96,8 @@
                     }
                 } else
                 if(type===this.CONST_Collapsed) {
-                    var rep = context.repForNode(member.node);
-                    if(!rep.collapsedTag) {
+                    var rep = context.repForNode(member.node);                    
+                    if (typeof rep.collapsedTag === "undefined") {
                         throw "no 'collapsedTag' property in rep: " + rep.toString();
                     }
                     return rep.collapsedTag;

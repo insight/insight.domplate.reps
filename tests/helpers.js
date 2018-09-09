@@ -17,27 +17,41 @@ exports.describeRepSuite = function (repUri, node, expected) {
 
         require('bash.origin.workspace').LIB.BASH_ORIGIN_EXPRESS.runForTestHooks(before, after, {
             "routes": {
-                "/dist/insight-domplate-reps.js": {
+                "/dist/insight-domplate-renderer.js": {
                     "@it.pinf.org.browserify#s1": {
-                        "src": __dirname + "/../lib/reps.js",
-                        "dist": __dirname + "/../dist/insight-domplate-reps.js",
-                        "format": "standalone",
+                        "src": __dirname + "/../lib/renderer.js",
+                        "dist": __dirname + "/../dist/insight-domplate-renderer.js",
+                        "format": "browser",
                         "expose": {
-                            "window": "insight-domplate-reps"
+                            "window": {
+                                "insight-domplate-renderer": "Renderer"
+                            }
                         },
                         "prime": true
                     }
-                },               
+                },
                 "^/reps/": {
                     "@github.com~cadorn~domplate#s1": {
-                        "compile": false,
-                        "reps": reps
+                        "compile": true,
+                        "dist": __dirname + "/../dist/reps",
+                        "reps": reps,
+                        "injectStruct": {
+                            "context": {
+                                "repForNode": function () {
+                                    return {
+                                        tag: null,
+                                        shortTag: null,
+                                        collapsedTag: null
+                                    };
+                                }
+                            }
+                        }
                     }
                 },
                 "/": [
                     '<head>',
-                        '<script src="/reps/domplate-eval.js"></script>',
-                        '<script src="/dist/insight-domplate-reps.js"></script>',
+                        '<script src="/reps/domplate.js"></script>',
+                        '<script src="/dist/insight-domplate-renderer.js"></script>',
                         '<style>',
                             '#rep {',
                                 'padding: 2px 4px 1px 6px;',
@@ -50,7 +64,7 @@ exports.describeRepSuite = function (repUri, node, expected) {
                         '<div id="rep"></div>',
                     '</body>',
                     '<script>',
-                        '(new window["insight-domplate-reps"]({ repsBaseUrl: "/reps" })).renderNodeInto(' + JSON.stringify(node) + ', "#rep").catch(console.error);',
+                        '(new window["insight-domplate-renderer"]({ repsBaseUrl: "/reps" })).renderNodeInto(' + JSON.stringify(node) + ', "#rep").catch(console.error);',
                     '</script>'
                 ].join("\n")
             }

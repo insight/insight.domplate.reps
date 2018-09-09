@@ -1,11 +1,21 @@
-((function () {
+((function (_require, _exports, _module) {
+var bundle = { require: _require, exports: _exports, module: _module };
+var exports = undefined;
+var module = undefined;
+var define = function (deps, init) {
+var exports = init();
+[["insight-domplate-renderer","Renderer"]].forEach(function (expose) {
+window[expose[0]] = exports[expose[1]];
+});
+}; define.amd = true;
+
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.mainModule = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
 var WINDOW = window;
 var DOMPLATE = WINDOW.domplate;
 
-function InsightDomplateReps(options) {
+function Renderer(options) {
     var self = this;
 
     if (!options.repsBaseUrl) {
@@ -23,7 +33,8 @@ function InsightDomplateReps(options) {
                 // TODO: Optionally check against PINF sandbox directly to see if rep is loaded
                 //       instead of letting domplate load them.
                 var url = options.repsBaseUrl + "/" + repUri;
-                DOMPLATE.loadRep(url, function (rep) {
+
+                DOMPLATE.loadRep(url, { cssBaseUrl: options.repsBaseUrl.replace(/\/?$/, "/") + repUri.replace(/^([^\/]+\/).+$/, "$1") }, function (rep) {
 
                     resolve(rep);
                 }, function (err) {
@@ -83,6 +94,7 @@ function InsightDomplateReps(options) {
     function ensureRepsForNodeLoaded(node) {
 
         // TODO: Optionally pre-fill with already loaded reps.
+        // TODO: Move node traversal into helper module.
         var loadTypes = {};
         function traverse(node) {
 
@@ -189,12 +201,7 @@ function InsightDomplateReps(options) {
     };
 }
 
-exports["insight-domplate-reps"] = InsightDomplateReps;
+exports.Renderer = Renderer;
 },{}]},{},[1])(1)
 });
-var mainModule = window.mainModule;
-delete window.mainModule;
-["insight-domplate-reps"].forEach(function (name) {
-window[name] = mainModule[name];
-});
-})())
+})((typeof require !== "undefined" && require) || undefined, (typeof exports !== "undefined" && exports) || undefined, (typeof module !== "undefined" && module) || undefined, ))
