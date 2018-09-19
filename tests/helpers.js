@@ -35,16 +35,22 @@ exports.describeRepSuite = function (repUri, node, expected) {
                         "compile": true,
                         "dist": __dirname + "/../dist/reps",
                         "reps": reps,
-                        "injectStruct": {
-                            "context": {
-                                "repForNode": function () {
-                                    return {
-                                        tag: null,
-                                        shortTag: null,
-                                        collapsedTag: null
-                                    };
+                        "injectStruct": function (window) {
+
+                            return {
+                                "context": {
+                                    "repForNode": function (node) {
+
+                                        var tag = null;
+
+                                        return {
+                                            tag: tag,
+                                            shortTag: tag,
+                                            collapsedTag: tag
+                                        };
+                                    }
                                 }
-                            }
+                            };
                         }
                     }
                 },

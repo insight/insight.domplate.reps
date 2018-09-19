@@ -253,7 +253,7 @@
     css: (css () >>>
 
         :scope SPAN.structures-trace {
-            background-image: url(__RESOURCE__images/edit-rule.png);
+            background-image: url(images/edit-rule.png);
             background-repeat: no-repeat;
             background-position: 4px 1px;
             padding-left: 25px;

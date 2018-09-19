@@ -177,7 +177,7 @@
     css: (css () >>>
 
         :scope SPAN.table {
-            background-image: url(__RESOURCE__images/table.png);
+            background-image: url(images/table.png);
             background-repeat: no-repeat;
             background-position: 4px -1px;
             padding-left: 25px;

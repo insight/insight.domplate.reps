@@ -50,7 +50,7 @@
                                     "_expandable": "$pair.value.expandable"
                                 },
                                 T.TAG("$pair.value.tag", {"node": "$pair.value.node"})
-                                ),
+                            ),
                             T.IF("$pair.more", T.SPAN({"class": "separator"}, ","))
                         )
                     ),
@@ -69,7 +69,7 @@
                                     "_expandable": "$pair.value.expandable"
                                 },
                                 T.TAG("$pair.value.tag", {"node": "$pair.value.node"})
-                                ),
+                            ),
                             T.IF("$pair.more", T.SPAN({"class": "separator"}, ","))
                         )
                     ),
@@ -111,8 +111,8 @@
                         type = "shortTag";
                     }
                 }
-                if(!rep[type]) {
-                    if(type=="shortTag") {
+                if (typeof rep[type] === "undefined") {
+                    if (type == "shortTag") {
                         return rep.tag;
                     }
                     throw new Error("Rep does not have tag of type: " + type);

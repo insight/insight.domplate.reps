@@ -12,7 +12,8 @@
                     value: "World!"
                 }
             ]
-        }
+        },
+        element: {}
     },
     rep: function /*CodeBlock */ () {
 
@@ -82,7 +83,7 @@
                 } else
                 if(type===this.CONST_Collapsed) {
                     var rep = context.repForNode(element.node);
-                    if(!rep.collapsedTag) {
+                    if (typeof rep.collapsedTag === "undefined") {
                         throw "no 'collapsedTag' property in rep: " + rep.toString();
                     }
                     return rep.collapsedTag;
@@ -187,13 +188,13 @@
         }
         
         :scope SPAN.array > DIV.element.expandable {
-            background-image: url(__RESOURCE__images/twisty-closed.png);
+            background-image: url(images/twisty-closed.png);
             background-repeat: no-repeat;
             background-position: 6px 2px;
             cursor: pointer;
         }
         :scope SPAN.array > DIV.element.expandable.expanded {
-            background-image: url(__RESOURCE__images/twisty-open.png);
+            background-image: url(images/twisty-open.png);
         }
         
         :scope SPAN.array > .element > SPAN.value {
