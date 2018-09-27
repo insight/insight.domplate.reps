@@ -1,0 +1,20 @@
+>>>TEST_IGNORE_LINE:\d milliseconds.$<<<
+>>>TEST_IGNORE_LINE:\d+\spassing\s\([^\)]+\)<<<
+environments: default
+>>>TEST_IGNORE_LINE:^[\d\.]+\s<<<
+
+
+  Suite
+[bash.origin.express] Adding route: /dist/insight-domplate-renderer.js
+[bash.origin.express] Adding route: /php/array-associative.rep.js
+[bash.origin.express] Adding route: /php/string.rep.js
+[bash.origin.express] Adding route: /domplate-eval.js
+[bash.origin.express] Adding route: /domplate.js
+[bash.origin.express] Adding route: /^\//
+[bash.origin.express] Adding route: /^\/reps\//
+[bash.origin.express] Adding route: /
+Server: http://localhost:8080/
+[READY]
+
+
+
