@@ -1,7 +1,7 @@
 {
   "name": "insight.domplate.reps",
   "version": "0.0.0",
-  "devDependencies": {
+  "__devDependencies": {
     "bash.origin.workspace": "^0.3.1"
   },
   "scripts": {

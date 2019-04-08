@@ -15,7 +15,7 @@ exports.describeRepSuite = function (repUri, node, expected) {
             reps[repUri] = __dirname + "/../reps/" + repUri + ".rep.js";
         });
 
-        require('bash.origin.workspace').LIB.BASH_ORIGIN_EXPRESS.runForTestHooks(before, after, {
+        require('bash.origin.lib').js.BASH_ORIGIN_EXPRESS.runForTestHooks(before, after, {
             "routes": {
                 "/dist/insight-domplate-renderer.js": {
                     "@it.pinf.org.browserify#s1": {
