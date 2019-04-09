@@ -9,7 +9,7 @@ _module.exports = init();
        var pmodule = bundle.module;
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.mainModule = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-"use strict";
+
 
 function impl(domplate) {
   var T = domplate.tags;
@@ -162,8 +162,65 @@ exports.main = function (options) {
   options = options || {};
   var domplate = window.domplate;
   var rep = impl(domplate);
-  rep.__dom = "%%DOM%%";
-  rep.__markup = "%%MARKUP%%";
+  rep.__dom = {
+"tag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __path__ = context.__path__;
+var __bind__ = context.__bind__;
+var __if__ = context.__if__;
+var __link__ = context.__link__;
+var __loop__ = context.__loop__;
+return (function (root, context, o, d0, d1, d2) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1, d2) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var l0 = 0;  var if_0 = 0;  var if_1 = 0;  var if_2 = 0;  var if_3 = 0;  var if_4 = 0;  var e0 = 0;  with (this) {      if_0 = __if__.apply(this, [d0, function(if_0) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_0 (ifName)\',if_0);      }]);      l0 = __loop__.apply(this, [d1, function(i0,l0,d0,d1,d2) {       DomplateDebug.logVar(\'  .. i0 (counterName)\',i0);       DomplateDebug.logVar(\'  .. l0 (loopName)\',l0);      if_1 = __if__.apply(this, [d0, function(if_1) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_1 (ifName)\',if_1);      }]);      if_2 = __if__.apply(this, [d1, function(if_2) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_2 (ifName)\',if_2);      }]);      if_3 = __if__.apply(this, [d2, function(if_3,d0,d1) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_3 (ifName)\',if_3);        node = __path__(root, o,0+d0+l0+0+1+d0+d1);        e0 = __link__(node, d0, d1);      }]);        return 0+1+d0+d1+d2;      }]);      if_4 = __if__.apply(this, [d2, function(if_4) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_4 (ifName)\',if_4);      }]);  }  DomplateDebug.endGroup();  return 1;})');  var l0 = 0;  var if_0 = 0;  var if_1 = 0;  var if_2 = 0;  var if_3 = 0;  var if_4 = 0;  var e0 = 0;  with (this) {      if_0 = __if__.apply(this, [d0, function(if_0) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_0 (ifName)',if_0);      }]);      l0 = __loop__.apply(this, [d1, function(i0,l0,d0,d1,d2) {       DomplateDebug.logVar('  .. i0 (counterName)',i0);       DomplateDebug.logVar('  .. l0 (loopName)',l0);      if_1 = __if__.apply(this, [d0, function(if_1) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_1 (ifName)',if_1);      }]);      if_2 = __if__.apply(this, [d1, function(if_2) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_2 (ifName)',if_2);      }]);      if_3 = __if__.apply(this, [d2, function(if_3,d0,d1) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_3 (ifName)',if_3);        node = __path__(root, o,0+d0+l0+0+1+d0+d1);        e0 = __link__(node, d0, d1);      }]);        return 0+1+d0+d1+d2;      }]);      if_4 = __if__.apply(this, [d2, function(if_4) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_4 (ifName)',if_4);      }]);  }  DomplateDebug.endGroup();  return 1;})
+}
+,
+"shortTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __path__ = context.__path__;
+var __bind__ = context.__bind__;
+var __if__ = context.__if__;
+var __link__ = context.__link__;
+var __loop__ = context.__loop__;
+return (function (root, context, o, d0, d1, d2) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1, d2) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var l0 = 0;  var if_0 = 0;  var if_1 = 0;  var if_2 = 0;  var if_3 = 0;  var if_4 = 0;  var e0 = 0;  with (this) {      if_0 = __if__.apply(this, [d0, function(if_0) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_0 (ifName)\',if_0);      }]);      l0 = __loop__.apply(this, [d1, function(i0,l0,d0,d1,d2) {       DomplateDebug.logVar(\'  .. i0 (counterName)\',i0);       DomplateDebug.logVar(\'  .. l0 (loopName)\',l0);      if_1 = __if__.apply(this, [d0, function(if_1) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_1 (ifName)\',if_1);      }]);      if_2 = __if__.apply(this, [d1, function(if_2) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_2 (ifName)\',if_2);      }]);      if_3 = __if__.apply(this, [d2, function(if_3,d0,d1) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_3 (ifName)\',if_3);        node = __path__(root, o,0+d0+l0+0+1+d0+d1);        e0 = __link__(node, d0, d1);      }]);        return 0+1+d0+d1+d2;      }]);      if_4 = __if__.apply(this, [d2, function(if_4) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_4 (ifName)\',if_4);      }]);  }  DomplateDebug.endGroup();  return 1;})');  var l0 = 0;  var if_0 = 0;  var if_1 = 0;  var if_2 = 0;  var if_3 = 0;  var if_4 = 0;  var e0 = 0;  with (this) {      if_0 = __if__.apply(this, [d0, function(if_0) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_0 (ifName)',if_0);      }]);      l0 = __loop__.apply(this, [d1, function(i0,l0,d0,d1,d2) {       DomplateDebug.logVar('  .. i0 (counterName)',i0);       DomplateDebug.logVar('  .. l0 (loopName)',l0);      if_1 = __if__.apply(this, [d0, function(if_1) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_1 (ifName)',if_1);      }]);      if_2 = __if__.apply(this, [d1, function(if_2) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_2 (ifName)',if_2);      }]);      if_3 = __if__.apply(this, [d2, function(if_3,d0,d1) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_3 (ifName)',if_3);        node = __path__(root, o,0+d0+l0+0+1+d0+d1);        e0 = __link__(node, d0, d1);      }]);        return 0+1+d0+d1+d2;      }]);      if_4 = __if__.apply(this, [d2, function(if_4) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_4 (ifName)',if_4);      }]);  }  DomplateDebug.endGroup();  return 1;})
+}
+,
+"trimmedNoticeTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __path__ = context.__path__;
+var __bind__ = context.__bind__;
+var __if__ = context.__if__;
+var __link__ = context.__link__;
+var __loop__ = context.__loop__;
+return (function (root, context, o) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  }  DomplateDebug.endGroup();  return 1;})');  with (this) {  }  DomplateDebug.endGroup();  return 1;})
+}
+};
+  rep.__markup = {
+"tag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __escape__ = context.__escape__;
+var __if__ = context.__if__;
+var __loop__ = context.__loop__;
+var __link__ = context.__link__;
+return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " wrapped=\"",__escape__(node.wrapped), "\"", " class=\"","string", " ", "\"",">");__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","\'");}]);    __loop__.apply(this, [getValue(node), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.special, __out__, function(__out__) {    __code__.push("","<span", " class=\"","special", " ", "\"",">",__escape__(line.specialvalue),"</span>");}]);__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br", " class=\"", " ", "\"","/>");}]);__if__.apply(this, [line.trimmed, __out__, function(__out__) {__link__(getTrimmedTag(node), __code__, __out__, {"node":node});}]);    }]);__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","\'");}]);    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " wrapped=\"",__escape__(node.wrapped), "\"", " class=\"","string", " ", "\"",">");__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __loop__.apply(this, [getValue(node), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.special, __out__, function(__out__) {    __code__.push("","<span", " class=\"","special", " ", "\"",">",__escape__(line.specialvalue),"</span>");}]);__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br", " class=\"", " ", "\"","/>");}]);__if__.apply(this, [line.trimmed, __out__, function(__out__) {__link__(getTrimmedTag(node), __code__, __out__, {"node":node});}]);    }]);__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+}
+,
+"shortTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __escape__ = context.__escape__;
+var __if__ = context.__if__;
+var __loop__ = context.__loop__;
+var __link__ = context.__link__;
+return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " wrapped=\"",__escape__(node.wrapped), "\"", " class=\"","string", " ", "\"",">");__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","\'");}]);    __loop__.apply(this, [getShortValue(node), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.special, __out__, function(__out__) {    __code__.push("","<span", " class=\"","special", " ", "\"",">",__escape__(line.specialvalue),"</span>");}]);__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br", " class=\"", " ", "\"","/>");}]);__if__.apply(this, [line.trimmed, __out__, function(__out__) {__link__(getTrimmedTag(node), __code__, __out__, {"node":node});}]);    }]);__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","\'");}]);    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " wrapped=\"",__escape__(node.wrapped), "\"", " class=\"","string", " ", "\"",">");__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __loop__.apply(this, [getShortValue(node), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.special, __out__, function(__out__) {    __code__.push("","<span", " class=\"","special", " ", "\"",">",__escape__(line.specialvalue),"</span>");}]);__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br", " class=\"", " ", "\"","/>");}]);__if__.apply(this, [line.trimmed, __out__, function(__out__) {__link__(getTrimmedTag(node), __code__, __out__, {"node":node});}]);    }]);__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+}
+,
+"trimmedNoticeTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __escape__ = context.__escape__;
+var __if__ = context.__if__;
+var __loop__ = context.__loop__;
+var __link__ = context.__link__;
+return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","trimmed", " ", "\"",">",__escape__(getNotice(node)),"</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","trimmed", " ", "\"",">",__escape__(getNotice(node)),"</span>");  }DomplateDebug.endGroup();}})
+}
+};
   var res = domplate.domplate(rep);
   var renderedCss = false;
   Object.keys(rep).forEach(function (tagName) {

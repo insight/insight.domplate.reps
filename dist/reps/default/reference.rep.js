@@ -9,7 +9,7 @@ _module.exports = init();
        var pmodule = bundle.module;
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.mainModule = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-"use strict";
+
 
 function impl(domplate) {
   var T = domplate.tags;
@@ -58,8 +58,65 @@ exports.main = function (options) {
   options = options || {};
   var domplate = window.domplate;
   var rep = impl(domplate);
-  rep.__dom = "%%DOM%%";
-  rep.__markup = "%%MARKUP%%";
+  rep.__dom = {
+"tag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __path__ = context.__path__;
+var __bind__ = context.__bind__;
+var __if__ = context.__if__;
+var __link__ = context.__link__;
+var __loop__ = context.__loop__;
+return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})
+}
+,
+"shortTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __path__ = context.__path__;
+var __bind__ = context.__bind__;
+var __if__ = context.__if__;
+var __link__ = context.__link__;
+var __loop__ = context.__loop__;
+return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})
+}
+,
+"collapsedTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __path__ = context.__path__;
+var __bind__ = context.__bind__;
+var __if__ = context.__if__;
+var __link__ = context.__link__;
+var __loop__ = context.__loop__;
+return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})
+}
+};
+  rep.__markup = {
+"tag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __escape__ = context.__escape__;
+var __if__ = context.__if__;
+var __loop__ = context.__loop__;
+var __link__ = context.__link__;
+return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Normal), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Normal), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+}
+,
+"shortTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __escape__ = context.__escape__;
+var __if__ = context.__if__;
+var __loop__ = context.__loop__;
+var __link__ = context.__link__;
+return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+}
+,
+"collapsedTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __escape__ = context.__escape__;
+var __if__ = context.__if__;
+var __loop__ = context.__loop__;
+var __link__ = context.__link__;
+return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+}
+};
   var res = domplate.domplate(rep);
   var renderedCss = false;
   Object.keys(rep).forEach(function (tagName) {
