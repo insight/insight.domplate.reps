@@ -17,17 +17,15 @@ exports.describeRepSuite = function (repUri, node, expected) {
 
         require('bash.origin.lib').js.BASH_ORIGIN_EXPRESS.runForTestHooks(before, after, {
             "routes": {
-                "/dist/insight-domplate-renderer.js": {
+                "/dist/insight-domplate-renderer.browser.js": {
                     "@it.pinf.org.browserify#s1": {
                         "src": __dirname + "/../lib/renderer.js",
-                        "dist": __dirname + "/../dist/insight-domplate-renderer.js",
                         "format": "browser",
                         "expose": {
                             "window": {
                                 "insight-domplate-renderer": "Renderer"
                             }
-                        },
-                        "prime": true
+                        }
                     }
                 },
                 "^/reps/": {
@@ -56,8 +54,8 @@ exports.describeRepSuite = function (repUri, node, expected) {
                 },
                 "/": [
                     '<head>',
-                        '<script src="/reps/domplate.js"></script>',
-                        '<script src="/dist/insight-domplate-renderer.js"></script>',
+                        '<script src="/reps/domplate.browser.js"></script>',
+                        '<script src="/dist/insight-domplate-renderer.browser.js"></script>',
                         '<style>',
                             '#rep {',
                                 'padding: 2px 4px 1px 6px;',

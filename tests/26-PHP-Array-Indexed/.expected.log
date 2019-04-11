@@ -6,20 +6,20 @@ environments: default
 
 
   Suite
-[bash.origin.express] Adding route: /dist/insight-domplate-renderer.js
+[bash.origin.express] Adding route: /dist/insight-domplate-renderer.browser.js
+[bash.origin.express] Adding route: /domplate-eval.browser.js
 [bash.origin.express] Adding route: /php/array-indexed.rep.js
+[bash.origin.express] Adding route: /domplate.browser.js
 [bash.origin.express] Adding route: /php/string.rep.js
-[bash.origin.express] Adding route: /domplate-eval.js
-[bash.origin.express] Adding route: /domplate.js
 [bash.origin.express] Adding route: /^\//
 [bash.origin.express] Adding route: /^\/reps\//
 [bash.origin.express] Adding route: /
 Server: http://localhost:8080/
 [READY]
 [bash.origin.express] Routing request / with method GET due to route /
-[bash.origin.express] Routing request /domplate.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /domplate.js
-[bash.origin.express] Routing request / with method GET due to route /dist/insight-domplate-renderer.js
+[bash.origin.express] Routing request /domplate.browser.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
+[bash.origin.express] Routing request / with method GET due to route /domplate.browser.js
+[bash.origin.express] Routing request / with method GET due to route /dist/insight-domplate-renderer.browser.js
 [bash.origin.express] Routing request /php/array-indexed.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request / with method GET due to route /php/array-indexed.rep.js
 [bash.origin.express] Routing request /php/string.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
