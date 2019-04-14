@@ -28,11 +28,11 @@
             tag:
                 T.SPAN({"class": "dictionary"}, T.SPAN("$node|getLabel("),
                     T.FOR("member", "$context,$node,$CONST_Normal|dictionaryIterator",
-                        T.DIV({"class": "member", "$expandable":"$member.expandable", "_memberObject": "$member", "_context": "$context", "onclick": "$onClick"},
+                        T.DIV({"class": "member", "$expandable":"$member.expandable", "_memberObject": "$member", "_contextObject": "$context", "onclick": "$onClick"},
                             T.SPAN({"class": "name", "decorator": "$member|getMemberNameDecorator"}, "$member.name"),
                             T.SPAN({"class": "delimiter"}, ":"),
                             T.SPAN({"class": "value"},
-                                T.TAG("$member.tag", {"context": "$context", "member": "$member", "node": "$member.node"})
+                                T.TAG("$member.tag", {"context": "$context", "node": "$member.node", "member": "$member"})
                             ),
                             T.IF("$member.more", T.SPAN({"class": "separator"}, ","))
                         )
@@ -46,7 +46,7 @@
                             T.SPAN({"class": "name"}, "$member.name"),
                             T.SPAN({"class": "delimiter"}, ":"),
                             T.SPAN({"class": "value"},
-                                T.TAG("$member.tag", {"context": "$context", "member": "$member", "node": "$member.node"})
+                                T.TAG("$member.tag", {"context": "$context", "node": "$member.node", "member": "$member"})
                             ),
                             T.IF("$member.more", T.SPAN({"class": "separator"}, ","))
                         )
@@ -59,7 +59,7 @@
                 T.SPAN(")")),
     
             expandableStub:
-                T.TAG("$context,$member,$CONST_Collapsed|getTag", {"context": "$context", "node": "$member.node"}),
+                T.TAG("$context,$member,$CONST_Collapsed|getTag", {"context": "$context", "node": "$member.node", "member": "$member"}),
 
             expandedStub:
                 T.TAG("$tag", {"context": "$context", "node": "$node", "member": "$member"}),
@@ -106,8 +106,8 @@
             
             dictionaryIterator: function(context, node, type) {
                 var members = [];
-                if(!node.value || node.value.length==0) return members;
-                for( var name in node.value ) {
+                if (!node.value || node.value.length==0) return members;
+                for (var name in node.value) {
     
                     var member = {
                         "name": name,
@@ -121,10 +121,10 @@
                     } else {
                         member["tag"] = this.getTag(context, member, type);
                     }
-                    
+
                     members.push(member);
-    
-                    if(members.length>2 && type==this.CONST_Short) {
+
+                    if (members.length>2 && type==this.CONST_Short) {
                         break;
                     }
                 }
@@ -135,14 +135,14 @@
                 return members;
             },
             
-            isExpandable: function(node) {
+            isExpandable: function (node) {
                 return (node.type=="reference" ||
                         node.type=="dictionary" ||
                         node.type=="map" ||
                         node.type=="array");
             },
             
-            onClick: function(event) {
+            onClick: function (event) {
                 if (!domplate.util.isLeftClick(event)) {
                     return;
                 }
@@ -153,24 +153,25 @@
                 event.stopPropagation();
             },
             
-            toggleRow: function(row) {
+            toggleRow: function (row) {
                 var valueElement = domplate.util.getElementByClass(row, "value");
-                if (domplate.util.hasClass(row, "expanded"))
-                {
+                if (domplate.util.hasClass(row, "expanded")) {
                     domplate.util.removeClass(row, "expanded");
+
                     this.expandedStub.replace({
                         "tag": this.expandableStub,
                         "member": row.memberObject,
                         "node": row.memberObject.node,
-                        "context": row.context
+                        "context": row.contextObject
                     }, valueElement);
                 } else {
                     domplate.util.setClass(row, "expanded");
+
                     this.expandedStub.replace({
-                        "tag": row.context.repForNode(row.memberObject.node).tag,
+                        "tag": row.contextObject.repForNode(row.memberObject.node).tag,
                         "member": row.memberObject,
                         "node": row.memberObject.node,
-                        "context": row.context
+                        "context": row.contextObject
                     }, valueElement);
                 }
             }
@@ -178,54 +179,54 @@
     },
     css: (css () >>>
 
-        :scope SPAN.dictionary > SPAN {
+        SPAN.dictionary > SPAN {
             color: #9C9C9C;
         }
         
-        :scope SPAN.dictionary > SPAN.collapsed {
+        SPAN.dictionary > SPAN.collapsed {
             color: #0000FF;
             font-weight: normal;
             padding-left: 5px;
             padding-right: 5px;
         }
         
-        :scope SPAN.dictionary > SPAN.summary {
+        SPAN.dictionary > SPAN.summary {
             color: #0000FF;
             font-weight: normal;
             padding-left: 5px;
             padding-right: 5px;
         }
         
-        :scope SPAN.dictionary > SPAN.member {
+        SPAN.dictionary > SPAN.member {
             color: #9C9C9C;
         }
         
-        :scope SPAN.dictionary > DIV.member {
+        SPAN.dictionary > DIV.member {
             display: block;
             padding-left: 20px;
         }
-        :scope SPAN.dictionary > DIV.member.expandable {
+        SPAN.dictionary > DIV.member.expandable {
             background-image: url(images/twisty-closed.png);
             background-repeat: no-repeat;
             background-position: 6px 2px;
             cursor: pointer;
         }
-        :scope SPAN.dictionary > DIV.member.expandable.expanded {
+        SPAN.dictionary > DIV.member.expandable.expanded {
             background-image: url(images/twisty-open.png);
         }
         
-        :scope SPAN.dictionary > .member > SPAN.name {
+        SPAN.dictionary > .member > SPAN.name {
             color: #E59D07;
             font-weight: normal;
         }
         
-        :scope SPAN.dictionary > .member > SPAN.value {
+        SPAN.dictionary > .member > SPAN.value {
             font-weight: normal;
         }
         
-        :scope SPAN.dictionary > .member > SPAN.delimiter,
-        :scope SPAN.dictionary > .member > SPAN.separator,
-        :scope SPAN.dictionary > .member SPAN.more {
+        SPAN.dictionary > .member > SPAN.delimiter,
+        SPAN.dictionary > .member > SPAN.separator,
+        SPAN.dictionary > .member SPAN.more {
             color: #9C9C9C;
             padding-left: 2px;
             padding-right: 2px;

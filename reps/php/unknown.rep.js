@@ -26,7 +26,7 @@
     },
     css: (css () >>>
 
-        :scope DIV.unknown {
+        DIV.unknown {
             color: #FFFFFF;
             background-color: red;
         }

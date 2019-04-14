@@ -7,6 +7,7 @@ environments: default
 
   Suite
 [bash.origin.express] Adding route: /dist/insight-domplate-renderer.browser.js
+[bash.origin.express] Adding route: /default/dictionary.rep.js
 [bash.origin.express] Adding route: /domplate-eval.browser.js
 [bash.origin.express] Adding route: /wrappers/console.rep.js
 [bash.origin.express] Adding route: /default/string.rep.js
@@ -17,13 +18,13 @@ environments: default
 Server: http://localhost:8080/
 [READY]
 [bash.origin.express] Routing request / with method GET due to route /
-[bash.origin.express] Routing request /domplate.browser.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /domplate.browser.js
 [bash.origin.express] Routing request / with method GET due to route /dist/insight-domplate-renderer.browser.js
-[bash.origin.express] Routing request /default/string.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /default/string.rep.js
+[bash.origin.express] Routing request /default/dictionary.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
+[bash.origin.express] Routing request / with method GET due to route /default/dictionary.rep.js
 [bash.origin.express] Routing request /wrappers/console.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request / with method GET due to route /wrappers/console.rep.js
+[bash.origin.express] Routing request /default/string.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
+[bash.origin.express] Routing request / with method GET due to route /default/string.rep.js
 [bash.origin.express] Routing request /wrappers/images/plus-small-white.png with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request /wrappers/images/plus-small-white.png with method GET due to route { /^\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request /wrappers/images/node-magnifier.png with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }

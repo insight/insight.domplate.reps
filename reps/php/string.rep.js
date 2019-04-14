@@ -165,26 +165,26 @@
     },
     css: (css () >>>
 
-        :scope SPAN.null {
+        SPAN.null {
             color: navy;
         }
 
-        :scope SPAN.string {
+        SPAN.string {
             color: black;
         }
 
-        :scope SPAN.string[wrapped=true] {
+        SPAN.string[wrapped=true] {
             color: red;
         }
 
-        :scope SPAN.string > SPAN.special {
+        SPAN.string > SPAN.special {
             color: gray;
             font-weight: bold;
             padding-left: 3px;
             padding-right: 3px;
         }
 
-        :scope SPAN.string > SPAN.trimmed {
+        SPAN.string > SPAN.trimmed {
             color: #FFFFFF;
             background-color: blue;
             padding-left: 5px;

@@ -1,6 +1,7 @@
 {
   "name": "insight.domplate.reps",
   "version": "0.0.0",
+  "main": "lib/renderer.js",
   "__devDependencies": {
     "bash.origin.workspace": "^0.3.1"
   },

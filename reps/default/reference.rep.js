@@ -22,16 +22,20 @@
     
             tag:
                 T.SPAN({"class": "reference"},
-                T.TAG("$context,$node,$CONST_Normal|getTag", {"context": "$context", "node": "$context,$node|getInstanceNode"})),
+                    T.TAG("$context,$node,$CONST_Normal|getTag", {"context": "$context", "node": "$context,$node|getInstanceNode"})),
             
             shortTag:
                 T.SPAN({"class": "reference"},
-                T.TAG("$context,$node,$CONST_Collapsed|getTag", {"context": "$context", "node": "$context,$node|getInstanceNode"})),
+                    T.TAG("$context,$node,$CONST_Collapsed|getTag", {"context": "$context", "node": "$context,$node|getInstanceNode"})),
     
             collapsedTag:
                 T.SPAN({"class": "reference"},
-                T.TAG("$context,$node,$CONST_Collapsed|getTag", {"context": "$context", "node": "$context,$node|getInstanceNode"})),
+                    T.TAG("$context,$node,$CONST_Collapsed|getTag", {"context": "$context", "node": "$context,$node|getInstanceNode"})),
                 
+            getTagDbid: function(context, node, type) {
+                return context.repForNode(this.getInstanceNode(context, node)).__dbid;
+            },
+
             getTag: function(context, node, type) {
                 return context.repForNode(this.getInstanceNode(context, node))[type];
             },
@@ -39,12 +43,13 @@
             getInstanceNode: function (context, node) {
 
                 if (node.value.instance) {
-
                     return node.value.instance;
                 } else
                 if (typeof node.value.getInstanceNode === "function") {
-
                     return node.value.getInstanceNode(node);
+                } else
+                if (typeof node.getInstance === "function") {
+                    return node.getInstance();
                 }
 
                 return context.getInstanceNode(node);

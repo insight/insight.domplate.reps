@@ -21,7 +21,7 @@
     },
     css: (css () >>>
 
-        :scope SPAN.unknown {
+        SPAN.unknown {
             color: #FFFFFF;
             background-color: red;
         }

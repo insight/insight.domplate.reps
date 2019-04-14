@@ -21,7 +21,7 @@
     },
     css: (css () >>>
 
-        :scope SPAN.constant {
+        SPAN.constant {
             color: #0000FF;
         }
 

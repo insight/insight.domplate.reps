@@ -41,7 +41,8 @@ function impl(domplate) {
       "_argNodeObj": "$arg.node",
       "onclick": "$onArgClick"
     }, T.TAG("$arg.tag", {
-      "node": "$arg.node"
+      "node": "$arg.node",
+      "context": "$context"
     }), T.IF("$arg.more", T.SPAN({
       "class": "separator"
     }, ",")))), ")"))))))),
@@ -183,13 +184,14 @@ function impl(domplate) {
         var items = [];
 
         for (var i = 0; i < frame.args.length; i++) {
-          items.push({
+          var item = {
             "node": domplate.util.merge(frame.args[i], {
               "wrapped": true
             }),
             "tag": context.repForNode(frame.args[i]).shortTag,
             "more": i < frame.args.length - 1
-          });
+          };
+          items.push(item);
         }
 
         return items;
@@ -201,12 +203,11 @@ function impl(domplate) {
 }
 
 function css() {
-  return atob("CltfZGJpZD0iYjA1MTQzZDUxODUxZGM5MzJhNGIyNzQyY2U4MDZjNWNhZjA2ZGE4NSJdIFNQQU4uc3RydWN0dXJlcy10cmFjZSB7CiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoaW1hZ2VzL2VkaXQtcnVsZS5wbmcpOwogICAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDsKICAgIGJhY2tncm91bmQtcG9zaXRpb246IDRweCAxcHg7CiAgICBwYWRkaW5nLWxlZnQ6IDI1cHg7CiAgICBmb250LXdlaWdodDogYm9sZDsKfQoKW19kYmlkPSJiMDUxNDNkNTE4NTFkYzkzMmE0YjI3NDJjZTgwNmM1Y2FmMDZkYTg1Il0gRElWLnN0cnVjdHVyZXMtdHJhY2UgewogICAgcGFkZGluZzogMHB4OwogICAgbWFyZ2luOiAwcHg7Cn0KCltfZGJpZD0iYjA1MTQzZDUxODUxZGM5MzJhNGIyNzQyY2U4MDZjNWNhZjA2ZGE4NSJdIERJVi5zdHJ1Y3R1cmVzLXRyYWNlIFRBQkxFIHsKICBib3JkZXItYm90dG9tOiAxcHggc29saWQgI0Q3RDdENzsKfQoKW19kYmlkPSJiMDUxNDNkNTE4NTFkYzkzMmE0YjI3NDJjZTgwNmM1Y2FmMDZkYTg1Il0gRElWLnN0cnVjdHVyZXMtdHJhY2UgVEFCTEUgVEJPRFkgVFIgVEgsCltfZGJpZD0iYjA1MTQzZDUxODUxZGM5MzJhNGIyNzQyY2U4MDZjNWNhZjA2ZGE4NSJdIERJVi5zdHJ1Y3R1cmVzLXRyYWNlIFRBQkxFIFRCT0RZIFRSIFREIHsKICAgIHBhZGRpbmc6IDNweDsKICAgIHBhZGRpbmctbGVmdDogMTBweDsKICAgIHBhZGRpbmctcmlnaHQ6IDEwcHg7Cn0KCltfZGJpZD0iYjA1MTQzZDUxODUxZGM5MzJhNGIyNzQyY2U4MDZjNWNhZjA2ZGE4NSJdIERJVi5zdHJ1Y3R1cmVzLXRyYWNlIFRBQkxFIFRCT0RZIFRSIFRILmhlYWRlci1maWxlIHsKICB3aGl0ZS1zcGFjZTpub3dyYXA7CiAgZm9udC13ZWlnaHQ6IGJvbGQ7CiAgdGV4dC1hbGlnbjogbGVmdDsKfQoKW19kYmlkPSJiMDUxNDNkNTE4NTFkYzkzMmE0YjI3NDJjZTgwNmM1Y2FmMDZkYTg1Il0gRElWLnN0cnVjdHVyZXMtdHJhY2UgVEFCTEUgVEJPRFkgVFIgVEguaGVhZGVyLWxpbmUgewogIHdoaXRlLXNwYWNlOm5vd3JhcDsKICBmb250LXdlaWdodDogYm9sZDsKICB0ZXh0LWFsaWduOiByaWdodDsKfQpbX2RiaWQ9ImIwNTE0M2Q1MTg1MWRjOTMyYTRiMjc0MmNlODA2YzVjYWYwNmRhODUiXSBESVYuc3RydWN0dXJlcy10cmFjZSBUQUJMRSBUQk9EWSBUUiBUSC5oZWFkZXItaW5zdCB7CiAgd2hpdGUtc3BhY2U6bm93cmFwOwogIGZvbnQtd2VpZ2h0OiBib2xkOwogIHRleHQtYWxpZ246IGxlZnQ7Cn0KCltfZGJpZD0iYjA1MTQzZDUxODUxZGM5MzJhNGIyNzQyY2U4MDZjNWNhZjA2ZGE4NSJdIERJVi5zdHJ1Y3R1cmVzLXRyYWNlIFRBQkxFIFRCT0RZIFRSIFRELmNlbGwtZmlsZSB7CiAgdmVydGljYWwtYWxpZ246IHRvcDsKICBib3JkZXI6IDFweCBzb2xpZCAjRDdEN0Q3OwogIGJvcmRlci1ib3R0b206IDBweDsKICBib3JkZXItcmlnaHQ6IDBweDsKfQpbX2RiaWQ9ImIwNTE0M2Q1MTg1MWRjOTMyYTRiMjc0MmNlODA2YzVjYWYwNmRhODUiXSBESVYuc3RydWN0dXJlcy10cmFjZSBUQUJMRSBUQk9EWSBUUiBURC5jZWxsLWxpbmUgewogIHdoaXRlLXNwYWNlOm5vd3JhcDsKICB2ZXJ0aWNhbC1hbGlnbjogdG9wOwogIHRleHQtYWxpZ246IHJpZ2h0OwogIGJvcmRlcjoxcHggc29saWQgI0Q3RDdENzsKICBib3JkZXItYm90dG9tOiAwcHg7CiAgYm9yZGVyLXJpZ2h0OiAwcHg7Cn0KW19kYmlkPSJiMDUxNDNkNTE4NTFkYzkzMmE0YjI3NDJjZTgwNmM1Y2FmMDZkYTg1Il0gRElWLnN0cnVjdHVyZXMtdHJhY2UgVEFCTEUgVEJPRFkgVFIgVEQuY2VsbC1saW5lOmhvdmVyLApbX2RiaWQ9ImIwNTE0M2Q1MTg1MWRjOTMyYTRiMjc0MmNlODA2YzVjYWYwNmRhODUiXSBESVYuc3RydWN0dXJlcy10cmFjZSBUQUJMRSBUQk9EWSBUUiBURC5jZWxsLWZpbGU6aG92ZXIgewogICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmYzczZDsKICAgIGN1cnNvcjogcG9pbnRlcjsgICAgCn0KW19kYmlkPSJiMDUxNDNkNTE4NTFkYzkzMmE0YjI3NDJjZTgwNmM1Y2FmMDZkYTg1Il0gRElWLnN0cnVjdHVyZXMtdHJhY2UgVEFCTEUgVEJPRFkgVFIgVEQuY2VsbC1pbnN0IHsKICB2ZXJ0aWNhbC1hbGlnbjogdG9wOwogIHBhZGRpbmctbGVmdDogMTBweDsKICBmb250LXdlaWdodDogYm9sZDsKICBib3JkZXI6MXB4IHNvbGlkICNEN0Q3RDc7CiAgYm9yZGVyLWJvdHRvbTogMHB4Owp9CgpbX2RiaWQ9ImIwNTE0M2Q1MTg1MWRjOTMyYTRiMjc0MmNlODA2YzVjYWYwNmRhODUiXSBESVYuc3RydWN0dXJlcy10cmFjZSBUQUJMRSBUQk9EWSBUUiBURC5jZWxsLWluc3QgRElWLmFyZyB7CiAgZm9udC13ZWlnaHQ6IG5vcm1hbDsKICBwYWRkaW5nLWxlZnQ6IDNweDsKICBwYWRkaW5nLXJpZ2h0OiAzcHg7CiAgZGlzcGxheTogaW5saW5lLWJsb2NrOwp9CltfZGJpZD0iYjA1MTQzZDUxODUxZGM5MzJhNGIyNzQyY2U4MDZjNWNhZjA2ZGE4NSJdIERJVi5zdHJ1Y3R1cmVzLXRyYWNlIFRBQkxFIFRCT0RZIFRSIFRELmNlbGwtaW5zdCBESVYuYXJnOmhvdmVyIHsKICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmM3M2Q7CiAgICBjdXJzb3I6IHBvaW50ZXI7ICAgIAp9CgpbX2RiaWQ9ImIwNTE0M2Q1MTg1MWRjOTMyYTRiMjc0MmNlODA2YzVjYWYwNmRhODUiXSBESVYuc3RydWN0dXJlcy10cmFjZSBUQUJMRSBUQk9EWSBUUiBURC5jZWxsLWluc3QgLnNlcGFyYXRvciB7CiAgICBwYWRkaW5nLWxlZnQ6IDFweDsKICAgIHBhZGRpbmctcmlnaHQ6IDNweDsKfQo=");
+  return atob("ClNQQU4uc3RydWN0dXJlcy10cmFjZVtfX2RiaWQ9ImVjOGE1NmNkYWZhMzIxZjA5MDBmYTY1NmNhOWQ3MWJjZjNkMWI1NGUiXSB7CiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoaW1hZ2VzL2VkaXQtcnVsZS5wbmcpOwogICAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDsKICAgIGJhY2tncm91bmQtcG9zaXRpb246IDRweCAxcHg7CiAgICBwYWRkaW5nLWxlZnQ6IDI1cHg7CiAgICBmb250LXdlaWdodDogYm9sZDsKfQoKRElWLnN0cnVjdHVyZXMtdHJhY2VbX19kYmlkPSJlYzhhNTZjZGFmYTMyMWYwOTAwZmE2NTZjYTlkNzFiY2YzZDFiNTRlIl0gewogICAgcGFkZGluZzogMHB4OwogICAgbWFyZ2luOiAwcHg7Cn0KCkRJVi5zdHJ1Y3R1cmVzLXRyYWNlW19fZGJpZD0iZWM4YTU2Y2RhZmEzMjFmMDkwMGZhNjU2Y2E5ZDcxYmNmM2QxYjU0ZSJdIFRBQkxFIHsKICBib3JkZXItYm90dG9tOiAxcHggc29saWQgI0Q3RDdENzsKfQoKRElWLnN0cnVjdHVyZXMtdHJhY2VbX19kYmlkPSJlYzhhNTZjZGFmYTMyMWYwOTAwZmE2NTZjYTlkNzFiY2YzZDFiNTRlIl0gVEFCTEUgVEJPRFkgVFIgVEgsIERJVi5zdHJ1Y3R1cmVzLXRyYWNlIFRBQkxFIFRCT0RZIFRSIFREIHsKICAgIHBhZGRpbmc6IDNweDsKICAgIHBhZGRpbmctbGVmdDogMTBweDsKICAgIHBhZGRpbmctcmlnaHQ6IDEwcHg7Cn0KCkRJVi5zdHJ1Y3R1cmVzLXRyYWNlW19fZGJpZD0iZWM4YTU2Y2RhZmEzMjFmMDkwMGZhNjU2Y2E5ZDcxYmNmM2QxYjU0ZSJdIFRBQkxFIFRCT0RZIFRSIFRILmhlYWRlci1maWxlIHsKICB3aGl0ZS1zcGFjZTpub3dyYXA7CiAgZm9udC13ZWlnaHQ6IGJvbGQ7CiAgdGV4dC1hbGlnbjogbGVmdDsKfQoKRElWLnN0cnVjdHVyZXMtdHJhY2VbX19kYmlkPSJlYzhhNTZjZGFmYTMyMWYwOTAwZmE2NTZjYTlkNzFiY2YzZDFiNTRlIl0gVEFCTEUgVEJPRFkgVFIgVEguaGVhZGVyLWxpbmUgewogIHdoaXRlLXNwYWNlOm5vd3JhcDsKICBmb250LXdlaWdodDogYm9sZDsKICB0ZXh0LWFsaWduOiByaWdodDsKfQpESVYuc3RydWN0dXJlcy10cmFjZVtfX2RiaWQ9ImVjOGE1NmNkYWZhMzIxZjA5MDBmYTY1NmNhOWQ3MWJjZjNkMWI1NGUiXSBUQUJMRSBUQk9EWSBUUiBUSC5oZWFkZXItaW5zdCB7CiAgd2hpdGUtc3BhY2U6bm93cmFwOwogIGZvbnQtd2VpZ2h0OiBib2xkOwogIHRleHQtYWxpZ246IGxlZnQ7Cn0KCkRJVi5zdHJ1Y3R1cmVzLXRyYWNlW19fZGJpZD0iZWM4YTU2Y2RhZmEzMjFmMDkwMGZhNjU2Y2E5ZDcxYmNmM2QxYjU0ZSJdIFRBQkxFIFRCT0RZIFRSIFRELmNlbGwtZmlsZSB7CiAgdmVydGljYWwtYWxpZ246IHRvcDsKICBib3JkZXI6IDFweCBzb2xpZCAjRDdEN0Q3OwogIGJvcmRlci1ib3R0b206IDBweDsKICBib3JkZXItcmlnaHQ6IDBweDsKfQpESVYuc3RydWN0dXJlcy10cmFjZVtfX2RiaWQ9ImVjOGE1NmNkYWZhMzIxZjA5MDBmYTY1NmNhOWQ3MWJjZjNkMWI1NGUiXSBUQUJMRSBUQk9EWSBUUiBURC5jZWxsLWxpbmUgewogIHdoaXRlLXNwYWNlOm5vd3JhcDsKICB2ZXJ0aWNhbC1hbGlnbjogdG9wOwogIHRleHQtYWxpZ246IHJpZ2h0OwogIGJvcmRlcjoxcHggc29saWQgI0Q3RDdENzsKICBib3JkZXItYm90dG9tOiAwcHg7CiAgYm9yZGVyLXJpZ2h0OiAwcHg7Cn0KRElWLnN0cnVjdHVyZXMtdHJhY2VbX19kYmlkPSJlYzhhNTZjZGFmYTMyMWYwOTAwZmE2NTZjYTlkNzFiY2YzZDFiNTRlIl0gVEFCTEUgVEJPRFkgVFIgVEQuY2VsbC1saW5lOmhvdmVyLCBESVYuc3RydWN0dXJlcy10cmFjZSBUQUJMRSBUQk9EWSBUUiBURC5jZWxsLWZpbGU6aG92ZXIgewogICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmYzczZDsKICAgIGN1cnNvcjogcG9pbnRlcjsgICAgCn0KRElWLnN0cnVjdHVyZXMtdHJhY2VbX19kYmlkPSJlYzhhNTZjZGFmYTMyMWYwOTAwZmE2NTZjYTlkNzFiY2YzZDFiNTRlIl0gVEFCTEUgVEJPRFkgVFIgVEQuY2VsbC1pbnN0IHsKICB2ZXJ0aWNhbC1hbGlnbjogdG9wOwogIHBhZGRpbmctbGVmdDogMTBweDsKICBmb250LXdlaWdodDogYm9sZDsKICBib3JkZXI6MXB4IHNvbGlkICNEN0Q3RDc7CiAgYm9yZGVyLWJvdHRvbTogMHB4Owp9CgpESVYuc3RydWN0dXJlcy10cmFjZVtfX2RiaWQ9ImVjOGE1NmNkYWZhMzIxZjA5MDBmYTY1NmNhOWQ3MWJjZjNkMWI1NGUiXSBUQUJMRSBUQk9EWSBUUiBURC5jZWxsLWluc3QgRElWLmFyZyB7CiAgZm9udC13ZWlnaHQ6IG5vcm1hbDsKICBwYWRkaW5nLWxlZnQ6IDNweDsKICBwYWRkaW5nLXJpZ2h0OiAzcHg7CiAgZGlzcGxheTogaW5saW5lLWJsb2NrOwp9CkRJVi5zdHJ1Y3R1cmVzLXRyYWNlW19fZGJpZD0iZWM4YTU2Y2RhZmEzMjFmMDkwMGZhNjU2Y2E5ZDcxYmNmM2QxYjU0ZSJdIFRBQkxFIFRCT0RZIFRSIFRELmNlbGwtaW5zdCBESVYuYXJnOmhvdmVyIHsKICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmM3M2Q7CiAgICBjdXJzb3I6IHBvaW50ZXI7ICAgIAp9CgpESVYuc3RydWN0dXJlcy10cmFjZVtfX2RiaWQ9ImVjOGE1NmNkYWZhMzIxZjA5MDBmYTY1NmNhOWQ3MWJjZjNkMWI1NGUiXSBUQUJMRSBUQk9EWSBUUiBURC5jZWxsLWluc3QgLnNlcGFyYXRvciB7CiAgICBwYWRkaW5nLWxlZnQ6IDFweDsKICAgIHBhZGRpbmctcmlnaHQ6IDNweDsKfQo=");
 }
 
-exports.main = function (options) {
+exports.main = function (domplate, options) {
   options = options || {};
-  var domplate = window.domplate;
   var rep = impl(domplate);
   rep.__dom = {
 "tag":function (context) {
@@ -216,7 +217,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0) {  DomplateDebug.startGroup([' .. Run DOM .. ','div'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'div\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var l0 = 0;  var l1 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3) {       DomplateDebug.logVar(\'  .. i0 (counterName)\',i0);       DomplateDebug.logVar(\'  .. l0 (loopName)\',l0);        node = __path__(root, o,0,0,0+1+l0+0);node.frameNodeObj = d0;        node = __path__(root, o,0,0,0+1+l0+0,0);node.addEventListener("click", __bind__(this, d1), false);        node = __path__(root, o,0,0,0+1+l0+0,0+1);node.addEventListener("click", __bind__(this, d2), false);      l1 = __loop__.apply(this, [d3, function(i1,l1,d0,d1,d2,d3,d4) {       DomplateDebug.logVar(\'  .. i1 (counterName)\',i1);       DomplateDebug.logVar(\'  .. l1 (loopName)\',l1);        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0);node.addEventListener("click", __bind__(this, d0), false);node.argNodeObj = d1;        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0,0);        e0 = __link__(node, d2, d3);      if_0 = __if__.apply(this, [d4, function(if_0) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_0 (ifName)\',if_0);      }]);        return 0+1;      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})');  var l0 = 0;  var l1 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3) {       DomplateDebug.logVar('  .. i0 (counterName)',i0);       DomplateDebug.logVar('  .. l0 (loopName)',l0);        node = __path__(root, o,0,0,0+1+l0+0);node.frameNodeObj = d0;        node = __path__(root, o,0,0,0+1+l0+0,0);node.addEventListener("click", __bind__(this, d1), false);        node = __path__(root, o,0,0,0+1+l0+0,0+1);node.addEventListener("click", __bind__(this, d2), false);      l1 = __loop__.apply(this, [d3, function(i1,l1,d0,d1,d2,d3,d4) {       DomplateDebug.logVar('  .. i1 (counterName)',i1);       DomplateDebug.logVar('  .. l1 (loopName)',l1);        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0);node.addEventListener("click", __bind__(this, d0), false);node.argNodeObj = d1;        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0,0);        e0 = __link__(node, d2, d3);      if_0 = __if__.apply(this, [d4, function(if_0) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_0 (ifName)',if_0);      }]);        return 0+1;      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0) {  var l0 = 0;  var l1 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3) {        node = __path__(root, o,0,0,0+1+l0+0);node.frameNodeObj = d0;        node = __path__(root, o,0,0,0+1+l0+0,0);node.addEventListener("click", __bind__(this, d1), false);        node = __path__(root, o,0,0,0+1+l0+0,0+1);node.addEventListener("click", __bind__(this, d2), false);      l1 = __loop__.apply(this, [d3, function(i1,l1,d0,d1,d2,d3,d4) {        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0);node.addEventListener("click", __bind__(this, d0), false);node.argNodeObj = d1;        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0,0);        e0 = __link__(node, d2, d3);      if_0 = __if__.apply(this, [d4, function(if_0) {      }]);        return 0+1;      }]);        return 0+1;      }]);  }  return 1;})
 }
 ,
 "shortTag":function (context) {
@@ -226,7 +227,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  return 1;})
 }
 };
   rep.__markup = {
@@ -236,7 +237,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','div'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'div\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<div", " class=\"","structures-trace", " ", "\"",">","<table", " cellpadding=\"","3", "\"", " cellspacing=\"","0", "\"", " class=\"", " ", "\"",">","<tbody", " class=\"", " ", "\"",">","<tr", " class=\"", " ", "\"",">","<th", " class=\"","header-file", " ", "\"",">","File","</th>","<th", " class=\"","header-line", " ", "\"",">","Line","</th>","<th", " class=\"","header-inst", " ", "\"",">","Instruction","</th>","</tr>");    __loop__.apply(this, [getCallList(node), __out__, function(frame, __out__) {    __code__.push("","<tr", " class=\"", " ", "\"",">","<td", " class=\"","cell-file", " ", "\"",">",__escape__(frame.file),"</td>","<td", " class=\"","cell-line", " ", "\"",">",__escape__(frame.line),"</td>","<td", " class=\"","cell-inst", " ", "\"",">","<div", " class=\"", " ", "\"",">",__escape__(getFrameLabel(frame)),"(");__out__.push(frame.node,onFileClick,onFileClick);    __loop__.apply(this, [argIterator(context,frame), __out__, function(arg, __out__) {    __code__.push("","<div", " class=\"","arg", " ", "\"",">");__out__.push(onArgClick,arg.node);__link__(arg.tag, __code__, __out__, {"node":arg.node});__if__.apply(this, [arg.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("",")","</div>","</td>","</tr>");    }]);    __code__.push("","</tbody>","</table>","</div>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<div", " class=\"","structures-trace", " ", "\"",">","<table", " cellpadding=\"","3", "\"", " cellspacing=\"","0", "\"", " class=\"", " ", "\"",">","<tbody", " class=\"", " ", "\"",">","<tr", " class=\"", " ", "\"",">","<th", " class=\"","header-file", " ", "\"",">","File","</th>","<th", " class=\"","header-line", " ", "\"",">","Line","</th>","<th", " class=\"","header-inst", " ", "\"",">","Instruction","</th>","</tr>");    __loop__.apply(this, [getCallList(node), __out__, function(frame, __out__) {    __code__.push("","<tr", " class=\"", " ", "\"",">","<td", " class=\"","cell-file", " ", "\"",">",__escape__(frame.file),"</td>","<td", " class=\"","cell-line", " ", "\"",">",__escape__(frame.line),"</td>","<td", " class=\"","cell-inst", " ", "\"",">","<div", " class=\"", " ", "\"",">",__escape__(getFrameLabel(frame)),"(");__out__.push(frame.node,onFileClick,onFileClick);    __loop__.apply(this, [argIterator(context,frame), __out__, function(arg, __out__) {    __code__.push("","<div", " class=\"","arg", " ", "\"",">");__out__.push(onArgClick,arg.node);__link__(arg.tag, __code__, __out__, {"node":arg.node});__if__.apply(this, [arg.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("",")","</div>","</td>","</tr>");    }]);    __code__.push("","</tbody>","</table>","</div>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " __dbid=\"","ec8a56cdafa321f0900fa656ca9d71bcf3d1b54e", "\"", " __dtid=\"","insight.domplate.reps/default/trace", "\"", " class=\"","structures-trace", " ", "\"",">","<table", " cellpadding=\"","3", "\"", " cellspacing=\"","0", "\"",">","<tbody",">","<tr",">","<th", " class=\"","header-file", " ", "\"",">","File","</th>","<th", " class=\"","header-line", " ", "\"",">","Line","</th>","<th", " class=\"","header-inst", " ", "\"",">","Instruction","</th>","</tr>");    __loop__.apply(this, [getCallList(node), __out__, function(frame, __out__) {    __code__.push("","<tr",">","<td", " class=\"","cell-file", " ", "\"",">",__escape__(frame.file),"</td>","<td", " class=\"","cell-line", " ", "\"",">",__escape__(frame.line),"</td>","<td", " class=\"","cell-inst", " ", "\"",">","<div",">",__escape__(getFrameLabel(frame)),"(");__out__.push(frame.node,onFileClick,onFileClick);    __loop__.apply(this, [argIterator(context,frame), __out__, function(arg, __out__) {    __code__.push("","<div", " class=\"","arg", " ", "\"",">");__out__.push(onArgClick,arg.node);__link__(arg.tag, __code__, __out__, {"node":arg.node,"context":context});__if__.apply(this, [arg.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("",")","</div>","</td>","</tr>");    }]);    __code__.push("","</tbody>","</table>","</div>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -245,11 +246,28 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","structures-trace", " ", "\"",">");__link__(getCaptionTag(context,node), __code__, __out__, {"node":getCaptionNode(node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","structures-trace", " ", "\"",">");__link__(getCaptionTag(context,node), __code__, __out__, {"node":getCaptionNode(node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","ec8a56cdafa321f0900fa656ca9d71bcf3d1b54e", "\"", " __dtid=\"","insight.domplate.reps/default/trace", "\"", " class=\"","structures-trace", " ", "\"",">");__link__(getCaptionTag(context,node), __code__, __out__, {"node":getCaptionNode(node)});    __code__.push("","</span>");  }}})
 }
 };
+  rep.__dbid = "ec8a56cdafa321f0900fa656ca9d71bcf3d1b54e";
+  rep.__dtid = "insight.domplate.reps/default/trace";
   var res = domplate.domplate(rep);
-  var renderedCss = false;
+  var injectedCss = false;
+
+  rep.__ensureCssInjected = function () {
+    if (injectedCss) return;
+    injectedCss = true;
+    var node = document.createElement("style");
+    var cssCode = css();
+
+    if (options.cssBaseUrl) {
+      cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
+    }
+
+    node.innerHTML = cssCode;
+    document.body.appendChild(node);
+  };
+
   Object.keys(rep).forEach(function (tagName) {
     if (!rep[tagName].tag) return;
     var replace_orig = res[tagName].replace;
@@ -257,18 +275,9 @@ return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.start
     res[tagName].replace = function () {
       var res = replace_orig.apply(this, arguments);
       if (!res) return;
-      if (renderedCss) return;
-      renderedCss = true;
-      res.parentNode.setAttribute("_dbid", "b05143d51851dc932a4b2742ce806c5caf06da85");
-      var node = document.createElement("style");
-      var cssCode = css();
-
-      if (options.cssBaseUrl) {
-        cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
-      }
-
-      node.innerHTML = cssCode;
-      document.body.appendChild(node);
+      setTimeout(function () {
+        rep.__ensureCssInjected();
+      }, 0);
       return res;
     };
   });

@@ -31,7 +31,7 @@
     },
     css: (css () >>>
 
-        :scope SPAN.trimmed {
+        SPAN.trimmed {
             color: #FFFFFF;
             background-color: blue;
             padding-left: 5px;

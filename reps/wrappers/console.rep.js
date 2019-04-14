@@ -46,8 +46,8 @@
                                 T.IF("$node|_hasLabel", T.SPAN("$node|_getLabel"))
                             ),
                             T.TAG("$context,$node,$CONST_Short|_getTag", {
-                                "node": "$context,$node|_getValue"
-//                                "message": "$node"
+                                "node": "$context,$node|_getValue",
+                                "context": "$context"
                             })
                         ),
                         T.SPAN({"class": "fileline"}, 
@@ -144,6 +144,11 @@
                 return "hidden";
             },
     
+            _getTagDbid: function (context, node) {
+                var rep = context.repForNode(node);
+                return rep.__dbid;
+            },
+
             _getTag: function (context, node, type) {
                 var rep = context.repForNode(node);
                 if (type == this.CONST_Short) {
@@ -325,7 +330,6 @@
                         masterRow.contextObject.dispatchEvent('click', [event, {
                             "message": masterRow.messageObject,
                             "masterTag": masterRow,
-                            "valueTag": valueTag,
                             "bodyTag": bodyTag
                         }]);
                     }
@@ -361,7 +365,8 @@
                 var rep = masterRow.contextObject.repForNode(masterRow.messageObject);
 
                 rep.tag.replace({
-                    "node": masterRow.messageObject
+                    "node": masterRow.messageObject,
+                    "context": masterRow.contextObject
                 }, bodyTag, rep);
 
 
@@ -399,20 +404,20 @@
     },
     css: (css () >>>
 
-        :scope DIV.console-message {
+        DIV.console-message {
             position: relative;
             margin: 0;
             border-bottom: 1px solid #D7D7D7;
             padding: 0px;
             background-color: #FFFFFF;
         }
-        :scope DIV.console-message.selected {
+        DIV.console-message.selected {
             background-color: #35FC03 !important;
         }
-        :scope DIV.console-message-group[expanded=true] {
+        DIV.console-message-group[expanded=true] {
             background-color: #77CDD9;
         }
-        :scope DIV.console-message > DIV.header {
+        DIV.console-message > DIV.header {
             position: relative;
             padding-left: 34px;
             padding-right: 10px;
@@ -420,35 +425,35 @@
             padding-bottom: 4px;
             cursor: pointer;
         }
-        :scope DIV.console-message[expanded=true] > DIV.header {
+        DIV.console-message[expanded=true] > DIV.header {
             text-align: right;
             min-height: 16px;
         }
-        :scope DIV.console-message[expanded=false] > DIV.header:hover {
+        DIV.console-message[expanded=false] > DIV.header:hover {
             background-color: #ffc73d;
         }
-        :scope DIV.console-message-group > DIV.header {
+        DIV.console-message-group > DIV.header {
             background: url(images/document_page_next.png) no-repeat;
             background-position: 2px 3px;
             font-weight: bold;
             background-color: #77CDD9;
         }
-        :scope DIV.console-message > DIV.header-priority-info {
+        DIV.console-message > DIV.header-priority-info {
             background: url(images/information.png) no-repeat;
             background-position: 2px 3px;
             background-color: #c6eeff;
         }
-        :scope DIV.console-message > DIV.header-priority-warn {
+        DIV.console-message > DIV.header-priority-warn {
             background: url(images/exclamation-diamond.png) no-repeat;
             background-position: 2px 3px;
             background-color: #ffe68d;
         }
-        :scope DIV.console-message > DIV.header-priority-error {
+        DIV.console-message > DIV.header-priority-error {
             background: url(images/exclamation-red.png) no-repeat;
             background-position: 2px 3px;
             background-color: #ffa7a7;
         }
-        :scope DIV.console-message > DIV.header > DIV.expander {
+        DIV.console-message > DIV.header > DIV.expander {
             background-color: black;
             width: 18px;
             height: 18px;
@@ -458,19 +463,19 @@
             top: -1px;
             margin-left: -14px;
         }
-        :scope DIV.console-message > DIV.header > DIV.expander:hover {
+        DIV.console-message > DIV.header > DIV.expander:hover {
             cursor: pointer;
         }
-        :scope DIV.console-message[expanded=false] > DIV.header > DIV.expander {
+        DIV.console-message[expanded=false] > DIV.header > DIV.expander {
             background: url(images/plus-small-white.png) no-repeat;
             background-position: 0px 1px;
         }
-        :scope DIV.console-message[expanded=true] > DIV.header > DIV.expander {
+        DIV.console-message[expanded=true] > DIV.header > DIV.expander {
             background: url(images/minus-small-white.png) no-repeat;
             background-position: 0px 1px;
         }
-        :scope DIV.console-message > DIV.header > SPAN.summary > SPAN.label > SPAN,
-        :scope DIV.console-message > DIV.header > SPAN.fileline > DIV > DIV.label {
+        DIV.console-message > DIV.header > SPAN.summary > SPAN.label > SPAN,
+        DIV.console-message > DIV.header > SPAN.fileline > DIV > DIV.label {
             margin-right: 5px;
             background-color: rgba(69,68,60,1);
             padding-left: 5px;
@@ -479,42 +484,42 @@
             vertical-align: top;
             margin-top: 1px;
         }
-        :scope DIV.console-message > DIV.header > SPAN.fileline > DIV > DIV.label {
+        DIV.console-message > DIV.header > SPAN.fileline > DIV > DIV.label {
             float: left;
             margin-top: 0px;
         }
-        :scope DIV.console-message > DIV.header > SPAN.summary > SPAN > SPAN.count {
+        DIV.console-message > DIV.header > SPAN.summary > SPAN > SPAN.count {
             color: #8c8c8c;
         }
-        :scope DIV.console-message > DIV.header > SPAN.fileline {
+        DIV.console-message > DIV.header > SPAN.fileline {
             color: #8c8c8c;
             word-wrap: break-word;
         }
-        :scope DIV.console-message[expanded=true] > DIV.header > SPAN.summary {
+        DIV.console-message[expanded=true] > DIV.header > SPAN.summary {
             display: none;
         }
-        :scope DIV.console-message[keeptitle=true] > DIV.header,
-        :scope DIV.console-message-group > DIV.header {
+        DIV.console-message[keeptitle=true] > DIV.header,
+        DIV.console-message-group > DIV.header {
             text-align: left !important;
         }
-        :scope DIV.console-message[keeptitle=true] > DIV.header > SPAN.fileline,
-        :scope DIV.console-message-group > DIV.header > SPAN.fileline {
+        DIV.console-message[keeptitle=true] > DIV.header > SPAN.fileline,
+        DIV.console-message-group > DIV.header > SPAN.fileline {
             display: none !important;
         }
-        :scope DIV.console-message[keeptitle=true] > DIV.header > SPAN.summary,
-        :scope DIV.console-message-group > DIV.header > SPAN.summary {
+        DIV.console-message[keeptitle=true] > DIV.header > SPAN.summary,
+        DIV.console-message-group > DIV.header > SPAN.summary {
             display: inline !important;
         }
-        :scope DIV.console-message-group > DIV.header > DIV.actions {
+        DIV.console-message-group > DIV.header > DIV.actions {
             display: none !important;
         }
-        :scope DIV.console-message-group > DIV.header > SPAN.summary > SPAN > SPAN.count {
+        DIV.console-message-group > DIV.header > SPAN.summary > SPAN > SPAN.count {
             color: #ffffff !important;
         }
-        :scope DIV.console-message[expanded=false] > DIV.header > SPAN.fileline {
+        DIV.console-message[expanded=false] > DIV.header > SPAN.fileline {
             display: none;
         }
-        :scope DIV.console-message > DIV.header > DIV.actions {
+        DIV.console-message > DIV.header > DIV.actions {
             display: inline-block;
             position: relative;
             top: 0px;
@@ -523,33 +528,33 @@
             margin-left: 0px;
             margin-right: 5px;
         }
-        :scope DIV.console-message > DIV.header > DIV.actions DIV.inspect {
+        DIV.console-message > DIV.header > DIV.actions DIV.inspect {
             display: inline-block;
             background: url(images/node-magnifier.png) no-repeat;
             width: 16px;
             height: 16px;
             margin-right: 4px;
         }
-        :scope DIV.console-message > DIV.header > DIV.actions > DIV.file {
+        DIV.console-message > DIV.header > DIV.actions > DIV.file {
             display: inline-block;
             background: url(images/document-binary.png) no-repeat;
             width: 16px;
             height: 16px;
             margin-right: 4px;
         }
-        :scope DIV.console-message > DIV.header > DIV.actions > DIV.inspect:hover,
-        :scope DIV.console-message > DIV.header > DIV.actions > DIV.file:hover {
+        DIV.console-message > DIV.header > DIV.actions > DIV.inspect:hover,
+        DIV.console-message > DIV.header > DIV.actions > DIV.file:hover {
             cursor: pointer;
         }
-        :scope DIV.console-message > DIV.body {
+        DIV.console-message > DIV.body {
             padding: 6px;
             margin: 3px;
             margin-top: 0px;
         }
-        :scope DIV.console-message[expanded=false] > DIV.body {
+        DIV.console-message[expanded=false] > DIV.body {
             display: none;
         }
-        :scope DIV.console-message-group > DIV.body {
+        DIV.console-message-group > DIV.body {
             padding: 0px;
             margin: 0px;
             margin-left: 20px;
@@ -557,22 +562,22 @@
             border-left: 1px solid #000000;
             margin-bottom: -1px;
         }
-        :scope DIV.console-message > DIV.body-priority-info {
+        DIV.console-message > DIV.body-priority-info {
             border: 3px solid #c6eeff;
             margin: 0px;
             border-top: 0px;
         }
-        :scope DIV.console-message > DIV.body-priority-warn {
+        DIV.console-message > DIV.body-priority-warn {
             border: 3px solid #ffe68d;
             margin: 0px;
             border-top: 0px;
         }
-        :scope DIV.console-message > DIV.body-priority-error {
+        DIV.console-message > DIV.body-priority-error {
             border: 3px solid #ffa7a7;
             margin: 0px;
             border-top: 0px;
         }
-        :scope DIV.console-message > DIV.body > DIV.group-no-messages {
+        DIV.console-message > DIV.body > DIV.group-no-messages {
             background-color: white;
             padding-left: 4px;
             padding-right: 4px;
@@ -580,7 +585,7 @@
             padding-bottom: 3px;
             color: gray;
         }
-        :scope DIV.console-message .hidden {
+        DIV.console-message .hidden {
             display: none !important;
         }
 

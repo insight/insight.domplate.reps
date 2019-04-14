@@ -30,9 +30,9 @@
             tag:
                 T.SPAN({"class": "array"}, T.SPAN("$VAR_label("),
                     T.FOR("element", "$context,$node,$CONST_Normal|elementIterator",
-                        T.DIV({"class": "element", "$expandable":"$element.expandable", "_elementObject": "$element", "onclick": "$onClick"},
+                        T.DIV({"class": "element", "$expandable":"$element.expandable", "_contextObject": "$context", "_elementObject": "$element", "onclick": "$onClick"},
                             T.SPAN({"class": "value"},
-                                T.TAG("$element.tag", {"element": "$element", "node": "$element.node"})
+                                T.TAG("$element.tag", {"element": "$element", "node": "$element.node", "context": "$context"})
                             ),
                             T.IF("$element.more", T.SPAN({"class": "separator"}, ","))
                         )
@@ -49,7 +49,7 @@
                     T.FOR("element", "$context,$node,$CONST_Short|elementIterator",
                         T.SPAN({"class": "element"},
                             T.SPAN({"class": "value"},
-                                T.TAG("$element.tag", {"element": "$element", "node": "$element.node"})
+                                T.TAG("$element.tag", {"element": "$element", "node": "$element.node", "context": "$context"})
                             ),
                             T.IF("$element.more", T.SPAN({"class": "separator"}, ","))
                         )
@@ -57,31 +57,31 @@
                 T.SPAN(")")),
     
             expandableStub:
-                T.TAG("$context,$element,$CONST_Collapsed|getTag", {"node": "$element.node"}),
+                T.TAG("$context,$element,$CONST_Collapsed|getTag", {"node": "$element.node", "context": "$context"}),
                 
             expandedStub:
-                T.TAG("$tag", {"node": "$node", "element": "$element"}),
+                T.TAG("$tag", {"node": "$node", "context": "$context", "element": "$element"}),
     
             moreTag:
                 T.SPAN(" ... "),
     
-            getElementCount: function(node) {
+            getElementCount: function (node) {
                 if(!node.value) return 0;
                 return node.value.length || 0;
             },
     
             getTag: function(context, element, type) {
-                if(type===this.CONST_Short) {
+                if (type===this.CONST_Short) {
                     return context.repForNode(element.node).shortTag;
                 } else
-                if(type===this.CONST_Normal) {
+                if (type===this.CONST_Normal) {
                     if(element.expandable) {
                         return this.expandableStub;
                     } else {
                         return context.repForNode(element.node).tag;
                     }
                 } else
-                if(type===this.CONST_Collapsed) {
+                if (type===this.CONST_Collapsed) {
                     var rep = context.repForNode(element.node);
                     if (typeof rep.collapsedTag === "undefined") {
                         throw "no 'collapsedTag' property in rep: " + rep.toString();
@@ -90,7 +90,7 @@
                 }
             },
     
-            elementIterator: function(context, node, type) {
+            elementIterator: function (context, node, type) {
                 var elements = [];
                 if(!node.value) return elements;
                 for( var i=0 ; i<node.value.length ; i++ ) {
@@ -117,40 +117,41 @@
                 return elements;
             },
     
-            isExpandable: function(node) {
+            isExpandable: function (node) {
                 return (node.type=="reference" ||
                         node.type=="dictionary" ||
                         node.type=="map" ||
                         node.type=="array");
             },
             
-            onClick: function(event) {
+            onClick: function (event) {
                 if (!domplate.util.isLeftClick(event)) {
                     return;
                 }
                 var row = domplate.util.getAncestorByClass(event.target, "element");
-                if(domplate.util.hasClass(row, "expandable")) {
+                if (domplate.util.hasClass(row, "expandable")) {
                     this.toggleRow(row);
                 }
                 event.stopPropagation();
             },
             
-            toggleRow: function(row)
-            {
+            toggleRow: function (row) {
                 var valueElement = domplate.util.getElementByClass(row, "value");
-                if (domplate.util.hasClass(row, "expanded"))
-                {
+                if (domplate.util.hasClass(row, "expanded")) {
                     domplate.util.removeClass(row, "expanded");
                     this.expandedStub.replace({
                         "tag": this.expandableStub,
                         "element": row.elementObject,
+                        "context": row.contextObject,
                         "node": row.elementObject.node
                     }, valueElement);
                 } else {
                     domplate.util.setClass(row, "expanded");
+                    var rep = row.contextObject.repForNode(row.elementObject.node);
                     this.expandedStub.replace({
-                        "tag": helpers.getTemplateForNode(row.elementObject.node).tag,
+                        "tag": rep.tag,
                         "element": row.elementObject,
+                        "context": row.contextObject,
                         "node": row.elementObject.node
                     }, valueElement);
                 }
@@ -159,48 +160,48 @@
     },
     css: (css () >>>
 
-        :scope SPAN.array > SPAN {
+        SPAN.array > SPAN {
             color: #9C9C9C;
             font-weight: bold;
         }
         
-        :scope SPAN.array > SPAN.collapsed {
+        SPAN.array > SPAN.collapsed {
             color: #0000FF;
             font-weight: normal;
             padding-left: 5px;
             padding-right: 5px;
         }
         
-        :scope SPAN.array > SPAN.summary {
+        SPAN.array > SPAN.summary {
             color: #0000FF;
             font-weight: normal;
             padding-left: 5px;
             padding-right: 5px;
         }
         
-        :scope SPAN.array > DIV.element {
+        SPAN.array > DIV.element {
             display: block;
             padding-left: 20px;
         }
         
-        :scope SPAN.array > SPAN.element {
+        SPAN.array > SPAN.element {
             padding-left: 2px;
         }
         
-        :scope SPAN.array > DIV.element.expandable {
+        SPAN.array > DIV.element.expandable {
             background-image: url(images/twisty-closed.png);
             background-repeat: no-repeat;
             background-position: 6px 2px;
             cursor: pointer;
         }
-        :scope SPAN.array > DIV.element.expandable.expanded {
+        SPAN.array > DIV.element.expandable.expanded {
             background-image: url(images/twisty-open.png);
         }
         
-        :scope SPAN.array > .element > SPAN.value {
+        SPAN.array > .element > SPAN.value {
         }
         
-        :scope SPAN.array > .element > SPAN.separator {
+        SPAN.array > .element > SPAN.separator {
             color: #9C9C9C;
         }
 

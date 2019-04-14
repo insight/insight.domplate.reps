@@ -27,7 +27,7 @@
     },
     css: (css () >>>
 
-        :scope SPAN.null {
+        SPAN.null {
             color: navy;
         }
 

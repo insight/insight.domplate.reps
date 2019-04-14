@@ -23,7 +23,7 @@ function impl(domplate) {
       "class": "member",
       "$expandable": "$member.expandable",
       "_memberObject": "$member",
-      "_context": "$context",
+      "_contextObject": "$context",
       "onclick": "$onClick"
     }, T.SPAN({
       "class": "name",
@@ -34,8 +34,8 @@ function impl(domplate) {
       "class": "value"
     }, T.TAG("$member.tag", {
       "context": "$context",
-      "member": "$member",
-      "node": "$member.node"
+      "node": "$member.node",
+      "member": "$member"
     })), T.IF("$member.more", T.SPAN({
       "class": "separator"
     }, ",")))), T.SPAN(")")),
@@ -51,8 +51,8 @@ function impl(domplate) {
       "class": "value"
     }, T.TAG("$member.tag", {
       "context": "$context",
-      "member": "$member",
-      "node": "$member.node"
+      "node": "$member.node",
+      "member": "$member"
     })), T.IF("$member.more", T.SPAN({
       "class": "separator"
     }, ",")))), T.SPAN(")")),
@@ -63,7 +63,8 @@ function impl(domplate) {
     }, "... $node|getMemberCount ..."), T.SPAN(")")),
     expandableStub: T.TAG("$context,$member,$CONST_Collapsed|getTag", {
       "context": "$context",
-      "node": "$member.node"
+      "node": "$member.node",
+      "member": "$member"
     }),
     expandedStub: T.TAG("$tag", {
       "context": "$context",
@@ -166,15 +167,15 @@ function impl(domplate) {
           "tag": this.expandableStub,
           "member": row.memberObject,
           "node": row.memberObject.node,
-          "context": row.context
+          "context": row.contextObject
         }, valueElement);
       } else {
         domplate.util.setClass(row, "expanded");
         this.expandedStub.replace({
-          "tag": row.context.repForNode(row.memberObject.node).tag,
+          "tag": row.contextObject.repForNode(row.memberObject.node).tag,
           "member": row.memberObject,
           "node": row.memberObject.node,
-          "context": row.context
+          "context": row.contextObject
         }, valueElement);
       }
     }
@@ -182,12 +183,11 @@ function impl(domplate) {
 }
 
 function css() {
-  return atob("CltfZGJpZD0iNDc1YTI0Y2YxYjUyMTczODgxZWNhODc4YmJjOWNjNmZkNmVhMmYzOCJdIFNQQU4uZGljdGlvbmFyeSA+IFNQQU4gewogICAgY29sb3I6ICM5QzlDOUM7Cn0KCltfZGJpZD0iNDc1YTI0Y2YxYjUyMTczODgxZWNhODc4YmJjOWNjNmZkNmVhMmYzOCJdIFNQQU4uZGljdGlvbmFyeSA+IFNQQU4uY29sbGFwc2VkIHsKICAgIGNvbG9yOiAjMDAwMEZGOwogICAgZm9udC13ZWlnaHQ6IG5vcm1hbDsKICAgIHBhZGRpbmctbGVmdDogNXB4OwogICAgcGFkZGluZy1yaWdodDogNXB4Owp9CgpbX2RiaWQ9IjQ3NWEyNGNmMWI1MjE3Mzg4MWVjYTg3OGJiYzljYzZmZDZlYTJmMzgiXSBTUEFOLmRpY3Rpb25hcnkgPiBTUEFOLnN1bW1hcnkgewogICAgY29sb3I6ICMwMDAwRkY7CiAgICBmb250LXdlaWdodDogbm9ybWFsOwogICAgcGFkZGluZy1sZWZ0OiA1cHg7CiAgICBwYWRkaW5nLXJpZ2h0OiA1cHg7Cn0KCltfZGJpZD0iNDc1YTI0Y2YxYjUyMTczODgxZWNhODc4YmJjOWNjNmZkNmVhMmYzOCJdIFNQQU4uZGljdGlvbmFyeSA+IFNQQU4ubWVtYmVyIHsKICAgIGNvbG9yOiAjOUM5QzlDOwp9CgpbX2RiaWQ9IjQ3NWEyNGNmMWI1MjE3Mzg4MWVjYTg3OGJiYzljYzZmZDZlYTJmMzgiXSBTUEFOLmRpY3Rpb25hcnkgPiBESVYubWVtYmVyIHsKICAgIGRpc3BsYXk6IGJsb2NrOwogICAgcGFkZGluZy1sZWZ0OiAyMHB4Owp9CltfZGJpZD0iNDc1YTI0Y2YxYjUyMTczODgxZWNhODc4YmJjOWNjNmZkNmVhMmYzOCJdIFNQQU4uZGljdGlvbmFyeSA+IERJVi5tZW1iZXIuZXhwYW5kYWJsZSB7CiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoaW1hZ2VzL3R3aXN0eS1jbG9zZWQucG5nKTsKICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7CiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiA2cHggMnB4OwogICAgY3Vyc29yOiBwb2ludGVyOwp9CltfZGJpZD0iNDc1YTI0Y2YxYjUyMTczODgxZWNhODc4YmJjOWNjNmZkNmVhMmYzOCJdIFNQQU4uZGljdGlvbmFyeSA+IERJVi5tZW1iZXIuZXhwYW5kYWJsZS5leHBhbmRlZCB7CiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoaW1hZ2VzL3R3aXN0eS1vcGVuLnBuZyk7Cn0KCltfZGJpZD0iNDc1YTI0Y2YxYjUyMTczODgxZWNhODc4YmJjOWNjNmZkNmVhMmYzOCJdIFNQQU4uZGljdGlvbmFyeSA+IC5tZW1iZXIgPiBTUEFOLm5hbWUgewogICAgY29sb3I6ICNFNTlEMDc7CiAgICBmb250LXdlaWdodDogbm9ybWFsOwp9CgpbX2RiaWQ9IjQ3NWEyNGNmMWI1MjE3Mzg4MWVjYTg3OGJiYzljYzZmZDZlYTJmMzgiXSBTUEFOLmRpY3Rpb25hcnkgPiAubWVtYmVyID4gU1BBTi52YWx1ZSB7CiAgICBmb250LXdlaWdodDogbm9ybWFsOwp9CgpbX2RiaWQ9IjQ3NWEyNGNmMWI1MjE3Mzg4MWVjYTg3OGJiYzljYzZmZDZlYTJmMzgiXSBTUEFOLmRpY3Rpb25hcnkgPiAubWVtYmVyID4gU1BBTi5kZWxpbWl0ZXIsCltfZGJpZD0iNDc1YTI0Y2YxYjUyMTczODgxZWNhODc4YmJjOWNjNmZkNmVhMmYzOCJdIFNQQU4uZGljdGlvbmFyeSA+IC5tZW1iZXIgPiBTUEFOLnNlcGFyYXRvciwKW19kYmlkPSI0NzVhMjRjZjFiNTIxNzM4ODFlY2E4NzhiYmM5Y2M2ZmQ2ZWEyZjM4Il0gU1BBTi5kaWN0aW9uYXJ5ID4gLm1lbWJlciBTUEFOLm1vcmUgewogICAgY29sb3I6ICM5QzlDOUM7CiAgICBwYWRkaW5nLWxlZnQ6IDJweDsKICAgIHBhZGRpbmctcmlnaHQ6IDJweDsKfSAgICAgICAgCg==");
+  return atob("ClNQQU4uZGljdGlvbmFyeVtfX2RiaWQ9IjJjNzY0YTE5Yzg4OWU4N2MyMjliZGJiMGI4ZjUxYTY1MmYzMzUwZmIiXSA+IFNQQU4gewogICAgY29sb3I6ICM5QzlDOUM7Cn0KClNQQU4uZGljdGlvbmFyeVtfX2RiaWQ9IjJjNzY0YTE5Yzg4OWU4N2MyMjliZGJiMGI4ZjUxYTY1MmYzMzUwZmIiXSA+IFNQQU4uY29sbGFwc2VkIHsKICAgIGNvbG9yOiAjMDAwMEZGOwogICAgZm9udC13ZWlnaHQ6IG5vcm1hbDsKICAgIHBhZGRpbmctbGVmdDogNXB4OwogICAgcGFkZGluZy1yaWdodDogNXB4Owp9CgpTUEFOLmRpY3Rpb25hcnlbX19kYmlkPSIyYzc2NGExOWM4ODllODdjMjI5YmRiYjBiOGY1MWE2NTJmMzM1MGZiIl0gPiBTUEFOLnN1bW1hcnkgewogICAgY29sb3I6ICMwMDAwRkY7CiAgICBmb250LXdlaWdodDogbm9ybWFsOwogICAgcGFkZGluZy1sZWZ0OiA1cHg7CiAgICBwYWRkaW5nLXJpZ2h0OiA1cHg7Cn0KClNQQU4uZGljdGlvbmFyeVtfX2RiaWQ9IjJjNzY0YTE5Yzg4OWU4N2MyMjliZGJiMGI4ZjUxYTY1MmYzMzUwZmIiXSA+IFNQQU4ubWVtYmVyIHsKICAgIGNvbG9yOiAjOUM5QzlDOwp9CgpTUEFOLmRpY3Rpb25hcnlbX19kYmlkPSIyYzc2NGExOWM4ODllODdjMjI5YmRiYjBiOGY1MWE2NTJmMzM1MGZiIl0gPiBESVYubWVtYmVyIHsKICAgIGRpc3BsYXk6IGJsb2NrOwogICAgcGFkZGluZy1sZWZ0OiAyMHB4Owp9ClNQQU4uZGljdGlvbmFyeVtfX2RiaWQ9IjJjNzY0YTE5Yzg4OWU4N2MyMjliZGJiMGI4ZjUxYTY1MmYzMzUwZmIiXSA+IERJVi5tZW1iZXIuZXhwYW5kYWJsZSB7CiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoaW1hZ2VzL3R3aXN0eS1jbG9zZWQucG5nKTsKICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7CiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiA2cHggMnB4OwogICAgY3Vyc29yOiBwb2ludGVyOwp9ClNQQU4uZGljdGlvbmFyeVtfX2RiaWQ9IjJjNzY0YTE5Yzg4OWU4N2MyMjliZGJiMGI4ZjUxYTY1MmYzMzUwZmIiXSA+IERJVi5tZW1iZXIuZXhwYW5kYWJsZS5leHBhbmRlZCB7CiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoaW1hZ2VzL3R3aXN0eS1vcGVuLnBuZyk7Cn0KClNQQU4uZGljdGlvbmFyeVtfX2RiaWQ9IjJjNzY0YTE5Yzg4OWU4N2MyMjliZGJiMGI4ZjUxYTY1MmYzMzUwZmIiXSA+IC5tZW1iZXIgPiBTUEFOLm5hbWUgewogICAgY29sb3I6ICNFNTlEMDc7CiAgICBmb250LXdlaWdodDogbm9ybWFsOwp9CgpTUEFOLmRpY3Rpb25hcnlbX19kYmlkPSIyYzc2NGExOWM4ODllODdjMjI5YmRiYjBiOGY1MWE2NTJmMzM1MGZiIl0gPiAubWVtYmVyID4gU1BBTi52YWx1ZSB7CiAgICBmb250LXdlaWdodDogbm9ybWFsOwp9CgpTUEFOLmRpY3Rpb25hcnlbX19kYmlkPSIyYzc2NGExOWM4ODllODdjMjI5YmRiYjBiOGY1MWE2NTJmMzM1MGZiIl0gPiAubWVtYmVyID4gU1BBTi5kZWxpbWl0ZXIsIFNQQU4uZGljdGlvbmFyeSA+IC5tZW1iZXIgPiBTUEFOLnNlcGFyYXRvciwgU1BBTi5kaWN0aW9uYXJ5ID4gLm1lbWJlciBTUEFOLm1vcmUgewogICAgY29sb3I6ICM5QzlDOUM7CiAgICBwYWRkaW5nLWxlZnQ6IDJweDsKICAgIHBhZGRpbmctcmlnaHQ6IDJweDsKfSAgICAgICAgCg==");
 }
 
-exports.main = function (options) {
+exports.main = function (domplate, options) {
   options = options || {};
-  var domplate = window.domplate;
   var rep = impl(domplate);
   rep.__dom = {
 "tag":function (context) {
@@ -197,7 +197,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3,d4,d5) {       DomplateDebug.logVar(\'  .. i0 (counterName)\',i0);       DomplateDebug.logVar(\'  .. l0 (loopName)\',l0);        node = __path__(root, o,0+1+l0+0);node.addEventListener("click", __bind__(this, d0), false);node.memberObject = d1;node.context = d2;        node = __path__(root, o,0+1+l0+0,0+1+1,0);        e0 = __link__(node, d3, d4);      if_0 = __if__.apply(this, [d5, function(if_0) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_0 (ifName)\',if_0);      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})');  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3,d4,d5) {       DomplateDebug.logVar('  .. i0 (counterName)',i0);       DomplateDebug.logVar('  .. l0 (loopName)',l0);        node = __path__(root, o,0+1+l0+0);node.addEventListener("click", __bind__(this, d0), false);node.memberObject = d1;node.context = d2;        node = __path__(root, o,0+1+l0+0,0+1+1,0);        e0 = __link__(node, d3, d4);      if_0 = __if__.apply(this, [d5, function(if_0) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_0 (ifName)',if_0);      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0) {  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3,d4,d5) {        node = __path__(root, o,0+1+l0+0);node.addEventListener("click", __bind__(this, d0), false);node.memberObject = d1;node.contextObject = d2;        node = __path__(root, o,0+1+l0+0,0+1+1,0);        e0 = __link__(node, d3, d4);      if_0 = __if__.apply(this, [d5, function(if_0) {      }]);        return 0+1;      }]);  }  return 1;})
 }
 ,
 "shortTag":function (context) {
@@ -207,7 +207,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2) {       DomplateDebug.logVar(\'  .. i0 (counterName)\',i0);       DomplateDebug.logVar(\'  .. l0 (loopName)\',l0);        node = __path__(root, o,0+1+l0+0,0+1+1,0);        e0 = __link__(node, d0, d1);      if_0 = __if__.apply(this, [d2, function(if_0) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_0 (ifName)\',if_0);      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})');  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2) {       DomplateDebug.logVar('  .. i0 (counterName)',i0);       DomplateDebug.logVar('  .. l0 (loopName)',l0);        node = __path__(root, o,0+1+l0+0,0+1+1,0);        e0 = __link__(node, d0, d1);      if_0 = __if__.apply(this, [d2, function(if_0) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_0 (ifName)',if_0);      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0) {  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2) {        node = __path__(root, o,0+1+l0+0,0+1+1,0);        e0 = __link__(node, d0, d1);      if_0 = __if__.apply(this, [d2, function(if_0) {      }]);        return 0+1;      }]);  }  return 1;})
 }
 ,
 "collapsedTag":function (context) {
@@ -217,7 +217,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  }  DomplateDebug.endGroup();  return 1;})');  with (this) {  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o) {  with (this) {  }  return 1;})
 }
 ,
 "expandableStub":function (context) {
@@ -227,7 +227,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','undefined'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'undefined\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return e0;})');  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return e0;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  return e0;})
 }
 ,
 "expandedStub":function (context) {
@@ -237,7 +237,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','undefined'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'undefined\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return e0;})');  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return e0;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  return e0;})
 }
 ,
 "moreTag":function (context) {
@@ -247,7 +247,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  }  DomplateDebug.endGroup();  return 1;})');  with (this) {  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o) {  with (this) {  }  return 1;})
 }
 };
   rep.__markup = {
@@ -257,7 +257,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","dictionary", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Normal), __out__, function(member, __out__) {    __code__.push("","<div", " class=\"","member", " ", (member.expandable ? "expandable" + " " : ""), "\"",">","<span", " decorator=\"",__escape__(getMemberNameDecorator(member)), "\"", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,member,context);__link__(member.tag, __code__, __out__, {"context":context,"member":member,"node":member.node});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","dictionary", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Normal), __out__, function(member, __out__) {    __code__.push("","<div", " class=\"","member", " ", (member.expandable ? "expandable" + " " : ""), "\"",">","<span", " decorator=\"",__escape__(getMemberNameDecorator(member)), "\"", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,member,context);__link__(member.tag, __code__, __out__, {"context":context,"member":member,"node":member.node});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","2c764a19c889e87c229bdbb0b8f51a652f3350fb", "\"", " __dtid=\"","insight.domplate.reps/default/dictionary", "\"", " class=\"","dictionary", " ", "\"",">","<span",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Normal), __out__, function(member, __out__) {    __code__.push("","<div", " class=\"","member", " ", (member.expandable ? "expandable" + " " : ""), "\"",">","<span", " decorator=\"",__escape__(getMemberNameDecorator(member)), "\"", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,member,context);__link__(member.tag, __code__, __out__, {"context":context,"node":member.node,"member":member});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -266,7 +266,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","dictionary", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Short), __out__, function(member, __out__) {    __code__.push("","<span", " class=\"","member", " ", "\"",">","<span", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__link__(member.tag, __code__, __out__, {"context":context,"member":member,"node":member.node});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","dictionary", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Short), __out__, function(member, __out__) {    __code__.push("","<span", " class=\"","member", " ", "\"",">","<span", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__link__(member.tag, __code__, __out__, {"context":context,"member":member,"node":member.node});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","2c764a19c889e87c229bdbb0b8f51a652f3350fb", "\"", " __dtid=\"","insight.domplate.reps/default/dictionary", "\"", " class=\"","dictionary", " ", "\"",">","<span",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Short), __out__, function(member, __out__) {    __code__.push("","<span", " class=\"","member", " ", "\"",">","<span", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__link__(member.tag, __code__, __out__, {"context":context,"node":member.node,"member":member});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "collapsedTag":function (context) {
@@ -275,7 +275,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","dictionary", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(getLabel(node)),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getMemberCount(node))," ...","</span>","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","dictionary", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(getLabel(node)),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getMemberCount(node))," ...","</span>","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","2c764a19c889e87c229bdbb0b8f51a652f3350fb", "\"", " __dtid=\"","insight.domplate.reps/default/dictionary", "\"", " class=\"","dictionary", " ", "\"",">","<span",">",__escape__(getLabel(node)),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getMemberCount(node))," ...","</span>","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "expandableStub":function (context) {
@@ -284,7 +284,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','undefined'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'undefined\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {__link__(getTag(context,member,CONST_Collapsed), __code__, __out__, {"context":context,"node":member.node});  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {__link__(getTag(context,member,CONST_Collapsed), __code__, __out__, {"context":context,"node":member.node});  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {__link__(getTag(context,member,CONST_Collapsed), __code__, __out__, {"context":context,"node":member.node,"member":member});  }}})
 }
 ,
 "expandedStub":function (context) {
@@ -293,7 +293,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','undefined'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'undefined\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {__link__(tag, __code__, __out__, {"context":context,"node":node,"member":member});  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {__link__(tag, __code__, __out__, {"context":context,"node":node,"member":member});  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {__link__(tag, __code__, __out__, {"context":context,"node":node,"member":member});  }}})
 }
 ,
 "moreTag":function (context) {
@@ -302,11 +302,28 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","more", " ", "\"",">"," ... ","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","more", " ", "\"",">"," ... ","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","2c764a19c889e87c229bdbb0b8f51a652f3350fb", "\"", " __dtid=\"","insight.domplate.reps/default/dictionary", "\"", " class=\"","more", " ", "\"",">"," ... ","</span>");  }}})
 }
 };
+  rep.__dbid = "2c764a19c889e87c229bdbb0b8f51a652f3350fb";
+  rep.__dtid = "insight.domplate.reps/default/dictionary";
   var res = domplate.domplate(rep);
-  var renderedCss = false;
+  var injectedCss = false;
+
+  rep.__ensureCssInjected = function () {
+    if (injectedCss) return;
+    injectedCss = true;
+    var node = document.createElement("style");
+    var cssCode = css();
+
+    if (options.cssBaseUrl) {
+      cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
+    }
+
+    node.innerHTML = cssCode;
+    document.body.appendChild(node);
+  };
+
   Object.keys(rep).forEach(function (tagName) {
     if (!rep[tagName].tag) return;
     var replace_orig = res[tagName].replace;
@@ -314,18 +331,9 @@ return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.start
     res[tagName].replace = function () {
       var res = replace_orig.apply(this, arguments);
       if (!res) return;
-      if (renderedCss) return;
-      renderedCss = true;
-      res.parentNode.setAttribute("_dbid", "475a24cf1b52173881eca878bbc9cc6fd6ea2f38");
-      var node = document.createElement("style");
-      var cssCode = css();
-
-      if (options.cssBaseUrl) {
-        cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
-      }
-
-      node.innerHTML = cssCode;
-      document.body.appendChild(node);
+      setTimeout(function () {
+        rep.__ensureCssInjected();
+      }, 0);
       return res;
     };
   });

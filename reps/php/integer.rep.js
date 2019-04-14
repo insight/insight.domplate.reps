@@ -40,7 +40,7 @@
     },
     css: (css () >>>
 
-        :scope SPAN.integer {
+        SPAN.integer {
             color: green;
         }
 

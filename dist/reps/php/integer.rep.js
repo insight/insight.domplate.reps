@@ -40,12 +40,11 @@ function impl(domplate) {
 }
 
 function css() {
-  return atob("CltfZGJpZD0iNjk0M2M3ZjRmMjU5ZjYyYjBkZWRjNjFhZjNjODhlOTgyYjg0MzQzZCJdIFNQQU4uaW50ZWdlciB7CiAgICBjb2xvcjogZ3JlZW47Cn0K");
+  return atob("ClNQQU4uaW50ZWdlcltfX2RiaWQ9Ijk0MDZlYmJlZmMyYzQwYzI5MGFiYzRkNTA4ZjUwMDczMDgwZjQ2ZmEiXSB7CiAgICBjb2xvcjogZ3JlZW47Cn0K");
 }
 
-exports.main = function (options) {
+exports.main = function (domplate, options) {
   options = options || {};
-  var domplate = window.domplate;
   var rep = impl(domplate);
   rep.__dom = {
 "tag":function (context) {
@@ -55,7 +54,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  }  DomplateDebug.endGroup();  return 1;})');  with (this) {  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o) {  with (this) {  }  return 1;})
 }
 ,
 "shortTag":function (context) {
@@ -65,7 +64,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  }  DomplateDebug.endGroup();  return 1;})');  with (this) {  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o) {  with (this) {  }  return 1;})
 }
 };
   rep.__markup = {
@@ -75,7 +74,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","integer", " ", "\"",">",__escape__(getValue(node)),"</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","integer", " ", "\"",">",__escape__(getValue(node)),"</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","9406ebbefc2c40c290abc4d508f50073080f46fa", "\"", " __dtid=\"","insight.domplate.reps/php/integer", "\"", " class=\"","integer", " ", "\"",">",__escape__(getValue(node)),"</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -84,11 +83,28 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","integer", " ", "\"",">",__escape__(getValue(node)),"</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","integer", " ", "\"",">",__escape__(getValue(node)),"</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","9406ebbefc2c40c290abc4d508f50073080f46fa", "\"", " __dtid=\"","insight.domplate.reps/php/integer", "\"", " class=\"","integer", " ", "\"",">",__escape__(getValue(node)),"</span>");  }}})
 }
 };
+  rep.__dbid = "9406ebbefc2c40c290abc4d508f50073080f46fa";
+  rep.__dtid = "insight.domplate.reps/php/integer";
   var res = domplate.domplate(rep);
-  var renderedCss = false;
+  var injectedCss = false;
+
+  rep.__ensureCssInjected = function () {
+    if (injectedCss) return;
+    injectedCss = true;
+    var node = document.createElement("style");
+    var cssCode = css();
+
+    if (options.cssBaseUrl) {
+      cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
+    }
+
+    node.innerHTML = cssCode;
+    document.body.appendChild(node);
+  };
+
   Object.keys(rep).forEach(function (tagName) {
     if (!rep[tagName].tag) return;
     var replace_orig = res[tagName].replace;
@@ -96,18 +112,9 @@ return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.start
     res[tagName].replace = function () {
       var res = replace_orig.apply(this, arguments);
       if (!res) return;
-      if (renderedCss) return;
-      renderedCss = true;
-      res.parentNode.setAttribute("_dbid", "6943c7f4f259f62b0dedc61af3c88e982b84343d");
-      var node = document.createElement("style");
-      var cssCode = css();
-
-      if (options.cssBaseUrl) {
-        cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
-      }
-
-      node.innerHTML = cssCode;
-      document.body.appendChild(node);
+      setTimeout(function () {
+        rep.__ensureCssInjected();
+      }, 0);
       return res;
     };
   });

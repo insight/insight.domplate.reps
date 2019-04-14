@@ -35,6 +35,9 @@ function impl(domplate) {
       "context": "$context",
       "node": "$context,$node|getInstanceNode"
     })),
+    getTagDbid: function getTagDbid(context, node, type) {
+      return context.repForNode(this.getInstanceNode(context, node)).__dbid;
+    },
     getTag: function getTag(context, node, type) {
       return context.repForNode(this.getInstanceNode(context, node))[type];
     },
@@ -43,6 +46,8 @@ function impl(domplate) {
         return node.value.instance;
       } else if (typeof node.value.getInstanceNode === "function") {
         return node.value.getInstanceNode(node);
+      } else if (typeof node.getInstance === "function") {
+        return node.getInstance();
       }
 
       return context.getInstanceNode(node);
@@ -54,9 +59,8 @@ function css() {
   return atob("");
 }
 
-exports.main = function (options) {
+exports.main = function (domplate, options) {
   options = options || {};
-  var domplate = window.domplate;
   var rep = impl(domplate);
   rep.__dom = {
 "tag":function (context) {
@@ -66,7 +70,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  return 1;})
 }
 ,
 "shortTag":function (context) {
@@ -76,7 +80,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  return 1;})
 }
 ,
 "collapsedTag":function (context) {
@@ -86,7 +90,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  return 1;})
 }
 };
   rep.__markup = {
@@ -96,7 +100,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Normal), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Normal), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","1045e0712af9dd5a66f745020d64d1c1a8e466c7", "\"", " __dtid=\"","insight.domplate.reps/default/reference", "\"", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Normal), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -105,7 +109,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","1045e0712af9dd5a66f745020d64d1c1a8e466c7", "\"", " __dtid=\"","insight.domplate.reps/default/reference", "\"", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }}})
 }
 ,
 "collapsedTag":function (context) {
@@ -114,11 +118,28 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","1045e0712af9dd5a66f745020d64d1c1a8e466c7", "\"", " __dtid=\"","insight.domplate.reps/default/reference", "\"", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }}})
 }
 };
+  rep.__dbid = "1045e0712af9dd5a66f745020d64d1c1a8e466c7";
+  rep.__dtid = "insight.domplate.reps/default/reference";
   var res = domplate.domplate(rep);
-  var renderedCss = false;
+  var injectedCss = false;
+
+  rep.__ensureCssInjected = function () {
+    if (injectedCss) return;
+    injectedCss = true;
+    var node = document.createElement("style");
+    var cssCode = css();
+
+    if (options.cssBaseUrl) {
+      cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
+    }
+
+    node.innerHTML = cssCode;
+    document.body.appendChild(node);
+  };
+
   Object.keys(rep).forEach(function (tagName) {
     if (!rep[tagName].tag) return;
     var replace_orig = res[tagName].replace;
@@ -126,18 +147,9 @@ return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.start
     res[tagName].replace = function () {
       var res = replace_orig.apply(this, arguments);
       if (!res) return;
-      if (renderedCss) return;
-      renderedCss = true;
-      res.parentNode.setAttribute("_dbid", "34aa39bd26ff3f8d18ffd1365fabda276b5abb63");
-      var node = document.createElement("style");
-      var cssCode = css();
-
-      if (options.cssBaseUrl) {
-        cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
-      }
-
-      node.innerHTML = cssCode;
-      document.body.appendChild(node);
+      setTimeout(function () {
+        rep.__ensureCssInjected();
+      }, 0);
       return res;
     };
   });

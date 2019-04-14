@@ -27,7 +27,7 @@
     },
     css: (css () >>>
 
-        :scope SPAN.boolean {
+        SPAN.boolean {
             color: navy;
         }
 

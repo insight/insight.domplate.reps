@@ -10,11 +10,36 @@ module.config = {
 
 require("../helpers").describeRepSuite([
     "wrappers/viewer",
+    "default/dictionary",
     "default/string"
 ], {
     meta: {
         "wrapper": "wrappers/viewer"
     },
-    type: "string",
-    value: "Hello World!"
-}, "Hello World!");
+    type: "dictionary",
+    value: {
+        key1: {
+            type: "string",
+            value: "Hello"
+        },
+        key2: {
+            type: "string",
+            value: "World!"
+        },
+        key3: {
+            type: "dictionary",
+            value: {
+                sub1: {
+                    type: "string",
+                    value: "Sub Value!"
+                }
+            }
+        }
+    }
+}, [
+    "dictionary(",
+        "key1:Hello,",
+        "key2:World!,",
+        "key3:dictionary(... 1 ...)",
+    ")"
+].join("\n"));

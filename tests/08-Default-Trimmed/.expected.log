@@ -17,8 +17,6 @@ environments: default
 Server: http://localhost:8080/
 [READY]
 [bash.origin.express] Routing request / with method GET due to route /
-[bash.origin.express] Routing request /domplate.browser.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /domplate.browser.js
 [bash.origin.express] Routing request / with method GET due to route /dist/insight-domplate-renderer.browser.js
 [bash.origin.express] Routing request /default/string.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request / with method GET due to route /default/string.rep.js

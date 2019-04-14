@@ -10,7 +10,8 @@ module.config = {
 
 require("../helpers").describeRepSuite([
     "default/map",
-    "default/string"
+    "default/string",
+    "default/constant"
 ], {
     type: "map",
     value: [
@@ -26,8 +27,8 @@ require("../helpers").describeRepSuite([
         ],
         [
             {
-                type: "string",
-                value: "key2"
+                type: "constant",
+                value: "1"
             },
             {
                 type: "string",
@@ -38,6 +39,6 @@ require("../helpers").describeRepSuite([
 }, [
     "map(",
     "key1=>Hello,",
-    "key2=>World!",
+    "1=>World!",
     ")"
 ].join("\n"));

@@ -23,13 +23,15 @@ function impl(domplate) {
     }, T.SPAN("$VAR_label("), T.FOR("element", "$context,$node,$CONST_Normal|elementIterator", T.DIV({
       "class": "element",
       "$expandable": "$element.expandable",
+      "_contextObject": "$context",
       "_elementObject": "$element",
       "onclick": "$onClick"
     }, T.SPAN({
       "class": "value"
     }, T.TAG("$element.tag", {
       "element": "$element",
-      "node": "$element.node"
+      "node": "$element.node",
+      "context": "$context"
     })), T.IF("$element.more", T.SPAN({
       "class": "separator"
     }, ",")))), T.SPAN(")")),
@@ -46,15 +48,18 @@ function impl(domplate) {
       "class": "value"
     }, T.TAG("$element.tag", {
       "element": "$element",
-      "node": "$element.node"
+      "node": "$element.node",
+      "context": "$context"
     })), T.IF("$element.more", T.SPAN({
       "class": "separator"
     }, ",")))), T.SPAN(")")),
     expandableStub: T.TAG("$context,$element,$CONST_Collapsed|getTag", {
-      "node": "$element.node"
+      "node": "$element.node",
+      "context": "$context"
     }),
     expandedStub: T.TAG("$tag", {
       "node": "$node",
+      "context": "$context",
       "element": "$element"
     }),
     moreTag: T.SPAN(" ... "),
@@ -134,13 +139,16 @@ function impl(domplate) {
         this.expandedStub.replace({
           "tag": this.expandableStub,
           "element": row.elementObject,
+          "context": row.contextObject,
           "node": row.elementObject.node
         }, valueElement);
       } else {
         domplate.util.setClass(row, "expanded");
+        var rep = row.contextObject.repForNode(row.elementObject.node);
         this.expandedStub.replace({
-          "tag": helpers.getTemplateForNode(row.elementObject.node).tag,
+          "tag": rep.tag,
           "element": row.elementObject,
+          "context": row.contextObject,
           "node": row.elementObject.node
         }, valueElement);
       }
@@ -149,12 +157,11 @@ function impl(domplate) {
 }
 
 function css() {
-  return atob("CltfZGJpZD0iZmE2NmVjOWIxMTcwNzYwYjYyMTQwMzY5MjljMTA2MjcyNzEyYTM2ZCJdIFNQQU4uYXJyYXkgPiBTUEFOIHsKICAgIGNvbG9yOiAjOUM5QzlDOwogICAgZm9udC13ZWlnaHQ6IGJvbGQ7Cn0KCltfZGJpZD0iZmE2NmVjOWIxMTcwNzYwYjYyMTQwMzY5MjljMTA2MjcyNzEyYTM2ZCJdIFNQQU4uYXJyYXkgPiBTUEFOLmNvbGxhcHNlZCB7CiAgICBjb2xvcjogIzAwMDBGRjsKICAgIGZvbnQtd2VpZ2h0OiBub3JtYWw7CiAgICBwYWRkaW5nLWxlZnQ6IDVweDsKICAgIHBhZGRpbmctcmlnaHQ6IDVweDsKfQoKW19kYmlkPSJmYTY2ZWM5YjExNzA3NjBiNjIxNDAzNjkyOWMxMDYyNzI3MTJhMzZkIl0gU1BBTi5hcnJheSA+IFNQQU4uc3VtbWFyeSB7CiAgICBjb2xvcjogIzAwMDBGRjsKICAgIGZvbnQtd2VpZ2h0OiBub3JtYWw7CiAgICBwYWRkaW5nLWxlZnQ6IDVweDsKICAgIHBhZGRpbmctcmlnaHQ6IDVweDsKfQoKW19kYmlkPSJmYTY2ZWM5YjExNzA3NjBiNjIxNDAzNjkyOWMxMDYyNzI3MTJhMzZkIl0gU1BBTi5hcnJheSA+IERJVi5lbGVtZW50IHsKICAgIGRpc3BsYXk6IGJsb2NrOwogICAgcGFkZGluZy1sZWZ0OiAyMHB4Owp9CgpbX2RiaWQ9ImZhNjZlYzliMTE3MDc2MGI2MjE0MDM2OTI5YzEwNjI3MjcxMmEzNmQiXSBTUEFOLmFycmF5ID4gU1BBTi5lbGVtZW50IHsKICAgIHBhZGRpbmctbGVmdDogMnB4Owp9CgpbX2RiaWQ9ImZhNjZlYzliMTE3MDc2MGI2MjE0MDM2OTI5YzEwNjI3MjcxMmEzNmQiXSBTUEFOLmFycmF5ID4gRElWLmVsZW1lbnQuZXhwYW5kYWJsZSB7CiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoaW1hZ2VzL3R3aXN0eS1jbG9zZWQucG5nKTsKICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7CiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiA2cHggMnB4OwogICAgY3Vyc29yOiBwb2ludGVyOwp9CltfZGJpZD0iZmE2NmVjOWIxMTcwNzYwYjYyMTQwMzY5MjljMTA2MjcyNzEyYTM2ZCJdIFNQQU4uYXJyYXkgPiBESVYuZWxlbWVudC5leHBhbmRhYmxlLmV4cGFuZGVkIHsKICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybChpbWFnZXMvdHdpc3R5LW9wZW4ucG5nKTsKfQoKW19kYmlkPSJmYTY2ZWM5YjExNzA3NjBiNjIxNDAzNjkyOWMxMDYyNzI3MTJhMzZkIl0gU1BBTi5hcnJheSA+IC5lbGVtZW50ID4gU1BBTi52YWx1ZSB7Cn0KCltfZGJpZD0iZmE2NmVjOWIxMTcwNzYwYjYyMTQwMzY5MjljMTA2MjcyNzEyYTM2ZCJdIFNQQU4uYXJyYXkgPiAuZWxlbWVudCA+IFNQQU4uc2VwYXJhdG9yIHsKICAgIGNvbG9yOiAjOUM5QzlDOwp9Cg==");
+  return atob("ClNQQU4uYXJyYXlbX19kYmlkPSJjOGUwNTFhMGQ4YmE2MjM1ZWQ4ODllMTg0YWFlNzMxYzdlODEzZjQ4Il0gPiBTUEFOIHsKICAgIGNvbG9yOiAjOUM5QzlDOwogICAgZm9udC13ZWlnaHQ6IGJvbGQ7Cn0KClNQQU4uYXJyYXlbX19kYmlkPSJjOGUwNTFhMGQ4YmE2MjM1ZWQ4ODllMTg0YWFlNzMxYzdlODEzZjQ4Il0gPiBTUEFOLmNvbGxhcHNlZCB7CiAgICBjb2xvcjogIzAwMDBGRjsKICAgIGZvbnQtd2VpZ2h0OiBub3JtYWw7CiAgICBwYWRkaW5nLWxlZnQ6IDVweDsKICAgIHBhZGRpbmctcmlnaHQ6IDVweDsKfQoKU1BBTi5hcnJheVtfX2RiaWQ9ImM4ZTA1MWEwZDhiYTYyMzVlZDg4OWUxODRhYWU3MzFjN2U4MTNmNDgiXSA+IFNQQU4uc3VtbWFyeSB7CiAgICBjb2xvcjogIzAwMDBGRjsKICAgIGZvbnQtd2VpZ2h0OiBub3JtYWw7CiAgICBwYWRkaW5nLWxlZnQ6IDVweDsKICAgIHBhZGRpbmctcmlnaHQ6IDVweDsKfQoKU1BBTi5hcnJheVtfX2RiaWQ9ImM4ZTA1MWEwZDhiYTYyMzVlZDg4OWUxODRhYWU3MzFjN2U4MTNmNDgiXSA+IERJVi5lbGVtZW50IHsKICAgIGRpc3BsYXk6IGJsb2NrOwogICAgcGFkZGluZy1sZWZ0OiAyMHB4Owp9CgpTUEFOLmFycmF5W19fZGJpZD0iYzhlMDUxYTBkOGJhNjIzNWVkODg5ZTE4NGFhZTczMWM3ZTgxM2Y0OCJdID4gU1BBTi5lbGVtZW50IHsKICAgIHBhZGRpbmctbGVmdDogMnB4Owp9CgpTUEFOLmFycmF5W19fZGJpZD0iYzhlMDUxYTBkOGJhNjIzNWVkODg5ZTE4NGFhZTczMWM3ZTgxM2Y0OCJdID4gRElWLmVsZW1lbnQuZXhwYW5kYWJsZSB7CiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoaW1hZ2VzL3R3aXN0eS1jbG9zZWQucG5nKTsKICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7CiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiA2cHggMnB4OwogICAgY3Vyc29yOiBwb2ludGVyOwp9ClNQQU4uYXJyYXlbX19kYmlkPSJjOGUwNTFhMGQ4YmE2MjM1ZWQ4ODllMTg0YWFlNzMxYzdlODEzZjQ4Il0gPiBESVYuZWxlbWVudC5leHBhbmRhYmxlLmV4cGFuZGVkIHsKICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybChpbWFnZXMvdHdpc3R5LW9wZW4ucG5nKTsKfQoKU1BBTi5hcnJheVtfX2RiaWQ9ImM4ZTA1MWEwZDhiYTYyMzVlZDg4OWUxODRhYWU3MzFjN2U4MTNmNDgiXSA+IC5lbGVtZW50ID4gU1BBTi52YWx1ZSB7Cn0KClNQQU4uYXJyYXlbX19kYmlkPSJjOGUwNTFhMGQ4YmE2MjM1ZWQ4ODllMTg0YWFlNzMxYzdlODEzZjQ4Il0gPiAuZWxlbWVudCA+IFNQQU4uc2VwYXJhdG9yIHsKICAgIGNvbG9yOiAjOUM5QzlDOwp9Cg==");
 }
 
-exports.main = function (options) {
+exports.main = function (domplate, options) {
   options = options || {};
-  var domplate = window.domplate;
   var rep = impl(domplate);
   rep.__dom = {
 "tag":function (context) {
@@ -164,7 +171,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3,d4) {       DomplateDebug.logVar(\'  .. i0 (counterName)\',i0);       DomplateDebug.logVar(\'  .. l0 (loopName)\',l0);        node = __path__(root, o,0+1+l0+0);node.addEventListener("click", __bind__(this, d0), false);node.elementObject = d1;        node = __path__(root, o,0+1+l0+0,0,0);        e0 = __link__(node, d2, d3);      if_0 = __if__.apply(this, [d4, function(if_0) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_0 (ifName)\',if_0);      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})');  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3,d4) {       DomplateDebug.logVar('  .. i0 (counterName)',i0);       DomplateDebug.logVar('  .. l0 (loopName)',l0);        node = __path__(root, o,0+1+l0+0);node.addEventListener("click", __bind__(this, d0), false);node.elementObject = d1;        node = __path__(root, o,0+1+l0+0,0,0);        e0 = __link__(node, d2, d3);      if_0 = __if__.apply(this, [d4, function(if_0) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_0 (ifName)',if_0);      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0) {  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3,d4,d5) {        node = __path__(root, o,0+1+l0+0);node.addEventListener("click", __bind__(this, d0), false);node.contextObject = d1;node.elementObject = d2;        node = __path__(root, o,0+1+l0+0,0,0);        e0 = __link__(node, d3, d4);      if_0 = __if__.apply(this, [d5, function(if_0) {      }]);        return 0+1;      }]);  }  return 1;})
 }
 ,
 "collapsedTag":function (context) {
@@ -174,7 +181,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  }  DomplateDebug.endGroup();  return 1;})');  with (this) {  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o) {  with (this) {  }  return 1;})
 }
 ,
 "shortTag":function (context) {
@@ -184,7 +191,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2) {       DomplateDebug.logVar(\'  .. i0 (counterName)\',i0);       DomplateDebug.logVar(\'  .. l0 (loopName)\',l0);        node = __path__(root, o,0+1+l0+0,0,0);        e0 = __link__(node, d0, d1);      if_0 = __if__.apply(this, [d2, function(if_0) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_0 (ifName)\',if_0);      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})');  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2) {       DomplateDebug.logVar('  .. i0 (counterName)',i0);       DomplateDebug.logVar('  .. l0 (loopName)',l0);        node = __path__(root, o,0+1+l0+0,0,0);        e0 = __link__(node, d0, d1);      if_0 = __if__.apply(this, [d2, function(if_0) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_0 (ifName)',if_0);      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0) {  var l0 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2) {        node = __path__(root, o,0+1+l0+0,0,0);        e0 = __link__(node, d0, d1);      if_0 = __if__.apply(this, [d2, function(if_0) {      }]);        return 0+1;      }]);  }  return 1;})
 }
 ,
 "expandableStub":function (context) {
@@ -194,7 +201,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','undefined'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'undefined\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return e0;})');  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return e0;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  return e0;})
 }
 ,
 "expandedStub":function (context) {
@@ -204,7 +211,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','undefined'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'undefined\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return e0;})');  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return e0;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o);        e0 = __link__(node, d0, d1);  }  return e0;})
 }
 ,
 "moreTag":function (context) {
@@ -214,7 +221,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  }  DomplateDebug.endGroup();  return 1;})');  with (this) {  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o) {  with (this) {  }  return 1;})
 }
 };
   rep.__markup = {
@@ -224,7 +231,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","array", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(VAR_label),"(","</span>");    __loop__.apply(this, [elementIterator(context,node,CONST_Normal), __out__, function(element, __out__) {    __code__.push("","<div", " class=\"","element", " ", (element.expandable ? "expandable" + " " : ""), "\"",">","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,element);__link__(element.tag, __code__, __out__, {"element":element,"node":element.node});    __code__.push("","</span>");__if__.apply(this, [element.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","array", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(VAR_label),"(","</span>");    __loop__.apply(this, [elementIterator(context,node,CONST_Normal), __out__, function(element, __out__) {    __code__.push("","<div", " class=\"","element", " ", (element.expandable ? "expandable" + " " : ""), "\"",">","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,element);__link__(element.tag, __code__, __out__, {"element":element,"node":element.node});    __code__.push("","</span>");__if__.apply(this, [element.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","c8e051a0d8ba6235ed889e184aae731c7e813f48", "\"", " __dtid=\"","insight.domplate.reps/default/array", "\"", " class=\"","array", " ", "\"",">","<span",">",__escape__(VAR_label),"(","</span>");    __loop__.apply(this, [elementIterator(context,node,CONST_Normal), __out__, function(element, __out__) {    __code__.push("","<div", " class=\"","element", " ", (element.expandable ? "expandable" + " " : ""), "\"",">","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,context,element);__link__(element.tag, __code__, __out__, {"element":element,"node":element.node,"context":context});    __code__.push("","</span>");__if__.apply(this, [element.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "collapsedTag":function (context) {
@@ -233,7 +240,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","array", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(VAR_label),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getElementCount(node))," ...","</span>","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","array", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(VAR_label),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getElementCount(node))," ...","</span>","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","c8e051a0d8ba6235ed889e184aae731c7e813f48", "\"", " __dtid=\"","insight.domplate.reps/default/array", "\"", " class=\"","array", " ", "\"",">","<span",">",__escape__(VAR_label),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getElementCount(node))," ...","</span>","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -242,7 +249,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","array", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(VAR_label),"(","</span>");    __loop__.apply(this, [elementIterator(context,node,CONST_Short), __out__, function(element, __out__) {    __code__.push("","<span", " class=\"","element", " ", "\"",">","<span", " class=\"","value", " ", "\"",">");__link__(element.tag, __code__, __out__, {"element":element,"node":element.node});    __code__.push("","</span>");__if__.apply(this, [element.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","array", " ", "\"",">","<span", " class=\"", " ", "\"",">",__escape__(VAR_label),"(","</span>");    __loop__.apply(this, [elementIterator(context,node,CONST_Short), __out__, function(element, __out__) {    __code__.push("","<span", " class=\"","element", " ", "\"",">","<span", " class=\"","value", " ", "\"",">");__link__(element.tag, __code__, __out__, {"element":element,"node":element.node});    __code__.push("","</span>");__if__.apply(this, [element.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span", " class=\"", " ", "\"",">",")","</span>","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","c8e051a0d8ba6235ed889e184aae731c7e813f48", "\"", " __dtid=\"","insight.domplate.reps/default/array", "\"", " class=\"","array", " ", "\"",">","<span",">",__escape__(VAR_label),"(","</span>");    __loop__.apply(this, [elementIterator(context,node,CONST_Short), __out__, function(element, __out__) {    __code__.push("","<span", " class=\"","element", " ", "\"",">","<span", " class=\"","value", " ", "\"",">");__link__(element.tag, __code__, __out__, {"element":element,"node":element.node,"context":context});    __code__.push("","</span>");__if__.apply(this, [element.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "expandableStub":function (context) {
@@ -251,7 +258,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','undefined'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'undefined\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {__link__(getTag(context,element,CONST_Collapsed), __code__, __out__, {"node":element.node});  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {__link__(getTag(context,element,CONST_Collapsed), __code__, __out__, {"node":element.node});  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {__link__(getTag(context,element,CONST_Collapsed), __code__, __out__, {"node":element.node,"context":context});  }}})
 }
 ,
 "expandedStub":function (context) {
@@ -260,7 +267,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','undefined'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'undefined\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {__link__(tag, __code__, __out__, {"node":node,"element":element});  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {__link__(tag, __code__, __out__, {"node":node,"element":element});  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {__link__(tag, __code__, __out__, {"node":node,"context":context,"element":element});  }}})
 }
 ,
 "moreTag":function (context) {
@@ -269,11 +276,28 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"", " ", "\"",">"," ... ","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"", " ", "\"",">"," ... ","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","c8e051a0d8ba6235ed889e184aae731c7e813f48", "\"", " __dtid=\"","insight.domplate.reps/default/array", "\"",">"," ... ","</span>");  }}})
 }
 };
+  rep.__dbid = "c8e051a0d8ba6235ed889e184aae731c7e813f48";
+  rep.__dtid = "insight.domplate.reps/default/array";
   var res = domplate.domplate(rep);
-  var renderedCss = false;
+  var injectedCss = false;
+
+  rep.__ensureCssInjected = function () {
+    if (injectedCss) return;
+    injectedCss = true;
+    var node = document.createElement("style");
+    var cssCode = css();
+
+    if (options.cssBaseUrl) {
+      cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
+    }
+
+    node.innerHTML = cssCode;
+    document.body.appendChild(node);
+  };
+
   Object.keys(rep).forEach(function (tagName) {
     if (!rep[tagName].tag) return;
     var replace_orig = res[tagName].replace;
@@ -281,18 +305,9 @@ return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.start
     res[tagName].replace = function () {
       var res = replace_orig.apply(this, arguments);
       if (!res) return;
-      if (renderedCss) return;
-      renderedCss = true;
-      res.parentNode.setAttribute("_dbid", "fa66ec9b1170760b6214036929c106272712a36d");
-      var node = document.createElement("style");
-      var cssCode = css();
-
-      if (options.cssBaseUrl) {
-        cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
-      }
-
-      node.innerHTML = cssCode;
-      document.body.appendChild(node);
+      setTimeout(function () {
+        rep.__ensureCssInjected();
+      }, 0);
       return res;
     };
   });

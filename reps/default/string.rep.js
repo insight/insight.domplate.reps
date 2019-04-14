@@ -11,7 +11,7 @@
         
         return {
 
-            tag: T.SPAN({"class": "string"},
+            tag: T.SPAN({"class": "string",},
                 T.FOR("line", "$node.value|lineIterator", "$line.value",
                     T.IF("$line.more", T.BR())
                 )
@@ -53,6 +53,10 @@
         };
     },
     css: (css () >>>
+
+        SPAN {
+            color: black;
+        }
 
     <<<)
 }

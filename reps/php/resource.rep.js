@@ -27,7 +27,7 @@
     },
     css: (css () >>>
 
-        :scope SPAN.resource {
+        SPAN.resource {
             color: navy;
         }
 

@@ -40,7 +40,7 @@
     },
     css: (css () >>>
 
-        :scope SPAN.float {
+        SPAN.float {
             color: green;
         }
 

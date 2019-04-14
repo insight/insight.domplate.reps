@@ -68,7 +68,7 @@
                                 T.TR(
                                     T.FOR("cell", "$context,$row|getCells",
                                         T.TD({"class": "cell", "_cellNodeObj": "$cell.node", "onclick":"$onCellClick"},
-                                            T.TAG("$cell.tag", {"node": "$cell.node"}))
+                                            T.TAG("$cell.tag", {"node": "$cell.node", "context": "$context"}))
                                     )
                                 )
                             )
@@ -77,7 +77,13 @@
                 ),
 
             shortTag:
-                T.SPAN({"class": "table"}, T.TAG("$context,$node|getTitleTag", {"node": "$node|getTitleNode"})),
+                T.SPAN({"class": "table"}, T.TAG("$context,$node|getTitleTag", {"node": "$node|getTitleNode", "context": "$context"})),
+
+            getTitleTagDbid: function(context, node) {
+                var tag = this.getTitleTag(context, node);
+                if (!tag) return '';
+                return tag.__dbid;
+            },
 
             getTitleTag: function(context, node) {
                 var rep = context.repForNode(this.getTitleNode(node));
@@ -123,18 +129,20 @@
                 if(domplate.util.isArrayLike(row)) {
                     for (var i = 0; i < row.length; i++) {
                         var rep = context.repForNode(row[i]);
-                        items.push({
+                        var item = {
                             "node": domplate.util.merge(row[i], {"wrapped": false}),
                             "tag": rep.shortTag || rep.tag
-                        });
+                        };
+                        items.push(item);
                     }
                 } else
                 if(row.meta && row.meta['encoder.trimmed']) {
                     var rep = context.repForNode(row);
-                    items.push({
+                    var item = {
                         "node": domplate.util.merge(row, {"wrapped": false}),
                         "tag": rep.shortTag || rep.tag
-                    });
+                    };
+                    items.push(item);
                 }
                 return items;
             },
@@ -176,28 +184,28 @@
     },
     css: (css () >>>
 
-        :scope SPAN.table {
+        SPAN.table {
             background-image: url(images/table.png);
             background-repeat: no-repeat;
             background-position: 4px -1px;
             padding-left: 25px;
         }
         
-        :scope DIV.table {
+        DIV.table {
             padding: 0px;
             margin: 0px;
         }
         
-        :scope DIV.table TABLE {
+        DIV.table TABLE {
           border-bottom: 1px solid #D7D7D7;
           border-right: 1px solid #D7D7D7;
         }
         
-        :scope DIV.table TABLE TBODY TR.hide {
+        DIV.table TABLE TBODY TR.hide {
           display: none;
         }
         
-        :scope DIV.table TABLE TBODY TR TH.header {
+        DIV.table TABLE TBODY TR TH.header {
           vertical-align: top;
           font-weight: bold;
           text-align: center;
@@ -210,7 +218,7 @@
           padding-right: 10px;
         }
         
-        :scope DIV.table TABLE TBODY TR TD.cell {
+        DIV.table TABLE TBODY TR TD.cell {
           vertical-align: top;
           padding-right: 10px;
           border: 1px solid #D7D7D7;
@@ -221,7 +229,7 @@
           padding-right: 10px;
         }
         
-        :scope DIV.table TABLE TBODY TR TD.cell:hover {
+        DIV.table TABLE TBODY TR TD.cell:hover {
             background-color: #ffc73d;
             cursor: pointer;    
         }        

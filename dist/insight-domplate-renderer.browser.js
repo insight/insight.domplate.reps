@@ -21,79 +21,24 @@ var DOMPLATE = WINDOW.domplate;
 
 function Renderer(options) {
   var self = this;
-
-  if (!options.repsBaseUrl) {
-    throw new Error("'options.repsBaseUrl' not set!");
-  }
-
-  var loadingReps = {};
-  var loadedReps = {};
-
-  function ensureRepForUri(repUri) {
-    if (!loadingReps[repUri]) {
-      loadingReps[repUri] = new WINDOW.Promise(function (resolve, reject) {
-        var url = options.repsBaseUrl + "/" + repUri;
-        DOMPLATE.loadRep(url, {
-          cssBaseUrl: options.repsBaseUrl.replace(/\/?$/, "/") + repUri.replace(/^([^\/]+\/).+$/, "$1")
-        }, function (rep) {
-          resolve(rep);
-        }, function (err) {
-          var error = new Error("Error loading rep for uri '" + repUri + "' from '" + url + "'!");
-          error.previous = err;
-          reject(error);
-        });
-      });
-    }
-
-    return loadingReps[repUri];
-  }
-
-  function repUriForType(lang, type) {
-    type = type || "unknown";
-    return lang + "/" + type;
-  }
-
-  function repUriForNode(node) {
-    var lang = "default";
-    var type = node.type;
-
-    if (node.meta) {
-      if (node.meta["encoder.trimmed"]) {
-        type = "trimmed";
-      } else if (node.meta.renderer === "structures/table") {
-          type = "table";
-        } else if (node.meta.renderer === "structures/trace") {
-            type = "trace";
-          } else if (node.meta["lang"] && node.meta["lang.type"]) {
-            lang = node.meta["lang"];
-            type = node.meta["lang.type"];
-
-            if (lang === "php") {
-              if (type === "array") {
-                if (node.value[0] && Array.isArray(node.value[0])) {
-                  type = "array-associative";
-                } else {
-                  type = "array-indexed";
-                }
-              }
-            }
-          }
-    }
-
-    return repUriForType(lang, type);
-  }
+  var loader = options.loader || new exports.Loader(options);
+  self.domplate = DOMPLATE;
 
   function InsightDomplateContext() {
     var self = this;
+    self.repForNode = loader.repForNode.bind(loader);
+    self.wrapperRepForNode = loader.wrapperRepForNode.bind(loader);
 
-    self.repForNode = function (node) {
-      var repUri = repUriForNode(node);
-
-      if (!loadedReps[repUri]) {
-        throw new Error("Rep for uri '" + repUri + "' not loaded!");
+    self.dispatchEvent = function (name, args) {
+      if (options.onEvent) {
+        try {
+          options.onEvent(name, args);
+        } catch (err) {
+          err.message += "(while dispatching event with name '" + name + "')";
+          err.stack[0] += "(while dispatching event with name '" + name + "')";
+          throw err;
+        }
       }
-
-      return loadedReps[repUri];
     };
   }
 
@@ -134,9 +79,13 @@ function Renderer(options) {
                 loadTypes[node.meta["lang"] + "/" + node.meta["lang.type"]] = true;
               }
             }
+
+        if (node.meta.wrapper) {
+          loadTypes[node.meta.wrapper] = true;
+        }
       }
 
-      if (node.value) {
+      if (typeof node.value !== 'undefined') {
         if (node.type === "array") {
           node.value.forEach(function (node) {
             traverse(node);
@@ -153,6 +102,8 @@ function Renderer(options) {
         } else if (node.type === "reference") {
           if (node.value.instance) {
             traverse(node.value.instance);
+          } else if (typeof node.getInstance === 'function') {
+            traverse(node.getInstance());
           }
         } else if (node.type === "table") {
           if (node.value.title) {
@@ -191,22 +142,31 @@ function Renderer(options) {
     traverse(node);
     return Promise.all(Object.keys(loadTypes).map(function (type) {
       type = type.split("/");
-      var repUri = repUriForType(type[0], type[1]);
-      return ensureRepForUri(repUri).then(function (rep) {
-        loadedReps[repUri] = rep;
+      var repUri = loader.repUriForType(type[0], type[1]);
+      return loader.ensureRepForUri(repUri).then(function () {
         return null;
       });
     }));
   }
 
-  self.renderNodeInto = function (node, selector) {
-    var el = document.querySelector(selector);
+  self.renderNodeInto = function (node, selectorOrElement) {
+    var el = typeof selectorOrElement === 'string' && document.querySelector(selectorOrElement) || selectorOrElement;
 
     if (!el) {
-      throw new Error("Could not find element for selector '" + selector + "'!");
+      throw new Error("Could not find element for selector '" + selectorOrElement + "'!");
     }
 
     return ensureRepsForNodeLoaded(node).then(function () {
+      var wrapperRep = context.wrapperRepForNode(node);
+
+      if (wrapperRep) {
+        wrapperRep.tag.replace({
+          context: context,
+          node: node
+        }, el);
+        return;
+      }
+
       var rep = context.repForNode(node);
       rep.tag.replace({
         context: context,
@@ -217,6 +177,100 @@ function Renderer(options) {
 }
 
 exports.Renderer = Renderer;
+
+function Loader(options) {
+  var self = this;
+
+  if (!options.repsBaseUrl) {
+    throw new Error("'options.repsBaseUrl' not set!");
+  }
+
+  var loadingReps = {};
+  var loadedReps = {};
+  self.domplate = DOMPLATE;
+
+  self.ensureRepForUri = function (repUri) {
+    if (!loadingReps[repUri]) {
+      loadingReps[repUri] = new WINDOW.Promise(function (resolve, reject) {
+        var url = options.repsBaseUrl + "/" + repUri;
+        DOMPLATE.loadRep(url, {
+          cssBaseUrl: options.repsBaseUrl.replace(/\/?$/, "/") + repUri.replace(/^([^\/]+\/).+$/, "$1")
+        }, function (rep) {
+          setTimeout(function () {
+            rep.__ensureCssInjected();
+          }, 0);
+          loadedReps[repUri] = rep;
+          resolve(rep);
+        }, function (err) {
+          var error = new Error("Error loading rep for uri '" + repUri + "' from '" + url + "'!");
+          error.previous = err;
+          reject(error);
+        });
+      });
+    }
+
+    return loadingReps[repUri];
+  };
+
+  self.repUriForType = function (lang, type) {
+    type = type || "unknown";
+    return lang + "/" + type;
+  };
+
+  function repUriForNode(node) {
+    var lang = "default";
+    var type = node.type;
+
+    if (node.meta) {
+      if (node.meta["encoder.trimmed"]) {
+        type = "trimmed";
+      } else if (node.meta.renderer === "structures/table") {
+          type = "table";
+        } else if (node.meta.renderer === "structures/trace") {
+            type = "trace";
+          } else if (node.meta["lang"] && node.meta["lang.type"]) {
+            lang = node.meta["lang"];
+            type = node.meta["lang.type"];
+
+            if (lang === "php") {
+              if (type === "array") {
+                if (node.value[0] && Array.isArray(node.value[0])) {
+                  type = "array-associative";
+                } else {
+                  type = "array-indexed";
+                }
+              }
+            }
+          }
+    }
+
+    return self.repUriForType(lang, type);
+  }
+
+  self.repForNode = function (node) {
+    var repUri = repUriForNode(node);
+
+    if (!loadedReps[repUri]) {
+      throw new Error("Rep for uri '" + repUri + "' not loaded!");
+    }
+
+    return loadedReps[repUri];
+  };
+
+  self.wrapperRepForNode = function (node) {
+    if (node.meta && node.meta.wrapper) {
+      if (!loadedReps[node.meta.wrapper]) {
+        throw new Error("Wrapper Rep for uri '" + node.meta.wrapper + "' not loaded!");
+      }
+
+      return loadedReps[node.meta.wrapper];
+    }
+
+    return null;
+  };
+}
+
+exports.Loader = Loader;
 },{}]},{},[1])(1)
 });
 

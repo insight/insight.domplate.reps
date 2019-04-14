@@ -15,10 +15,16 @@ function impl(domplate) {
   var T = domplate.tags;
   return {
     tag: T.DIV({
-      "class": "viewer-harness"
+      "class": "viewer-harness",
+      "__dbid": "$context,$node|_getTagDbid"
     }, T.TAG("$context,$node|_getTag", {
-      "node": "$node"
+      "node": "$node",
+      "context": "$context"
     })),
+    _getTagDbid: function _getTagDbid(context, node) {
+      var rep = context.repForNode(node);
+      return rep.__dbid;
+    },
     _getTag: function _getTag(context, node) {
       var rep = context.repForNode(node);
       return rep.tag;
@@ -27,12 +33,11 @@ function impl(domplate) {
 }
 
 function css() {
-  return atob("CltfZGJpZD0iOTczNTdjZTIyOTE3OWI5M2U5NGRlOWY4NjM4ZmQ5YzRjMDA4ZTM4MyJdIERJVi52aWV3ZXItaGFybmVzcyB7CiAgICBwYWRkaW5nOiAycHggNHB4IDFweCA2cHg7CiAgICBmb250LWZhbWlseTogTHVjaWRhIEdyYW5kZSwgVGFob21hLCBzYW5zLXNlcmlmOwogICAgZm9udC1zaXplOiAxMXB4Owp9Cg==");
+  return atob("CkRJVi52aWV3ZXItaGFybmVzc1tfX2RiaWQ9IjgxZGQ2Y2MzNDljYzYwNzY5N2IyMjE0OGFhMTgwOTA1MGMwZmNkYTQiXSB7CiAgICBwYWRkaW5nOiAycHggNHB4IDFweCA2cHg7CiAgICBmb250LWZhbWlseTogTHVjaWRhIEdyYW5kZSwgVGFob21hLCBzYW5zLXNlcmlmOwogICAgZm9udC1zaXplOiAxMXB4Owp9Cg==");
 }
 
-exports.main = function (options) {
+exports.main = function (domplate, options) {
   options = options || {};
-  var domplate = window.domplate;
   var rep = impl(domplate);
   rep.__dom = {
 "tag":function (context) {
@@ -42,7 +47,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','div'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'div\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  return 1;})
 }
 };
   rep.__markup = {
@@ -52,11 +57,28 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','div'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'div\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<div", " class=\"","viewer-harness", " ", "\"",">");__link__(_getTag(context,node), __code__, __out__, {"node":node});    __code__.push("","</div>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<div", " class=\"","viewer-harness", " ", "\"",">");__link__(_getTag(context,node), __code__, __out__, {"node":node});    __code__.push("","</div>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " __dbid=\"","81dd6cc349cc607697b22148aa1809050c0fcda4", "\"", " __dtid=\"","insight.domplate.reps/wrappers/viewer", "\"", " class=\"","viewer-harness", " ", "\"",">");__link__(_getTag(context,node), __code__, __out__, {"node":node,"context":context});    __code__.push("","</div>");  }}})
 }
 };
+  rep.__dbid = "81dd6cc349cc607697b22148aa1809050c0fcda4";
+  rep.__dtid = "insight.domplate.reps/wrappers/viewer";
   var res = domplate.domplate(rep);
-  var renderedCss = false;
+  var injectedCss = false;
+
+  rep.__ensureCssInjected = function () {
+    if (injectedCss) return;
+    injectedCss = true;
+    var node = document.createElement("style");
+    var cssCode = css();
+
+    if (options.cssBaseUrl) {
+      cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
+    }
+
+    node.innerHTML = cssCode;
+    document.body.appendChild(node);
+  };
+
   Object.keys(rep).forEach(function (tagName) {
     if (!rep[tagName].tag) return;
     var replace_orig = res[tagName].replace;
@@ -64,18 +86,9 @@ return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.start
     res[tagName].replace = function () {
       var res = replace_orig.apply(this, arguments);
       if (!res) return;
-      if (renderedCss) return;
-      renderedCss = true;
-      res.parentNode.setAttribute("_dbid", "97357ce229179b93e94de9f8638fd9c4c008e383");
-      var node = document.createElement("style");
-      var cssCode = css();
-
-      if (options.cssBaseUrl) {
-        cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
-      }
-
-      node.innerHTML = cssCode;
-      document.body.appendChild(node);
+      setTimeout(function () {
+        rep.__ensureCssInjected();
+      }, 0);
       return res;
     };
   });

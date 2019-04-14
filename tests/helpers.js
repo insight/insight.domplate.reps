@@ -32,6 +32,7 @@ exports.describeRepSuite = function (repUri, node, expected) {
                     "@github.com~cadorn~domplate#s1": {
                         "compile": true,
                         "dist": __dirname + "/../dist/reps",
+                        "repIdPrefix": "insight.domplate.reps/",
                         "reps": reps,
                         "injectStruct": function (window) {
 
@@ -54,7 +55,6 @@ exports.describeRepSuite = function (repUri, node, expected) {
                 },
                 "/": [
                     '<head>',
-                        '<script src="/reps/domplate.browser.js"></script>',
                         '<script src="/dist/insight-domplate-renderer.browser.js"></script>',
                         '<style>',
                             '#rep {',
@@ -89,7 +89,7 @@ exports.describeRepSuite = function (repUri, node, expected) {
             } else {
                 client.expect.element('BODY #rep').text.to.contain(expected);
             }
-            client.expect.element('BODY #rep').to.have.attribute('_dbid');
+            client.expect.element('BODY #rep > [__dbid]').to.have.attribute('__dbid');
         });
     });
 

@@ -31,13 +31,20 @@ function impl(domplate) {
       "_cellNodeObj": "$cell.node",
       "onclick": "$onCellClick"
     }, T.TAG("$cell.tag", {
-      "node": "$cell.node"
+      "node": "$cell.node",
+      "context": "$context"
     })))))))),
     shortTag: T.SPAN({
       "class": "table"
     }, T.TAG("$context,$node|getTitleTag", {
-      "node": "$node|getTitleNode"
+      "node": "$node|getTitleNode",
+      "context": "$context"
     })),
+    getTitleTagDbid: function getTitleTagDbid(context, node) {
+      var tag = this.getTitleTag(context, node);
+      if (!tag) return '';
+      return tag.__dbid;
+    },
     getTitleTag: function getTitleTag(context, node) {
       var rep = context.repForNode(this.getTitleNode(node));
       return rep.shortTag || rep.tag;
@@ -82,21 +89,23 @@ function impl(domplate) {
       if (domplate.util.isArrayLike(row)) {
         for (var i = 0; i < row.length; i++) {
           var rep = context.repForNode(row[i]);
-          items.push({
+          var item = {
             "node": domplate.util.merge(row[i], {
               "wrapped": false
             }),
             "tag": rep.shortTag || rep.tag
-          });
+          };
+          items.push(item);
         }
       } else if (row.meta && row.meta['encoder.trimmed']) {
         var rep = context.repForNode(row);
-        items.push({
+        var item = {
           "node": domplate.util.merge(row, {
             "wrapped": false
           }),
           "tag": rep.shortTag || rep.tag
-        });
+        };
+        items.push(item);
       }
 
       return items;
@@ -138,12 +147,11 @@ function impl(domplate) {
 }
 
 function css() {
-  return atob("CltfZGJpZD0iNDhkMjMyMzY0YzEyM2E1OTBiOTUxOTliMTNhOTM4MjVmNjM3NWQ1YiJdIFNQQU4udGFibGUgewogICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKGltYWdlcy90YWJsZS5wbmcpOwogICAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDsKICAgIGJhY2tncm91bmQtcG9zaXRpb246IDRweCAtMXB4OwogICAgcGFkZGluZy1sZWZ0OiAyNXB4Owp9CgpbX2RiaWQ9IjQ4ZDIzMjM2NGMxMjNhNTkwYjk1MTk5YjEzYTkzODI1ZjYzNzVkNWIiXSBESVYudGFibGUgewogICAgcGFkZGluZzogMHB4OwogICAgbWFyZ2luOiAwcHg7Cn0KCltfZGJpZD0iNDhkMjMyMzY0YzEyM2E1OTBiOTUxOTliMTNhOTM4MjVmNjM3NWQ1YiJdIERJVi50YWJsZSBUQUJMRSB7CiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNEN0Q3RDc7CiAgYm9yZGVyLXJpZ2h0OiAxcHggc29saWQgI0Q3RDdENzsKfQoKW19kYmlkPSI0OGQyMzIzNjRjMTIzYTU5MGI5NTE5OWIxM2E5MzgyNWY2Mzc1ZDViIl0gRElWLnRhYmxlIFRBQkxFIFRCT0RZIFRSLmhpZGUgewogIGRpc3BsYXk6IG5vbmU7Cn0KCltfZGJpZD0iNDhkMjMyMzY0YzEyM2E1OTBiOTUxOTliMTNhOTM4MjVmNjM3NWQ1YiJdIERJVi50YWJsZSBUQUJMRSBUQk9EWSBUUiBUSC5oZWFkZXIgewogIHZlcnRpY2FsLWFsaWduOiB0b3A7CiAgZm9udC13ZWlnaHQ6IGJvbGQ7CiAgdGV4dC1hbGlnbjogY2VudGVyOwogIGJvcmRlcjogMXB4IHNvbGlkICNEN0Q3RDc7CiAgYm9yZGVyLWJvdHRvbTogMHB4OwogIGJvcmRlci1yaWdodDogMHB4OwogIGJhY2tncm91bmQtY29sb3I6ICNlY2VjZWM7CiAgcGFkZGluZzogMnB4OwogIHBhZGRpbmctbGVmdDogMTBweDsKICBwYWRkaW5nLXJpZ2h0OiAxMHB4Owp9CgpbX2RiaWQ9IjQ4ZDIzMjM2NGMxMjNhNTkwYjk1MTk5YjEzYTkzODI1ZjYzNzVkNWIiXSBESVYudGFibGUgVEFCTEUgVEJPRFkgVFIgVEQuY2VsbCB7CiAgdmVydGljYWwtYWxpZ246IHRvcDsKICBwYWRkaW5nLXJpZ2h0OiAxMHB4OwogIGJvcmRlcjogMXB4IHNvbGlkICNEN0Q3RDc7CiAgYm9yZGVyLWJvdHRvbTogMHB4OwogIGJvcmRlci1yaWdodDogMHB4OwogIHBhZGRpbmc6IDJweDsKICBwYWRkaW5nLWxlZnQ6IDEwcHg7CiAgcGFkZGluZy1yaWdodDogMTBweDsKfQoKW19kYmlkPSI0OGQyMzIzNjRjMTIzYTU5MGI5NTE5OWIxM2E5MzgyNWY2Mzc1ZDViIl0gRElWLnRhYmxlIFRBQkxFIFRCT0RZIFRSIFRELmNlbGw6aG92ZXIgewogICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmYzczZDsKICAgIGN1cnNvcjogcG9pbnRlcjsgICAgCn0gICAgICAgIAo=");
+  return atob("ClNQQU4udGFibGVbX19kYmlkPSI3NGVlNjI0MjBiYmQwMThlNDlhMTVkZDYxMTYxNmU3NTk3YWUxYjA0Il0gewogICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKGltYWdlcy90YWJsZS5wbmcpOwogICAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDsKICAgIGJhY2tncm91bmQtcG9zaXRpb246IDRweCAtMXB4OwogICAgcGFkZGluZy1sZWZ0OiAyNXB4Owp9CgpESVYudGFibGVbX19kYmlkPSI3NGVlNjI0MjBiYmQwMThlNDlhMTVkZDYxMTYxNmU3NTk3YWUxYjA0Il0gewogICAgcGFkZGluZzogMHB4OwogICAgbWFyZ2luOiAwcHg7Cn0KCkRJVi50YWJsZVtfX2RiaWQ9Ijc0ZWU2MjQyMGJiZDAxOGU0OWExNWRkNjExNjE2ZTc1OTdhZTFiMDQiXSBUQUJMRSB7CiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNEN0Q3RDc7CiAgYm9yZGVyLXJpZ2h0OiAxcHggc29saWQgI0Q3RDdENzsKfQoKRElWLnRhYmxlW19fZGJpZD0iNzRlZTYyNDIwYmJkMDE4ZTQ5YTE1ZGQ2MTE2MTZlNzU5N2FlMWIwNCJdIFRBQkxFIFRCT0RZIFRSLmhpZGUgewogIGRpc3BsYXk6IG5vbmU7Cn0KCkRJVi50YWJsZVtfX2RiaWQ9Ijc0ZWU2MjQyMGJiZDAxOGU0OWExNWRkNjExNjE2ZTc1OTdhZTFiMDQiXSBUQUJMRSBUQk9EWSBUUiBUSC5oZWFkZXIgewogIHZlcnRpY2FsLWFsaWduOiB0b3A7CiAgZm9udC13ZWlnaHQ6IGJvbGQ7CiAgdGV4dC1hbGlnbjogY2VudGVyOwogIGJvcmRlcjogMXB4IHNvbGlkICNEN0Q3RDc7CiAgYm9yZGVyLWJvdHRvbTogMHB4OwogIGJvcmRlci1yaWdodDogMHB4OwogIGJhY2tncm91bmQtY29sb3I6ICNlY2VjZWM7CiAgcGFkZGluZzogMnB4OwogIHBhZGRpbmctbGVmdDogMTBweDsKICBwYWRkaW5nLXJpZ2h0OiAxMHB4Owp9CgpESVYudGFibGVbX19kYmlkPSI3NGVlNjI0MjBiYmQwMThlNDlhMTVkZDYxMTYxNmU3NTk3YWUxYjA0Il0gVEFCTEUgVEJPRFkgVFIgVEQuY2VsbCB7CiAgdmVydGljYWwtYWxpZ246IHRvcDsKICBwYWRkaW5nLXJpZ2h0OiAxMHB4OwogIGJvcmRlcjogMXB4IHNvbGlkICNEN0Q3RDc7CiAgYm9yZGVyLWJvdHRvbTogMHB4OwogIGJvcmRlci1yaWdodDogMHB4OwogIHBhZGRpbmc6IDJweDsKICBwYWRkaW5nLWxlZnQ6IDEwcHg7CiAgcGFkZGluZy1yaWdodDogMTBweDsKfQoKRElWLnRhYmxlW19fZGJpZD0iNzRlZTYyNDIwYmJkMDE4ZTQ5YTE1ZGQ2MTE2MTZlNzU5N2FlMWIwNCJdIFRBQkxFIFRCT0RZIFRSIFRELmNlbGw6aG92ZXIgewogICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmYzczZDsKICAgIGN1cnNvcjogcG9pbnRlcjsgICAgCn0gICAgICAgIAo=");
 }
 
-exports.main = function (options) {
+exports.main = function (domplate, options) {
   options = options || {};
-  var domplate = window.domplate;
   var rep = impl(domplate);
   rep.__dom = {
 "tag":function (context) {
@@ -153,7 +161,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1, d2) {  DomplateDebug.startGroup([' .. Run DOM .. ','div'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1, d2) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'div\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var l0 = 0;  var l1 = 0;  var l2 = 0;  var if_0 = 0;  var e0 = 0;  var e1 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1) {       DomplateDebug.logVar(\'  .. i0 (counterName)\',i0);       DomplateDebug.logVar(\'  .. l0 (loopName)\',l0);        node = __path__(root, o,0,0,0,0+l0+0,0);        e0 = __link__(node, d0, d1);        return 0+1;      }]);      if_0 = __if__.apply(this, [d1, function(if_0) {       DomplateDebug.logVar(\'  .. d0\',d0);       DomplateDebug.logVar(\'  .. if_0 (ifName)\',if_0);      }]);      l1 = __loop__.apply(this, [d2, function(i1,l1,d0) {       DomplateDebug.logVar(\'  .. i1 (counterName)\',i1);       DomplateDebug.logVar(\'  .. l1 (loopName)\',l1);      l2 = __loop__.apply(this, [d0, function(i2,l2,d0,d1,d2,d3) {       DomplateDebug.logVar(\'  .. i2 (counterName)\',i2);       DomplateDebug.logVar(\'  .. l2 (loopName)\',l2);        node = __path__(root, o,0,0,0+1+l1+0,0+l2+0);node.addEventListener("click", __bind__(this, d0), false);node.cellNodeObj = d1;        node = __path__(root, o,0,0,0+1+l1+0,0+l2+0,0);        e1 = __link__(node, d2, d3);        return 0+1;      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})');  var l0 = 0;  var l1 = 0;  var l2 = 0;  var if_0 = 0;  var e0 = 0;  var e1 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1) {       DomplateDebug.logVar('  .. i0 (counterName)',i0);       DomplateDebug.logVar('  .. l0 (loopName)',l0);        node = __path__(root, o,0,0,0,0+l0+0,0);        e0 = __link__(node, d0, d1);        return 0+1;      }]);      if_0 = __if__.apply(this, [d1, function(if_0) {       DomplateDebug.logVar('  .. d0',d0);       DomplateDebug.logVar('  .. if_0 (ifName)',if_0);      }]);      l1 = __loop__.apply(this, [d2, function(i1,l1,d0) {       DomplateDebug.logVar('  .. i1 (counterName)',i1);       DomplateDebug.logVar('  .. l1 (loopName)',l1);      l2 = __loop__.apply(this, [d0, function(i2,l2,d0,d1,d2,d3) {       DomplateDebug.logVar('  .. i2 (counterName)',i2);       DomplateDebug.logVar('  .. l2 (loopName)',l2);        node = __path__(root, o,0,0,0+1+l1+0,0+l2+0);node.addEventListener("click", __bind__(this, d0), false);node.cellNodeObj = d1;        node = __path__(root, o,0,0,0+1+l1+0,0+l2+0,0);        e1 = __link__(node, d2, d3);        return 0+1;      }]);        return 0+1;      }]);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0, d1, d2) {  var l0 = 0;  var l1 = 0;  var l2 = 0;  var if_0 = 0;  var e0 = 0;  var e1 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1) {        node = __path__(root, o,0,0,0,0+l0+0,0);        e0 = __link__(node, d0, d1);        return 0+1;      }]);      if_0 = __if__.apply(this, [d1, function(if_0) {      }]);      l1 = __loop__.apply(this, [d2, function(i1,l1,d0) {      l2 = __loop__.apply(this, [d0, function(i2,l2,d0,d1,d2,d3) {        node = __path__(root, o,0,0,0+1+l1+0,0+l2+0);node.addEventListener("click", __bind__(this, d0), false);node.cellNodeObj = d1;        node = __path__(root, o,0,0,0+1+l1+0,0+l2+0,0);        e1 = __link__(node, d2, d3);        return 0+1;      }]);        return 0+1;      }]);  }  return 1;})
 }
 ,
 "shortTag":function (context) {
@@ -163,7 +171,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  DomplateDebug.startGroup([' .. Run DOM .. ','span'],arguments);  DomplateDebug.logJs('js','(function (root, context, o, d0, d1) {  DomplateDebug.startGroup([\' .. Run DOM .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})');  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  DomplateDebug.endGroup();  return 1;})
+return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  return 1;})
 }
 };
   rep.__markup = {
@@ -173,7 +181,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','div'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'div\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<div", " class=\"","table", " ", "\"",">","<table", " cellpadding=\"","3", "\"", " cellspacing=\"","0", "\"", " class=\"", " ", "\"",">","<tbody", " class=\"", " ", "\"",">","<tr", " class=\"",__escape__(getHeaderClass(node)), " ", "\"",">");    __loop__.apply(this, [getHeaders(context,node), __out__, function(column, __out__) {    __code__.push("","<th", " class=\"","header", " ", "\"",">");__link__(column.tag, __code__, __out__, {"node":column.node});    __code__.push("","</th>");    }]);__if__.apply(this, [hasNoHeader(node), __out__, function(__out__) {    __code__.push("","<th", " class=\"", " ", "\"",">","</th>");}]);    __code__.push("","</tr>");    __loop__.apply(this, [getRows(node), __out__, function(row, __out__) {    __code__.push("","<tr", " class=\"", " ", "\"",">");    __loop__.apply(this, [getCells(context,row), __out__, function(cell, __out__) {    __code__.push("","<td", " class=\"","cell", " ", "\"",">");__out__.push(onCellClick,cell.node);__link__(cell.tag, __code__, __out__, {"node":cell.node});    __code__.push("","</td>");    }]);    __code__.push("","</tr>");    }]);    __code__.push("","</tbody>","</table>","</div>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<div", " class=\"","table", " ", "\"",">","<table", " cellpadding=\"","3", "\"", " cellspacing=\"","0", "\"", " class=\"", " ", "\"",">","<tbody", " class=\"", " ", "\"",">","<tr", " class=\"",__escape__(getHeaderClass(node)), " ", "\"",">");    __loop__.apply(this, [getHeaders(context,node), __out__, function(column, __out__) {    __code__.push("","<th", " class=\"","header", " ", "\"",">");__link__(column.tag, __code__, __out__, {"node":column.node});    __code__.push("","</th>");    }]);__if__.apply(this, [hasNoHeader(node), __out__, function(__out__) {    __code__.push("","<th", " class=\"", " ", "\"",">","</th>");}]);    __code__.push("","</tr>");    __loop__.apply(this, [getRows(node), __out__, function(row, __out__) {    __code__.push("","<tr", " class=\"", " ", "\"",">");    __loop__.apply(this, [getCells(context,row), __out__, function(cell, __out__) {    __code__.push("","<td", " class=\"","cell", " ", "\"",">");__out__.push(onCellClick,cell.node);__link__(cell.tag, __code__, __out__, {"node":cell.node});    __code__.push("","</td>");    }]);    __code__.push("","</tr>");    }]);    __code__.push("","</tbody>","</table>","</div>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " __dbid=\"","74ee62420bbd018e49a15dd611616e7597ae1b04", "\"", " __dtid=\"","insight.domplate.reps/default/table", "\"", " class=\"","table", " ", "\"",">","<table", " cellpadding=\"","3", "\"", " cellspacing=\"","0", "\"",">","<tbody",">","<tr", " class=\"",__escape__(getHeaderClass(node)), " ", "\"",">");    __loop__.apply(this, [getHeaders(context,node), __out__, function(column, __out__) {    __code__.push("","<th", " class=\"","header", " ", "\"",">");__link__(column.tag, __code__, __out__, {"node":column.node});    __code__.push("","</th>");    }]);__if__.apply(this, [hasNoHeader(node), __out__, function(__out__) {    __code__.push("","<th",">","</th>");}]);    __code__.push("","</tr>");    __loop__.apply(this, [getRows(node), __out__, function(row, __out__) {    __code__.push("","<tr",">");    __loop__.apply(this, [getCells(context,row), __out__, function(cell, __out__) {    __code__.push("","<td", " class=\"","cell", " ", "\"",">");__out__.push(onCellClick,cell.node);__link__(cell.tag, __code__, __out__, {"node":cell.node,"context":context});    __code__.push("","</td>");    }]);    __code__.push("","</tr>");    }]);    __code__.push("","</tbody>","</table>","</div>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -182,11 +190,28 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([' .. Run Markup .. ','span'],arguments);  DomplateDebug.logJs('js','(function (__code__, __context__, __in__, __out__) {  DomplateDebug.startGroup([\' .. Run Markup .. \',\'span\'],arguments);  DomplateDebug.logJs(\'js\',\'__SELF__JS__\');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","table", " ", "\"",">");__link__(getTitleTag(context,node), __code__, __out__, {"node":getTitleNode(node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})');  with (this) {  with (__in__) {    __code__.push("","<span", " class=\"","table", " ", "\"",">");__link__(getTitleTag(context,node), __code__, __out__, {"node":getTitleNode(node)});    __code__.push("","</span>");  }DomplateDebug.endGroup();}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","74ee62420bbd018e49a15dd611616e7597ae1b04", "\"", " __dtid=\"","insight.domplate.reps/default/table", "\"", " class=\"","table", " ", "\"",">");__link__(getTitleTag(context,node), __code__, __out__, {"node":getTitleNode(node),"context":context});    __code__.push("","</span>");  }}})
 }
 };
+  rep.__dbid = "74ee62420bbd018e49a15dd611616e7597ae1b04";
+  rep.__dtid = "insight.domplate.reps/default/table";
   var res = domplate.domplate(rep);
-  var renderedCss = false;
+  var injectedCss = false;
+
+  rep.__ensureCssInjected = function () {
+    if (injectedCss) return;
+    injectedCss = true;
+    var node = document.createElement("style");
+    var cssCode = css();
+
+    if (options.cssBaseUrl) {
+      cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
+    }
+
+    node.innerHTML = cssCode;
+    document.body.appendChild(node);
+  };
+
   Object.keys(rep).forEach(function (tagName) {
     if (!rep[tagName].tag) return;
     var replace_orig = res[tagName].replace;
@@ -194,18 +219,9 @@ return (function (__code__, __context__, __in__, __out__) {  DomplateDebug.start
     res[tagName].replace = function () {
       var res = replace_orig.apply(this, arguments);
       if (!res) return;
-      if (renderedCss) return;
-      renderedCss = true;
-      res.parentNode.setAttribute("_dbid", "48d232364c123a590b95199b13a93825f6375d5b");
-      var node = document.createElement("style");
-      var cssCode = css();
-
-      if (options.cssBaseUrl) {
-        cssCode = cssCode.replace(/(url\s*\()([^\)]+\))/g, "$1" + options.cssBaseUrl + "$2");
-      }
-
-      node.innerHTML = cssCode;
-      document.body.appendChild(node);
+      setTimeout(function () {
+        rep.__ensureCssInjected();
+      }, 0);
       return res;
     };
   });

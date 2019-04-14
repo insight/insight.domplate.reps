@@ -69,7 +69,7 @@
                                         T.DIV("$frame|getFrameLabel(",
                                             T.FOR("arg", "$context,$frame|argIterator",
                                                 T.DIV({"class": "arg", "_argNodeObj": "$arg.node", "onclick":"$onArgClick"},
-                                                    T.TAG("$arg.tag", {"node": "$arg.node"}),
+                                                    T.TAG("$arg.tag", {"node": "$arg.node", "context": "$context"}),
                                                     T.IF("$arg.more", T.SPAN({"class": "separator"}, ","))
                                                 )
                                             ),
@@ -227,19 +227,19 @@
                 }
             },
     
-            argIterator: function(context, frame)
-            {
+            argIterator: function(context, frame) {
                 try {
                     if(!frame.args) {
                         return [];
                     }
                     var items = [];
                     for (var i = 0; i < frame.args.length; i++) {
-                        items.push({
+                        var item = {
                             "node": domplate.util.merge(frame.args[i], {"wrapped": true}),
                             "tag": context.repForNode(frame.args[i]).shortTag,
                             "more": (i < frame.args.length-1)
-                        });
+                        };
+                        items.push(item);
                     }
                     return items;
                 } catch(err) {
@@ -252,7 +252,7 @@
     },
     css: (css () >>>
 
-        :scope SPAN.structures-trace {
+        SPAN.structures-trace {
             background-image: url(images/edit-rule.png);
             background-repeat: no-repeat;
             background-position: 4px 1px;
@@ -260,46 +260,46 @@
             font-weight: bold;
         }
 
-        :scope DIV.structures-trace {
+        DIV.structures-trace {
             padding: 0px;
             margin: 0px;
         }
         
-        :scope DIV.structures-trace TABLE {
+        DIV.structures-trace TABLE {
           border-bottom: 1px solid #D7D7D7;
         }
         
-        :scope DIV.structures-trace TABLE TBODY TR TH,
-        :scope DIV.structures-trace TABLE TBODY TR TD {
+        DIV.structures-trace TABLE TBODY TR TH,
+        DIV.structures-trace TABLE TBODY TR TD {
             padding: 3px;
             padding-left: 10px;
             padding-right: 10px;
         }
         
-        :scope DIV.structures-trace TABLE TBODY TR TH.header-file {
+        DIV.structures-trace TABLE TBODY TR TH.header-file {
           white-space:nowrap;
           font-weight: bold;
           text-align: left;
         }
         
-        :scope DIV.structures-trace TABLE TBODY TR TH.header-line {
+        DIV.structures-trace TABLE TBODY TR TH.header-line {
           white-space:nowrap;
           font-weight: bold;
           text-align: right;
         }
-        :scope DIV.structures-trace TABLE TBODY TR TH.header-inst {
+        DIV.structures-trace TABLE TBODY TR TH.header-inst {
           white-space:nowrap;
           font-weight: bold;
           text-align: left;
         }
         
-        :scope DIV.structures-trace TABLE TBODY TR TD.cell-file {
+        DIV.structures-trace TABLE TBODY TR TD.cell-file {
           vertical-align: top;
           border: 1px solid #D7D7D7;
           border-bottom: 0px;
           border-right: 0px;
         }
-        :scope DIV.structures-trace TABLE TBODY TR TD.cell-line {
+        DIV.structures-trace TABLE TBODY TR TD.cell-line {
           white-space:nowrap;
           vertical-align: top;
           text-align: right;
@@ -307,12 +307,12 @@
           border-bottom: 0px;
           border-right: 0px;
         }
-        :scope DIV.structures-trace TABLE TBODY TR TD.cell-line:hover,
-        :scope DIV.structures-trace TABLE TBODY TR TD.cell-file:hover {
+        DIV.structures-trace TABLE TBODY TR TD.cell-line:hover,
+        DIV.structures-trace TABLE TBODY TR TD.cell-file:hover {
             background-color: #ffc73d;
             cursor: pointer;    
         }
-        :scope DIV.structures-trace TABLE TBODY TR TD.cell-inst {
+        DIV.structures-trace TABLE TBODY TR TD.cell-inst {
           vertical-align: top;
           padding-left: 10px;
           font-weight: bold;
@@ -320,18 +320,18 @@
           border-bottom: 0px;
         }
         
-        :scope DIV.structures-trace TABLE TBODY TR TD.cell-inst DIV.arg {
+        DIV.structures-trace TABLE TBODY TR TD.cell-inst DIV.arg {
           font-weight: normal;
           padding-left: 3px;
           padding-right: 3px;
           display: inline-block;
         }
-        :scope DIV.structures-trace TABLE TBODY TR TD.cell-inst DIV.arg:hover {
+        DIV.structures-trace TABLE TBODY TR TD.cell-inst DIV.arg:hover {
             background-color: #ffc73d;
             cursor: pointer;    
         }
         
-        :scope DIV.structures-trace TABLE TBODY TR TD.cell-inst .separator {
+        DIV.structures-trace TABLE TBODY TR TD.cell-inst .separator {
             padding-left: 1px;
             padding-right: 3px;
         }

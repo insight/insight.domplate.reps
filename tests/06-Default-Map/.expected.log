@@ -8,6 +8,7 @@ environments: default
   Suite
 [bash.origin.express] Adding route: /dist/insight-domplate-renderer.browser.js
 [bash.origin.express] Adding route: /domplate-eval.browser.js
+[bash.origin.express] Adding route: /default/constant.rep.js
 [bash.origin.express] Adding route: /default/string.rep.js
 [bash.origin.express] Adding route: /domplate.browser.js
 [bash.origin.express] Adding route: /default/map.rep.js
@@ -17,13 +18,13 @@ environments: default
 Server: http://localhost:8080/
 [READY]
 [bash.origin.express] Routing request / with method GET due to route /
-[bash.origin.express] Routing request /domplate.browser.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /domplate.browser.js
 [bash.origin.express] Routing request / with method GET due to route /dist/insight-domplate-renderer.browser.js
 [bash.origin.express] Routing request /default/map.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request / with method GET due to route /default/map.rep.js
 [bash.origin.express] Routing request /default/string.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request / with method GET due to route /default/string.rep.js
+[bash.origin.express] Routing request /default/constant.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
+[bash.origin.express] Routing request / with method GET due to route /default/constant.rep.js
 
 
 
