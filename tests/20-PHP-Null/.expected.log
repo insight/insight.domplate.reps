@@ -19,6 +19,9 @@ Server: http://localhost:8080/
 [bash.origin.express] Routing request / with method GET due to route /dist/insight-domplate-renderer.browser.js
 [bash.origin.express] Routing request /php/null.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request / with method GET due to route /php/null.rep.js
+[domplate] Load style: php/null.rep.css
+[bash.origin.express] Routing request /php/null.rep.css with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
+[bash.origin.express] Routing request /php/null.rep.css with method GET due to route { /^\// fast_star: false, fast_slash: false }
 
 
 

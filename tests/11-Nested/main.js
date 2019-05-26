@@ -8,6 +8,8 @@ module.config = {
 }
 */
 
+console.log('>>>TEST_IGNORE_LINE:\\[domplate\\] Load style: <<<');
+
 require("../helpers").describeRepSuite([
     "default/map",
     "default/array",

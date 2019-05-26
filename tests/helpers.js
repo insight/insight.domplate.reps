@@ -30,6 +30,7 @@ exports.describeRepSuite = function (repUri, node, expected) {
                 },
                 "^/reps/": {
                     "@github.com~cadorn~domplate#s1": {
+                        "externalizeCss": true,
                         "compile": true,
                         "dist": __dirname + "/../dist/reps",
                         "repIdPrefix": "insight.domplate.reps/",

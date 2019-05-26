@@ -22,8 +22,14 @@ Server: http://localhost:8080/
 [bash.origin.express] Routing request / with method GET due to route /default/dictionary.rep.js
 [bash.origin.express] Routing request /default/string.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request / with method GET due to route /default/string.rep.js
+[domplate] Load style: default/dictionary.rep.css
+[bash.origin.express] Routing request /default/dictionary.rep.css with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
+[bash.origin.express] Routing request /default/dictionary.rep.css with method GET due to route { /^\// fast_star: false, fast_slash: false }
+[domplate] Load style: default/string.rep.css
 [bash.origin.express] Routing request /default/images/twisty-closed.png with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request /default/images/twisty-closed.png with method GET due to route { /^\// fast_star: false, fast_slash: false }
+[bash.origin.express] Routing request /default/string.rep.css with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
+[bash.origin.express] Routing request /default/string.rep.css with method GET due to route { /^\// fast_star: false, fast_slash: false }
 
 
 

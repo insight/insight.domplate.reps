@@ -2,8 +2,8 @@
     "js.browser": {
         "insight-domplate-renderer": {
             "core": {
-                "size": 8968,
-                "hash": "sha1:9aeb5c4b53a030ea1842f89e469d0d1e021cac82"
+                "size": 87205,
+                "hash": "sha1:10609b694240d8ccafb7601e7b8724ae2349b4f7"
             }
         }
     }

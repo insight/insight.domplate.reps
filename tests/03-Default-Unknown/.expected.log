@@ -19,6 +19,9 @@ Server: http://localhost:8080/
 [bash.origin.express] Routing request / with method GET due to route /dist/insight-domplate-renderer.browser.js
 [bash.origin.express] Routing request /default/unknown.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
 [bash.origin.express] Routing request / with method GET due to route /default/unknown.rep.js
+[domplate] Load style: default/unknown.rep.css
+[bash.origin.express] Routing request /default/unknown.rep.css with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
+[bash.origin.express] Routing request /default/unknown.rep.css with method GET due to route { /^\// fast_star: false, fast_slash: false }
 
 
 
