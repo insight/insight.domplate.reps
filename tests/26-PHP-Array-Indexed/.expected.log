@@ -2,6 +2,7 @@
 >>>TEST_IGNORE_LINE:\d milliseconds.$<<<
 >>>TEST_IGNORE_LINE:\d+\spassing\s\([^\)]+\)<<<
 environments: default
+>>>TEST_IGNORE_LINE:\[bash.origin.express\] Routing request /<<<
 >>>TEST_IGNORE_LINE:^[\d\.]+\s<<<
 
 
@@ -16,18 +17,8 @@ environments: default
 [bash.origin.express] Adding route: /
 Server: http://localhost:8080/
 [READY]
-[bash.origin.express] Routing request / with method GET due to route /
-[bash.origin.express] Routing request / with method GET due to route /dist/insight-domplate-renderer.browser.js
-[bash.origin.express] Routing request /php/array-indexed.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /php/array-indexed.rep.js
-[bash.origin.express] Routing request /php/string.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /php/string.rep.js
 [domplate] Load style: php/array-indexed.rep.css
-[bash.origin.express] Routing request /php/array-indexed.rep.css with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request /php/array-indexed.rep.css with method GET due to route { /^\// fast_star: false, fast_slash: false }
 [domplate] Load style: php/string.rep.css
-[bash.origin.express] Routing request /php/string.rep.css with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request /php/string.rep.css with method GET due to route { /^\// fast_star: false, fast_slash: false }
 
 
 

@@ -140,7 +140,13 @@
             },
             
             _getFileActionClass: function (message) {
-                if(message.meta["file"]) return "";
+                if (
+                    message.meta["file"] &&
+                    message.meta.console &&
+                    message.meta.console["enableFileInspect"]
+                ) {
+                    return "";
+                }
                 return "hidden";
             },
     

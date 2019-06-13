@@ -11,6 +11,8 @@ module.config = {
 
 // TODO: What is 'meta["encoder.trimmed.partial"]' for?
 
+console.log('>>>TEST_IGNORE_LINE:\\[bash.origin.express\\] Routing request /<<<');
+
 require("../helpers").describeRepSuite([
     "default/trace",
     "default/string"

@@ -125,7 +125,10 @@ function impl(domplate) {
       return true;
     },
     _getFileActionClass: function _getFileActionClass(message) {
-      if (message.meta["file"]) return "";
+      if (message.meta["file"] && message.meta.console && message.meta.console["enableFileInspect"]) {
+        return "";
+      }
+
       return "hidden";
     },
     _getTagDbid: function _getTagDbid(context, node) {
@@ -335,7 +338,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " expandable=\"",__escape__(_isExpandable(node)), "\"", " expanded=\"","false", "\"", " __dbid=\"","cdd4949d15dda119d54ec76a79fcd05a6508656e", "\"", " __dtid=\"","insight.domplate.reps/wrappers/console", "\"", " class=\"",__escape__(_getMessageClass(node)), " ", "\"",">","<div", " hideOnExpand=\"",__escape__(_getHideShortTagOnExpand(context,node)), "\"", " class=\"",__escape__(_getHeaderClass(node)), " ", "\"",">","<div", " class=\"","expander", " ", "\"",">","</div>","<div", " class=\"","actions", " ", "\"",">","<div", " class=\"","inspect", " ", "\"",">","</div>","<div", " class=\"","file ",__escape__(_getFileActionClass(node)), " ", "\"",">","</div>","</div>","<span", " class=\"","summary", " ", "\"",">","<span", " class=\"","label", " ", "\"",">");__out__.push(onMouseOver,onMouseMove,onMouseOut,onClick,node,context,node,onClick,onClick);__if__.apply(this, [_hasLabel(node), __out__, function(__out__) {    __code__.push("","<span",">",__escape__(_getLabel(node)),"</span>");}]);    __code__.push("","</span>");__link__(_getTag(context,node,CONST_Short), __code__, __out__, {"node":_getValue(context,node),"context":context});    __code__.push("","</span>","<span", " class=\"","fileline", " ", "\"",">","<div",">");__if__.apply(this, [_hasLabel(node), __out__, function(__out__) {    __code__.push("","<div", " class=\"","label", " ", "\"",">",__escape__(_getLabel(node)),"</div>");}]);    __code__.push("","</div>","<div",">",__escape__(_getFileLine(node)),"</div>","</span>","</div>","<div", " class=\"",__escape__(_getBodyClass(node)), " ", "\"",">","</div>","</div>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " expandable=\"",__escape__(_isExpandable(node)), "\"", " expanded=\"","false", "\"", " __dbid=\"","fce502428a58134fa703fae570efa3d3d8709d26", "\"", " __dtid=\"","insight.domplate.reps/wrappers/console", "\"", " class=\"",__escape__(_getMessageClass(node)), " ", "\"",">","<div", " hideOnExpand=\"",__escape__(_getHideShortTagOnExpand(context,node)), "\"", " class=\"",__escape__(_getHeaderClass(node)), " ", "\"",">","<div", " class=\"","expander", " ", "\"",">","</div>","<div", " class=\"","actions", " ", "\"",">","<div", " class=\"","inspect", " ", "\"",">","</div>","<div", " class=\"","file ",__escape__(_getFileActionClass(node)), " ", "\"",">","</div>","</div>","<span", " class=\"","summary", " ", "\"",">","<span", " class=\"","label", " ", "\"",">");__out__.push(onMouseOver,onMouseMove,onMouseOut,onClick,node,context,node,onClick,onClick);__if__.apply(this, [_hasLabel(node), __out__, function(__out__) {    __code__.push("","<span",">",__escape__(_getLabel(node)),"</span>");}]);    __code__.push("","</span>");__link__(_getTag(context,node,CONST_Short), __code__, __out__, {"node":_getValue(context,node),"context":context});    __code__.push("","</span>","<span", " class=\"","fileline", " ", "\"",">","<div",">");__if__.apply(this, [_hasLabel(node), __out__, function(__out__) {    __code__.push("","<div", " class=\"","label", " ", "\"",">",__escape__(_getLabel(node)),"</div>");}]);    __code__.push("","</div>","<div",">",__escape__(_getFileLine(node)),"</div>","</span>","</div>","<div", " class=\"",__escape__(_getBodyClass(node)), " ", "\"",">","</div>","</div>");  }}})
 }
 ,
 "groupNoMessagesTag":function (context) {
@@ -344,10 +347,10 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " __dbid=\"","cdd4949d15dda119d54ec76a79fcd05a6508656e", "\"", " __dtid=\"","insight.domplate.reps/wrappers/console", "\"", " class=\"","group-no-messages", " ", "\"",">","No Messages","</div>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " __dbid=\"","fce502428a58134fa703fae570efa3d3d8709d26", "\"", " __dtid=\"","insight.domplate.reps/wrappers/console", "\"", " class=\"","group-no-messages", " ", "\"",">","No Messages","</div>");  }}})
 }
 };
-  rep.__dbid = "cdd4949d15dda119d54ec76a79fcd05a6508656e";
+  rep.__dbid = "fce502428a58134fa703fae570efa3d3d8709d26";
   rep.__dtid = "insight.domplate.reps/wrappers/console";
   var res = domplate.domplate(rep);
   var injectedCss = false;

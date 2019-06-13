@@ -2,6 +2,7 @@
 >>>TEST_IGNORE_LINE:\d milliseconds.$<<<
 >>>TEST_IGNORE_LINE:\d+\spassing\s\([^\)]+\)<<<
 environments: default
+>>>TEST_IGNORE_LINE:\[bash.origin.express\] Routing request /<<<
 >>>TEST_IGNORE_LINE:^[\d\.]+\s<<<
 
 
@@ -17,23 +18,9 @@ environments: default
 [bash.origin.express] Adding route: /
 Server: http://localhost:8080/
 [READY]
-[bash.origin.express] Routing request / with method GET due to route /
-[bash.origin.express] Routing request / with method GET due to route /dist/insight-domplate-renderer.browser.js
-[bash.origin.express] Routing request /default/map.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /default/map.rep.js
-[bash.origin.express] Routing request /default/string.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /default/string.rep.js
-[bash.origin.express] Routing request /default/constant.rep.js with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request / with method GET due to route /default/constant.rep.js
 [domplate] Load style: default/map.rep.css
-[bash.origin.express] Routing request /default/map.rep.css with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request /default/map.rep.css with method GET due to route { /^\// fast_star: false, fast_slash: false }
 [domplate] Load style: default/string.rep.css
 [domplate] Load style: default/constant.rep.css
-[bash.origin.express] Routing request /default/string.rep.css with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request /default/string.rep.css with method GET due to route { /^\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request /default/constant.rep.css with method GET due to route { /^\/reps\// fast_star: false, fast_slash: false }
-[bash.origin.express] Routing request /default/constant.rep.css with method GET due to route { /^\// fast_star: false, fast_slash: false }
 
 
 
