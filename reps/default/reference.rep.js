@@ -45,6 +45,12 @@
                 if (node.value.instance) {
                     return node.value.instance;
                 } else
+                if (
+                    node.instances &&
+                    typeof node.value === "number"
+                ) {
+                    return node.instances[node.value];
+                } else
                 if (typeof node.value.getInstanceNode === "function") {
                     return node.value.getInstanceNode(node);
                 } else

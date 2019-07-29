@@ -37,7 +37,6 @@ function Domplate(exports) {
     }
 
     return new Promise(function (resolve, reject) {
-      console.log("[domplate] Load style:", uri);
       var link = window.document.createElementNS ? window.document.createElementNS("http://www.w3.org/1999/xhtml", "link") : window.document.createElement("link");
       link.rel = "stylesheet";
       link.href = uri;
@@ -965,7 +964,7 @@ exports.makeMarkupRuntime = function (EVAL, context) {
     try {
       if (!iter || !iter.next) {
         console.error("Cannot iterate loop", iter, _typeof(iter), outputs, fn);
-        throw new Exception("Cannot iterate loop as iter.next() method is not defined");
+        throw new Error("Cannot iterate loop as iter.next() method is not defined");
       }
 
       while (1) {
@@ -2522,55 +2521,102 @@ function Renderer(options) {
           loadTypes["default/trimmed"] = true;
         } else if (node.meta.renderer === "structures/table") {
             loadTypes["default/table"] = true;
+            loadTypes["default/string"] = true;
             node.type = "table";
           } else if (node.meta.renderer === "structures/trace") {
               loadTypes["default/trace"] = true;
+              loadTypes["default/string"] = true;
               node.type = "trace";
             } else if (node.meta["lang"] && node.meta["lang.type"]) {
-              if (node.meta["lang"] === "php" && node.meta["lang.type"] === "array") {
-                if (node.value[0] && Array.isArray(node.value[0])) {
+              if (node.meta["lang"] === "php") {
+                if (node.meta["lang.type"] === "array") {
+                  if (node.value[0] && Array.isArray(node.value[0])) {
+                    loadTypes["php/array-associative"] = true;
+                    node.value.forEach(function (pair) {
+                      traverse(pair[0]);
+                      traverse(pair[1]);
+                    });
+                  } else {
+                    loadTypes["php/array-indexed"] = true;
+                    node.value.forEach(function (node) {
+                      traverse(node);
+                    });
+                  }
+                } else if (node.meta["lang.type"] === "map") {
                   loadTypes["php/array-associative"] = true;
                   node.value.forEach(function (pair) {
                     traverse(pair[0]);
                     traverse(pair[1]);
                   });
+                } else if (node.meta["lang.type"] === "exception") {
+                  loadTypes["php/exception"] = true;
+                  loadTypes["default/string"] = true;
+
+                  if (node.value.title) {
+                    traverse(node.value.title);
+                  }
+
+                  if (node.value.stack) {
+                    node.value.stack.forEach(function (frame) {
+                      frame.args.forEach(function (arg) {
+                        traverse(arg);
+                      });
+                    });
+                  }
                 } else {
-                  loadTypes["php/array-indexed"] = true;
-                  node.value.forEach(function (node) {
-                    traverse(node);
-                  });
+                  loadTypes[node.meta["lang"] + "/" + node.meta["lang.type"]] = true;
+
+                  if (node.meta["lang.type"] === "table") {
+                    loadTypes["default/string"] = true;
+                  } else if (node.meta["lang.type"] === "trace") {
+                    loadTypes["default/string"] = true;
+                  }
                 }
               } else {
                 loadTypes[node.meta["lang"] + "/" + node.meta["lang.type"]] = true;
+
+                if (node.meta["lang.type"] === "table") {
+                  loadTypes["default/string"] = true;
+                } else if (node.meta["lang.type"] === "trace") {
+                  loadTypes["default/string"] = true;
+                }
               }
             }
 
         if (node.meta.wrapper) {
           loadTypes[node.meta.wrapper] = true;
+
+          if (node.meta.wrapper === "wrappers/request") {
+            if (node.value.title) {
+              traverse(node.value.title);
+            }
+          }
         }
       }
 
       if (typeof node.value !== 'undefined') {
-        if (node.type === "array") {
+        var type = node.type || node.meta["lang.type"];
+
+        if (type === "array") {
           node.value.forEach(function (node) {
             traverse(node);
           });
-        } else if (node.type === "dictionary") {
+        } else if (type === "dictionary") {
           Object.keys(node.value).forEach(function (key) {
             traverse(node.value[key]);
           });
-        } else if (node.type === "map") {
+        } else if (type === "map") {
           node.value.forEach(function (pair) {
             traverse(pair[0]);
             traverse(pair[1]);
           });
-        } else if (node.type === "reference") {
+        } else if (type === "reference") {
           if (node.value.instance) {
             traverse(node.value.instance);
           } else if (typeof node.getInstance === 'function') {
             traverse(node.getInstance());
           }
-        } else if (node.type === "table") {
+        } else if (type === "table") {
           if (node.value.title) {
             traverse(node.value.title);
           }
@@ -2588,7 +2634,7 @@ function Renderer(options) {
               });
             });
           }
-        } else if (node.type === "trace") {
+        } else if (type === "trace") {
           if (node.value.title) {
             traverse(node.value.title);
           }
@@ -2614,7 +2660,8 @@ function Renderer(options) {
     }));
   }
 
-  self.renderNodeInto = function (node, selectorOrElement) {
+  self.renderNodeInto = function (node, selectorOrElement, options) {
+    options = options || {};
     var el = typeof selectorOrElement === 'string' && document.querySelector(selectorOrElement) || selectorOrElement;
 
     if (!el) {
@@ -2625,7 +2672,13 @@ function Renderer(options) {
       var wrapperRep = context.wrapperRepForNode(node);
 
       if (wrapperRep) {
-        wrapperRep.tag.replace({
+        if (!wrapperRep[options.tagName || 'tag']) {
+          console.error("node", node);
+          console.error("wrapperRep", wrapperRep);
+          throw new Error("Could not get tag '".concat(options.tagName || 'tag', "' from wrapper!"));
+        }
+
+        wrapperRep[options.tagName || 'tag'].replace({
           context: context,
           node: node
         }, el);
@@ -2633,7 +2686,7 @@ function Renderer(options) {
       }
 
       var rep = context.repForNode(node);
-      rep.tag.replace({
+      rep[options.tagName || 'tag'].replace({
         context: context,
         node: node
       }, el);
@@ -2704,9 +2757,25 @@ function Loader(options) {
                 } else {
                   type = "array-indexed";
                 }
+              } else if (type === "map") {
+                type = "array-associative";
               }
             }
+          } else if (node.meta["lang.id"] === "registry.pinf.org/cadorn.org/github/renderers/packages/php/master") {
+            lang = "php";
+            type = node.meta["lang.type"];
+
+            if (node.meta["renderer"] === "http://registry.pinf.org/cadorn.org/renderers/packages/insight/0:structures/table") {
+              lang = "default";
+              type = "table";
+            }
           }
+    }
+
+    if (!type) {
+      console.error("node", node);
+      console.error("lang", lang);
+      throw new Error('Could not determine type for node!');
     }
 
     return self.repUriForType(lang, type);

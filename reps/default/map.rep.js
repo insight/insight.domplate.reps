@@ -93,9 +93,10 @@
             onClick: function (event) {
                 var row = domplate.util.getAncestorByClass(event.target, "value");
                 if(row.expandable) {
-                    this.toggleRow(row);
+                    if (this.toggleRow(row)) {
+                        event.stopPropagation();
+                    }
                 }
-                event.stopPropagation();
             },
             
             isCollapsible: function (node) {
@@ -122,7 +123,22 @@
                 return rep[type];
             },
             
+            _isTagExpandable: function (tag) {
+                while (true) {
+                    if(!tag.parentNode) {
+                        return true;
+                    }
+                    if(tag.getAttribute("allowTagExpand") === "false") {
+                        return false;
+                    }
+                    tag = tag.parentNode;
+                }
+            },
+
             toggleRow: function (row) {
+                if (!this._isTagExpandable(row)) {
+                    return false;
+                }
                 var node = null;
                 if (domplate.util.hasClass(row, "expanded")) {
                     node = this.collapsedTag.replace({
@@ -138,6 +154,7 @@
                     }, row);
                     domplate.util.setClass(row, "expanded");
                 }
+                return true;
             },
     
             mapIterator: function (context, node, type) {

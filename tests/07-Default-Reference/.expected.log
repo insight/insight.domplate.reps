@@ -17,8 +17,6 @@ environments: default
 [bash.origin.express] Adding route: /
 Server: http://localhost:8080/
 [READY]
-[domplate] Load style: default/reference.rep.css
-[domplate] Load style: default/string.rep.css
 
 
 

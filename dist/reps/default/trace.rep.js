@@ -15,8 +15,14 @@ function impl(domplate) {
   var T = domplate.tags;
   return {
     VAR_hideShortTagOnExpand: false,
+    meta: {
+      console: {
+        enableInspect: false
+      }
+    },
     tag: T.DIV({
-      "class": "structures-trace"
+      "class": "structures-trace",
+      "_templateObject": "$node|_getTemplateObject"
     }, T.TABLE({
       "cellpadding": 3,
       "cellspacing": 0
@@ -47,10 +53,14 @@ function impl(domplate) {
       "class": "separator"
     }, ",")))), ")"))))))),
     shortTag: T.SPAN({
-      "class": "structures-trace"
+      "class": "structures-trace",
+      "_templateObject": "$node|_getTemplateObject"
     }, T.TAG("$context,$node|getCaptionTag", {
       "node": "$node|getCaptionNode"
     })),
+    _getTemplateObject: function _getTemplateObject(node) {
+      return this;
+    },
     onFileClick: function onFileClick(event) {
       event.stopPropagation();
       var node = event.target.parentNode.frameNodeObj,
@@ -66,8 +76,9 @@ function impl(domplate) {
       };
 
       if (args["file"] && args["line"]) {
-        domplate.util.dispatchEvent('inspectFile', [event, {
-          "message": node.getObjectGraph().message,
+        var masterRow = this._getMasterRow(event.target);
+
+        masterRow.contextObject.dispatchEvent('inspectFile', [event, {
           "args": args
         }]);
       }
@@ -84,8 +95,9 @@ function impl(domplate) {
         tag = tag.parentNode;
       }
 
-      domplate.dispatchEvent('inspectNode', [event, {
-        "message": tag.argNodeObj.getObjectGraph().message,
+      var masterRow = this._getMasterRow(event.target);
+
+      masterRow.contextObject.dispatchEvent('inspectNode', [event, {
         "args": {
           "node": tag.argNodeObj
         }
@@ -103,10 +115,7 @@ function impl(domplate) {
     getTrace: function getTrace(node) {
       return node.value.stack;
     },
-    postRender: function postRender(node) {
-      ;
-      debugger;
-    },
+    postRender: function postRender(node) {},
     getCallList: function getCallList(node) {
       try {
         var list = [];
@@ -198,6 +207,21 @@ function impl(domplate) {
       } catch (err) {
         console.error(err);
       }
+    },
+    _getMasterRow: function _getMasterRow(row) {
+      while (true) {
+        if (!row.parentNode) {
+          return null;
+        }
+
+        if (domplate.util.hasClass(row, "console-message")) {
+          break;
+        }
+
+        row = row.parentNode;
+      }
+
+      return row;
     }
   };
 }
@@ -213,7 +237,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0) {  var l0 = 0;  var l1 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {      l0 = __loop__.apply(this, [d0, function(i0,l0,d0,d1,d2,d3) {        node = __path__(root, o,0,0,0+1+l0+0);node.frameNodeObj = d0;        node = __path__(root, o,0,0,0+1+l0+0,0);node.addEventListener("click", __bind__(this, d1), false);        node = __path__(root, o,0,0,0+1+l0+0,0+1);node.addEventListener("click", __bind__(this, d2), false);      l1 = __loop__.apply(this, [d3, function(i1,l1,d0,d1,d2,d3,d4) {        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0);node.addEventListener("click", __bind__(this, d0), false);node.argNodeObj = d1;        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0,0);        e0 = __link__(node, d2, d3);      if_0 = __if__.apply(this, [d4, function(if_0) {      }]);        return 0+1;      }]);        return 0+1;      }]);  }  return 1;})
+return (function (root, context, o, d0, d1) {  var l0 = 0;  var l1 = 0;  var if_0 = 0;  var e0 = 0;  with (this) {        node = __path__(root, o);node.templateObject = _getTemplateObject(d0);      l0 = __loop__.apply(this, [d1, function(i0,l0,d0,d1,d2,d3) {        node = __path__(root, o,0,0,0+1+l0+0);node.frameNodeObj = d0;        node = __path__(root, o,0,0,0+1+l0+0,0);node.addEventListener("click", __bind__(this, d1), false);        node = __path__(root, o,0,0,0+1+l0+0,0+1);node.addEventListener("click", __bind__(this, d2), false);      l1 = __loop__.apply(this, [d3, function(i1,l1,d0,d1,d2,d3,d4) {        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0);node.addEventListener("click", __bind__(this, d0), false);node.argNodeObj = d1;        node = __path__(root, o,0,0,0+1+l0+0,0+1+1,0,0+1+l1+0,0);        e0 = __link__(node, d2, d3);      if_0 = __if__.apply(this, [d4, function(if_0) {      }]);        return 0+1;      }]);        return 0+1;      }]);  }  return 1;})
 }
 ,
 "shortTag":function (context) {
@@ -223,7 +247,7 @@ var __bind__ = context.__bind__;
 var __if__ = context.__if__;
 var __link__ = context.__link__;
 var __loop__ = context.__loop__;
-return (function (root, context, o, d0, d1) {  var e0 = 0;  with (this) {        node = __path__(root, o,0);        e0 = __link__(node, d0, d1);  }  return 1;})
+return (function (root, context, o, d0, d1, d2) {  var e0 = 0;  with (this) {        node = __path__(root, o);node.templateObject = _getTemplateObject(d0);        node = __path__(root, o,0);        e0 = __link__(node, d1, d2);  }  return 1;})
 }
 };
   rep.__markup = {
@@ -233,7 +257,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " __dbid=\"","ec8a56cdafa321f0900fa656ca9d71bcf3d1b54e", "\"", " __dtid=\"","insight.domplate.reps/default/trace", "\"", " class=\"","structures-trace", " ", "\"",">","<table", " cellpadding=\"","3", "\"", " cellspacing=\"","0", "\"",">","<tbody",">","<tr",">","<th", " class=\"","header-file", " ", "\"",">","File","</th>","<th", " class=\"","header-line", " ", "\"",">","Line","</th>","<th", " class=\"","header-inst", " ", "\"",">","Instruction","</th>","</tr>");    __loop__.apply(this, [getCallList(node), __out__, function(frame, __out__) {    __code__.push("","<tr",">","<td", " class=\"","cell-file", " ", "\"",">",__escape__(frame.file),"</td>","<td", " class=\"","cell-line", " ", "\"",">",__escape__(frame.line),"</td>","<td", " class=\"","cell-inst", " ", "\"",">","<div",">",__escape__(getFrameLabel(frame)),"(");__out__.push(frame.node,onFileClick,onFileClick);    __loop__.apply(this, [argIterator(context,frame), __out__, function(arg, __out__) {    __code__.push("","<div", " class=\"","arg", " ", "\"",">");__out__.push(onArgClick,arg.node);__link__(arg.tag, __code__, __out__, {"node":arg.node,"context":context});__if__.apply(this, [arg.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("",")","</div>","</td>","</tr>");    }]);    __code__.push("","</tbody>","</table>","</div>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " __dbid=\"","02ce81bf834058ce5150d7be4d01e547baa84a2c", "\"", " __dtid=\"","insight.domplate.reps/default/trace", "\"", " class=\"","structures-trace", " ", "\"",">","<table", " cellpadding=\"","3", "\"", " cellspacing=\"","0", "\"",">","<tbody",">","<tr",">","<th", " class=\"","header-file", " ", "\"",">","File","</th>","<th", " class=\"","header-line", " ", "\"",">","Line","</th>","<th", " class=\"","header-inst", " ", "\"",">","Instruction","</th>","</tr>");__out__.push(node);    __loop__.apply(this, [getCallList(node), __out__, function(frame, __out__) {    __code__.push("","<tr",">","<td", " class=\"","cell-file", " ", "\"",">",__escape__(frame.file),"</td>","<td", " class=\"","cell-line", " ", "\"",">",__escape__(frame.line),"</td>","<td", " class=\"","cell-inst", " ", "\"",">","<div",">",__escape__(getFrameLabel(frame)),"(");__out__.push(frame.node,onFileClick,onFileClick);    __loop__.apply(this, [argIterator(context,frame), __out__, function(arg, __out__) {    __code__.push("","<div", " class=\"","arg", " ", "\"",">");__out__.push(onArgClick,arg.node);__link__(arg.tag, __code__, __out__, {"node":arg.node,"context":context});__if__.apply(this, [arg.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("",")","</div>","</td>","</tr>");    }]);    __code__.push("","</tbody>","</table>","</div>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -242,10 +266,10 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","ec8a56cdafa321f0900fa656ca9d71bcf3d1b54e", "\"", " __dtid=\"","insight.domplate.reps/default/trace", "\"", " class=\"","structures-trace", " ", "\"",">");__link__(getCaptionTag(context,node), __code__, __out__, {"node":getCaptionNode(node)});    __code__.push("","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","02ce81bf834058ce5150d7be4d01e547baa84a2c", "\"", " __dtid=\"","insight.domplate.reps/default/trace", "\"", " class=\"","structures-trace", " ", "\"",">");__out__.push(node);__link__(getCaptionTag(context,node), __code__, __out__, {"node":getCaptionNode(node)});    __code__.push("","</span>");  }}})
 }
 };
-  rep.__dbid = "ec8a56cdafa321f0900fa656ca9d71bcf3d1b54e";
+  rep.__dbid = "02ce81bf834058ce5150d7be4d01e547baa84a2c";
   rep.__dtid = "insight.domplate.reps/default/trace";
   var res = domplate.domplate(rep);
   var injectedCss = false;

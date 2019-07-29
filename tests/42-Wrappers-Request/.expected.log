@@ -8,9 +8,9 @@ environments: default
 
   Suite
 [bash.origin.express] Adding route: /dist/insight-domplate-renderer.browser.js
-[bash.origin.express] Adding route: /default/dictionary.rep.js
 [bash.origin.express] Adding route: /domplate-eval.browser.js
-[bash.origin.express] Adding route: /wrappers/console.rep.js
+[bash.origin.express] Adding route: /wrappers/request.rep.js
+[bash.origin.express] Adding route: /default/unknown.rep.js
 [bash.origin.express] Adding route: /default/string.rep.js
 [bash.origin.express] Adding route: /domplate.browser.js
 [bash.origin.express] Adding route: /^\//
@@ -18,9 +18,6 @@ environments: default
 [bash.origin.express] Adding route: /
 Server: http://localhost:8080/
 [READY]
-[domplate] Load style: default/dictionary.rep.css
-[domplate] Load style: wrappers/console.rep.css
-[domplate] Load style: default/string.rep.css
 
 
 

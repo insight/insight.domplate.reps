@@ -52,6 +52,12 @@
 
             VAR_hideShortTagOnExpand: false,
 
+            meta: {
+                console: {
+                    enableInspect: false
+                }
+            },
+
             tag:
                 T.DIV({"class": "table"},
                     T.TABLE({"cellpadding": 3, "cellspacing": 0},
@@ -150,7 +156,7 @@
             onCellClick: function(event) {
                 event.stopPropagation();
 
-                //var masterRow = this._getMasterRow(event.target);
+                var masterRow = this._getMasterRow(event.target);
                 //masterRow.messageObject
 
                 var tag = event.target;
@@ -160,9 +166,13 @@
                     }
                     tag = tag.parentNode;
                 }
-                domplate.dispatchEvent('inspectNode', [event, {
-                    //"message": masterRow.messageObject,
-                    "args": {"node": tag.cellNodeObj}
+
+                masterRow.contextObject.dispatchEvent('inspectNode', [event, {
+                    //"message": tag.argNodeObj.messageObject,
+                    //"masterTag": masterRow,
+                    "args": {
+                        "node": tag.cellNodeObj
+                    }
                 }]);
             },
 

@@ -17,8 +17,6 @@ environments: default
 [bash.origin.express] Adding route: /
 Server: http://localhost:8080/
 [READY]
-[domplate] Load style: php/array-indexed.rep.css
-[domplate] Load style: php/string.rep.css
 
 
 

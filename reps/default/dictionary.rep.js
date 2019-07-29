@@ -148,12 +148,28 @@
                 }
                 var row = domplate.util.getAncestorByClass(event.target, "member");
                 if(domplate.util.hasClass(row, "expandable")) {
-                    this.toggleRow(row);
+                    if (this.toggleRow(row)) {
+                        event.stopPropagation();
+                    }
                 }
-                event.stopPropagation();
+            },
+
+            _isTagExpandable: function (tag) {
+                while (true) {
+                    if(!tag.parentNode) {
+                        return true;
+                    }
+                    if(tag.getAttribute("allowTagExpand") === "false") {
+                        return false;
+                    }
+                    tag = tag.parentNode;
+                }
             },
             
             toggleRow: function (row) {
+                if (!this._isTagExpandable(row)) {
+                    return false;
+                }
                 var valueElement = domplate.util.getElementByClass(row, "value");
                 if (domplate.util.hasClass(row, "expanded")) {
                     domplate.util.removeClass(row, "expanded");
@@ -174,6 +190,7 @@
                         "context": row.contextObject
                     }, valueElement);
                 }
+                return true;
             }
         };
     },

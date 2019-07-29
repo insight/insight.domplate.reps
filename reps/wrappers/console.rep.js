@@ -37,11 +37,11 @@
                         },
                         T.DIV({"class": "expander"}),
                         T.DIV({"class": "actions"},
-                            T.DIV({"class": "inspect", "onclick":"$onClick"}),
+                            T.DIV({"class": "inspect $context,$node|_getInspectActionClass", "onclick":"$onClick"}),
                             T.DIV({"class": "file $node|_getFileActionClass", "onclick":"$onClick"})
                         ),
                         T.SPAN(
-                            {"class": "summary"},
+                            {"class": "summary", "allowTagExpand": "false"},
                             T.SPAN({"class": "label"},    // WORKAROUND: T.IF does not work at top level due to a bug
                                 T.IF("$node|_hasLabel", T.SPAN("$node|_getLabel"))
                             ),
@@ -51,16 +51,26 @@
                             })
                         ),
                         T.SPAN({"class": "fileline"}, 
-                            T.DIV(  // WORKAROUND: T.IF does not work at top level due to a bug
-                                T.IF("$node|_hasLabel", T.DIV({"class": "label"}, "$node|_getLabel"))
-                            ),
+                            //T.DIV(  // WORKAROUND: T.IF does not work at top level due to a bug
+                            //    T.IF("$node|_hasLabel", T.DIV({"class": "label"}, "$node|_getLabel"))
+                            //),
                             T.DIV("$node|_getFileLine"))
                     ),
                     T.DIV({"class": "$node|_getBodyClass"})
                 ),
 
+            shortTag:
+                T.TAG("getTag", {
+                    "node": "$node",
+                    "context": "$context"
+                }),
+
             groupNoMessagesTag:
                 T.DIV({"class": "group-no-messages"}, "No Messages"),    
+
+            _getTag: function () {
+                return this.tag;
+            },
 
             _getTemplateObject: function () {
                 return this;
@@ -143,11 +153,29 @@
                 if (
                     message.meta["file"] &&
                     message.meta.console &&
-                    message.meta.console["enableFileInspect"]
+                    typeof message.meta.console["enableFileInspect"] !== "undefined"
                 ) {
-                    return "";
+                    return message.meta.console["enableInspect"] ? "": "hidden";
                 }
                 return "hidden";
+            },
+
+            _getInspectActionClass: function (context, message) {
+                if (
+                    message.meta.console &&
+                    typeof message.meta.console["enableInspect"] !== "undefined"
+                ) {
+                    return message.meta.console["enableInspect"] ? "": "hidden";
+                }
+                var rep = context.repForNode(message);
+                if (
+                    rep.meta &&
+                    rep.meta.console &&
+                    typeof rep.meta.console["enableInspect"] !== "undefined"
+                ) {
+                    return rep.meta.console["enableInspect"] ? "": "hidden";
+                }
+                return "";
             },
     
             _getTagDbid: function (context, node) {
@@ -266,11 +294,16 @@
                         "right": actionsTag.getBoundingClientRect().left || headerTag.getBoundingClientRect().right,
                         "bottom": headerTag.getBoundingClientRect().bottom+1
                     };
-        
-                    if (pointer.x >= masterRect.left && pointer.x <= masterRect.right && pointer.y >= masterRect.top && pointer.y <= masterRect.bottom) {
+
+                    if (
+                        pointer.x >= masterRect.left &&
+                        pointer.x <= masterRect.right &&
+                        pointer.y >= masterRect.top &&
+                        pointer.y <= masterRect.bottom
+                    ) {
                         event.stopPropagation();
-                        
-                        if(masterRow.getAttribute("expanded")=="true") {
+
+                        if (masterRow.getAttribute("expanded") == "true") {
         
                             masterRow.setAttribute("expanded", "false");
 
@@ -301,7 +334,7 @@
                             }
                         }
                     } else
-                    if(domplate.util.hasClass(event.target, "inspect")) {
+                    if (domplate.util.hasClass(event.target, "inspect")) {
                         event.stopPropagation();
 
                         masterRow.contextObject.dispatchEvent('inspectMessage', [event, {
@@ -314,7 +347,7 @@
                             }
                         }]);
                     } else
-                    if(domplate.util.hasClass(event.target, "file")) {
+                    if (domplate.util.hasClass(event.target, "file")) {
                         event.stopPropagation();
                         var args = {
                             "file": masterRow.messageObject.meta.file,
@@ -355,12 +388,28 @@
             },
         
             postRender: function (node) {
-                var node = this._getMasterRow(node);
-                if (node.messageObject && typeof node.messageObject.postRender == "object") {
-                    if (typeof node.messageObject.postRender.keeptitle !== "undefined") {
-                        node.setAttribute("keeptitle", node.messageObject.postRender.keeptitle?"true":"false");
+
+                var masterRow = this._getMasterRow(node);
+
+                if (typeof masterRow.messageObject.meta.keeptitle !== "undefined") {
+console.log("keeptitle via (1)");                    
+                    masterRow.setAttribute("keeptitle", masterRow.messageObject.meta.keeptitle ? "true":"false");
+                } else
+                if (masterRow.messageObject && typeof masterRow.messageObject.postRender == "object") {
+                    if (typeof masterRow.messageObject.postRender.keeptitle !== "undefined") {
+console.log("keeptitle via (2)");                    
+                        masterRow.setAttribute("keeptitle", masterRow.messageObject.postRender.keeptitle ? "true":"false");
                     }
                 }
+/*
+console.log("MASTER ROW", masterRow);
+console.log("MASTER ROW node.meta", masterRow.messageObject.meta);
+
+                var summaryTag = masterRow.querySelector('.summary > [__dtid]');
+                if (summaryTag.templateObject) {
+                    summaryTag.templateObject.
+                }
+*/
             },
 
             expandForMasterRow: function (masterRow, bodyTag) {
@@ -430,10 +479,10 @@
             padding-top: 3px;
             padding-bottom: 4px;
             cursor: pointer;
-        }
-        DIV.console-message[expanded=true] > DIV.header {
-            text-align: right;
             min-height: 16px;
+        }
+        DIV.console-message[expanded=true] > DIV.header > SPAN.summary {
+            opacity: 0.4;
         }
         DIV.console-message[expanded=false] > DIV.header:hover {
             background-color: #ffc73d;
@@ -495,13 +544,14 @@
             margin-top: 0px;
         }
         DIV.console-message > DIV.header > SPAN.summary > SPAN > SPAN.count {
-            color: #8c8c8c;
+            color: #525252;
         }
         DIV.console-message > DIV.header > SPAN.fileline {
-            color: #8c8c8c;
+            color: #525252;
             word-wrap: break-word;
+            float: right;
         }
-        DIV.console-message[expanded=true] > DIV.header > SPAN.summary {
+        DIV.console-message[expandedSummary=true] > DIV.header > SPAN.summary {
             display: none;
         }
         DIV.console-message[keeptitle=true] > DIV.header,

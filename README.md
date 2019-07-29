@@ -3,16 +3,8 @@ insight.domplate.reps
 
 > [Domplate](https://github.com/domplate/domplate) object representations for visualizing language primitives.
 
-TODO:
-
-  * Load images: `npm test 05 --dev`
-  * Finish `console` and `viewer` reps
-  * Write reps & images to `/dist/`
-  * Publish to npm
-  * Use in `fireconsole.rep.js`
-
 
 Provenance
 ==========
 
-Original source logic by Christoph Dorn under MIT License since 2010.
+Original source logic by Christoph Dorn under [OSL](https://opensource.org/licenses/osl-3.0.php) License since 2010.

@@ -51,9 +51,18 @@
         return {
 
             VAR_hideShortTagOnExpand: false,
-            
+
+            meta: {
+                console: {
+                    enableInspect: false
+                }
+            },
+
             tag:
-                T.DIV({"class": "structures-trace"},
+                T.DIV({
+                    "class": "structures-trace",
+                    "_templateObject": "$node|_getTemplateObject"
+                },
                     T.TABLE({"cellpadding": 3, "cellspacing": 0},
                         T.TBODY(
                             T.TR(
@@ -82,10 +91,16 @@
                 ),
     
             shortTag:
-                T.SPAN({"class": "structures-trace"}, T.TAG("$context,$node|getCaptionTag", {"node": "$node|getCaptionNode"})),
+                T.SPAN({
+                    "class": "structures-trace",
+                    "_templateObject": "$node|_getTemplateObject"
+                }, T.TAG("$context,$node|getCaptionTag", {"node": "$node|getCaptionNode"})),
     
+            _getTemplateObject: function (node) {
+                return this;
+            },
     
-            onFileClick: function(event) {
+            onFileClick: function (event) {
                 event.stopPropagation();
                 var node = event.target.parentNode.frameNodeObj,
                     frame = node;
@@ -97,29 +112,44 @@
                     "line": frame.line.value
                 };
                 if(args["file"] && args["line"]) {
-                    domplate.util.dispatchEvent('inspectFile', [event, {
-                        "message": node.getObjectGraph().message,
+                    var masterRow = this._getMasterRow(event.target);
+
+                    masterRow.contextObject.dispatchEvent('inspectFile', [event, {
+                        //"message": masterRow.messageObject,
+                        //"masterTag": masterRow,
                         "args": args
                     }]);
                 }
             },
     
-            onArgClick: function(event) {
+            onArgClick: function (event) {
                 event.stopPropagation();
                 var tag = event.target;
-                while(tag.parentNode) {
-                    if(tag.argNodeObj) {
+                while (tag.parentNode) {
+                    if (tag.argNodeObj) {
                         break;
                     }
                     tag = tag.parentNode;
                 }
+
+                var masterRow = this._getMasterRow(event.target);
+
+                masterRow.contextObject.dispatchEvent('inspectNode', [event, {
+                    //"message": tag.argNodeObj.messageObject,
+                    //"masterTag": masterRow,
+                    "args": {
+                        "node": tag.argNodeObj
+                    }
+                }]);
+                /*
                 domplate.dispatchEvent('inspectNode', [event, {
                     "message": tag.argNodeObj.getObjectGraph().message,
                     "args": {"node": tag.argNodeObj}
                 }]);
+                */
             },
     
-            getCaptionTag: function(context, node) {
+            getCaptionTag: function (context, node) {
                 var rep = context.repForNode(this.getCaptionNode(node));
                 return rep.shortTag || rep.tag;
             },
@@ -132,9 +162,10 @@
                 return node.value.stack;
             },
 
-            postRender: function(node)
+            postRender: function (node)
             {
-;debugger;                    
+//console.log("POST RENDER IN TRACE!!", node);
+
 /*                    
                 var node = this._getMasterRow(node);
                 if (node.messageObject && typeof node.messageObject.postRender == "object")
@@ -144,7 +175,7 @@
                         node.setAttribute("keeptitle", node.messageObject.postRender.keeptitle?"true":"false");
                     }
                 }
-*/                    
+*/
             },
 
             getCallList: function(node) {
@@ -246,6 +277,19 @@
                     // TODO: Log to context/domplate error console
                     console.error(err);
                 }
+            },
+
+            _getMasterRow: function (row) {
+                while (true) {
+                    if(!row.parentNode) {
+                        return null;
+                    }
+                    if(domplate.util.hasClass(row, "console-message")) {
+                        break;
+                    }
+                    row = row.parentNode;
+                }
+                return row;
             }
 
         };
@@ -307,8 +351,8 @@
           border-bottom: 0px;
           border-right: 0px;
         }
-        DIV.structures-trace TABLE TBODY TR TD.cell-line:hover,
-        DIV.structures-trace TABLE TBODY TR TD.cell-file:hover {
+        DIV.structures-trace TABLE TBODY TR TD.cell-line[clickable="true"]:hover,
+        DIV.structures-trace TABLE TBODY TR TD.cell-file[clickable="true"]:hover {
             background-color: #ffc73d;
             cursor: pointer;    
         }

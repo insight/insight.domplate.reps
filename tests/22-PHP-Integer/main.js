@@ -16,4 +16,4 @@ require("../helpers").describeRepSuite("php/integer", {
         "lang.type": "integer"
     },
     value: 1000
-}, "1,000");
+}, "1000");

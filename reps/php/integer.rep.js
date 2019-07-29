@@ -21,7 +21,9 @@
                 T.SPAN({"class": "integer"}, "$node|getValue"),
 
             getValue: function (node) {
-                return this._addCommas(node.value);
+                return node.value;
+                // @see https://github.com/firephp/firephp-for-firefox-devtools/issues/41
+                //return this._addCommas(node.value);
             },
 
             // @see http://www.mredkj.com/javascript/numberFormat.html

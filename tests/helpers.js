@@ -58,7 +58,7 @@ exports.describeRepSuite = function (repUri, node, expected) {
                     '<head>',
                         '<script src="/dist/insight-domplate-renderer.browser.js"></script>',
                         '<style>',
-                            '#rep {',
+                            'DIV.rep {',
                                 'padding: 2px 4px 1px 6px;',
                                 'font-family: Lucida Grande, Tahoma, sans-serif;',
                                 'font-size: 11px;',
@@ -66,10 +66,13 @@ exports.describeRepSuite = function (repUri, node, expected) {
                         '</style>',
                     '</head>',
                     '<body>',
-                        '<div id="rep"></div>',
+                        '<div class="rep" id="rep"></div>',
+                        '<hr>',
+                        '<div class="rep" id="repShort"></div>',
                     '</body>',
                     '<script>',
                         '(new window["insight-domplate-renderer"]({ repsBaseUrl: "/reps" })).renderNodeInto(' + JSON.stringify(node) + ', "#rep").catch(console.error);',
+                        '(new window["insight-domplate-renderer"]({ repsBaseUrl: "/reps" })).renderNodeInto(' + JSON.stringify(node) + ', "#repShort", { tagName: "shortTag" }).catch(console.error);',
                     '</script>'
                 ].join("\n")
             }
