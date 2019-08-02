@@ -10,6 +10,7 @@
     "build": "pinf.it ./#_gi0.PINF.it_#.inf.json"
   },
   "dependencies": {
-    "domplate": "^0.3.0"
-  }
+    "domplate": "^0.4.0-pre.0"
+  },
+  "devDependencies": {}
 }
