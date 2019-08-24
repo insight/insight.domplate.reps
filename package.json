@@ -1,16 +1,15 @@
 {
   "name": "insight.domplate.reps",
-  "version": "0.0.0",
+  "version": "0.1.0-pre.0",
   "main": "lib/renderer.js",
-  "__devDependencies": {
-    "bash.origin.workspace": "^0.3.1"
-  },
   "scripts": {
     "test": "bash.origin.test tests",
     "build": "pinf.it ./#_gi0.PINF.it_#.inf.json"
   },
+  "devDependencies": {
+    "bash.origin.lib": "^0.4.0-pre.0"    
+  },
   "dependencies": {
     "domplate": "^0.4.0-pre.0"
-  },
-  "devDependencies": {}
+  }
 }
