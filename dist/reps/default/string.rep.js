@@ -20,8 +20,14 @@ function impl(domplate) {
     shortTag: T.SPAN({
       "class": "string"
     }, "$node|getValue"),
+    collapsedTag: T.SPAN({
+      "class": "string"
+    }, "$node|cropNode"),
     getValue: function getValue(node) {
       if (!node.parentNode || node.meta && typeof node.meta["string.trim.enabled"] !== "undefined" && node.meta["string.trim.enabled"] === false) return node.value;else return this.cropString(node.value);
+    },
+    cropNode: function cropNode(node) {
+      return this.cropString(node.value);
     },
     cropString: function cropString(text, limit) {
       text = text + "";
@@ -76,6 +82,16 @@ var __link__ = context.__link__;
 var __loop__ = context.__loop__;
 return (function (root, context, o) {  with (this) {  }  return 1;})
 }
+,
+"collapsedTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __path__ = context.__path__;
+var __bind__ = context.__bind__;
+var __if__ = context.__if__;
+var __link__ = context.__link__;
+var __loop__ = context.__loop__;
+return (function (root, context, o) {  with (this) {  }  return 1;})
+}
 };
   rep.__markup = {
 "tag":function (context) {
@@ -84,7 +100,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","bc26bd236f1fdd412abbeac376be6d7301b0432e", "\"", " __dtid=\"","insight.domplate.reps/default/string", "\"", " class=\"","string", " ", "\"",">");    __loop__.apply(this, [lineIterator(node.value), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br","/>");}]);    }]);    __code__.push("","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","62e0cc04c396104049de2fe8bd98aa71d8459ae5", "\"", " __dtid=\"","default/string", "\"", " class=\"","string", " ", "\"",">");    __loop__.apply(this, [lineIterator(node.value), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br","/>");}]);    }]);    __code__.push("","</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -93,11 +109,20 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","bc26bd236f1fdd412abbeac376be6d7301b0432e", "\"", " __dtid=\"","insight.domplate.reps/default/string", "\"", " class=\"","string", " ", "\"",">",__escape__(getValue(node)),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","62e0cc04c396104049de2fe8bd98aa71d8459ae5", "\"", " __dtid=\"","default/string", "\"", " class=\"","string", " ", "\"",">",__escape__(getValue(node)),"</span>");  }}})
+}
+,
+"collapsedTag":function (context) {
+var DomplateDebug = context.DomplateDebug;
+var __escape__ = context.__escape__;
+var __if__ = context.__if__;
+var __loop__ = context.__loop__;
+var __link__ = context.__link__;
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","62e0cc04c396104049de2fe8bd98aa71d8459ae5", "\"", " __dtid=\"","default/string", "\"", " class=\"","string", " ", "\"",">",__escape__(cropNode(node)),"</span>");  }}})
 }
 };
-  rep.__dbid = "bc26bd236f1fdd412abbeac376be6d7301b0432e";
-  rep.__dtid = "insight.domplate.reps/default/string";
+  rep.__dbid = "62e0cc04c396104049de2fe8bd98aa71d8459ae5";
+  rep.__dtid = "default/string";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

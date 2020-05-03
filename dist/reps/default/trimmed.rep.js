@@ -57,7 +57,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","5ee0a11f1b7ce8d99318df96e48d8aae775a3482", "\"", " __dtid=\"","insight.domplate.reps/default/trimmed", "\"", " class=\"","trimmed", " ", "\"",">",__escape__(getNotice(node)),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","5ee0a11f1b7ce8d99318df96e48d8aae775a3482", "\"", " __dtid=\"","default/trimmed", "\"", " class=\"","trimmed", " ", "\"",">",__escape__(getNotice(node)),"</span>");  }}})
 }
 ,
 "collapsedTag":function (context) {
@@ -66,11 +66,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","5ee0a11f1b7ce8d99318df96e48d8aae775a3482", "\"", " __dtid=\"","insight.domplate.reps/default/trimmed", "\"", " class=\"","trimmed", " ", "\"",">",__escape__(getNotice(node)),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","5ee0a11f1b7ce8d99318df96e48d8aae775a3482", "\"", " __dtid=\"","default/trimmed", "\"", " class=\"","trimmed", " ", "\"",">",__escape__(getNotice(node)),"</span>");  }}})
 }
 };
   rep.__dbid = "5ee0a11f1b7ce8d99318df96e48d8aae775a3482";
-  rep.__dtid = "insight.domplate.reps/default/trimmed";
+  rep.__dtid = "default/trimmed";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

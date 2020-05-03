@@ -230,7 +230,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a95f694649c73f58a7f6356cfd1437e0be74823", "\"", " __dtid=\"","insight.domplate.reps/php/array-associative", "\"", " class=\"","map", " ", "\"",">","<span",">",__escape__(VAR_label),"(","</span>");__out__.push(node);    __loop__.apply(this, [mapIterator(context,node,CONST_Normal), __out__, function(pair, __out__) {    __code__.push("","<div", " class=\"","pair", " ", "\"",">");__link__(pair.key.tag, __code__, __out__, {"node":pair.key.node,"context":context});    __code__.push("","<span", " class=\"","delimiter", " ", "\"",">","=>","</span>","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,pair.value.node,context,pair.value.expandable);__link__(pair.value.tag, __code__, __out__, {"node":pair.value.node,"context":context});    __code__.push("","</span>");__if__.apply(this, [pair.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a95f694649c73f58a7f6356cfd1437e0be74823", "\"", " __dtid=\"","php/array-associative", "\"", " class=\"","map", " ", "\"",">","<span",">",__escape__(VAR_label),"(","</span>");__out__.push(node);    __loop__.apply(this, [mapIterator(context,node,CONST_Normal), __out__, function(pair, __out__) {    __code__.push("","<div", " class=\"","pair", " ", "\"",">");__link__(pair.key.tag, __code__, __out__, {"node":pair.key.node,"context":context});    __code__.push("","<span", " class=\"","delimiter", " ", "\"",">","=>","</span>","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,pair.value.node,context,pair.value.expandable);__link__(pair.value.tag, __code__, __out__, {"node":pair.value.node,"context":context});    __code__.push("","</span>");__if__.apply(this, [pair.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -239,7 +239,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a95f694649c73f58a7f6356cfd1437e0be74823", "\"", " __dtid=\"","insight.domplate.reps/php/array-associative", "\"", " class=\"","map", " ", "\"",">","<span",">",__escape__(VAR_label),"(","</span>");__out__.push(node);    __loop__.apply(this, [mapIterator(context,node,CONST_Short), __out__, function(pair, __out__) {    __code__.push("","<span", " class=\"","pair", " ", "\"",">");__link__(pair.key.tag, __code__, __out__, {"node":pair.key.node,"context":context});    __code__.push("","<span", " class=\"","delimiter", " ", "\"",">","=>","</span>","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,pair.value.node,context,pair.value.expandable);__link__(pair.value.tag, __code__, __out__, {"node":pair.value.node,"context":context});    __code__.push("","</span>");__if__.apply(this, [pair.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a95f694649c73f58a7f6356cfd1437e0be74823", "\"", " __dtid=\"","php/array-associative", "\"", " class=\"","map", " ", "\"",">","<span",">",__escape__(VAR_label),"(","</span>");__out__.push(node);    __loop__.apply(this, [mapIterator(context,node,CONST_Short), __out__, function(pair, __out__) {    __code__.push("","<span", " class=\"","pair", " ", "\"",">");__link__(pair.key.tag, __code__, __out__, {"node":pair.key.node,"context":context});    __code__.push("","<span", " class=\"","delimiter", " ", "\"",">","=>","</span>","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,pair.value.node,context,pair.value.expandable);__link__(pair.value.tag, __code__, __out__, {"node":pair.value.node,"context":context});    __code__.push("","</span>");__if__.apply(this, [pair.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "collapsedTag":function (context) {
@@ -248,7 +248,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a95f694649c73f58a7f6356cfd1437e0be74823", "\"", " __dtid=\"","insight.domplate.reps/php/array-associative", "\"", " class=\"","map", " ", "\"",">","<span",">",__escape__(VAR_label),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getItemCount(node))," ...","</span>","<span",">",")","</span>","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a95f694649c73f58a7f6356cfd1437e0be74823", "\"", " __dtid=\"","php/array-associative", "\"", " class=\"","map", " ", "\"",">","<span",">",__escape__(VAR_label),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getItemCount(node))," ...","</span>","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "moreTag":function (context) {
@@ -257,11 +257,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a95f694649c73f58a7f6356cfd1437e0be74823", "\"", " __dtid=\"","insight.domplate.reps/php/array-associative", "\"",">"," ... ","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a95f694649c73f58a7f6356cfd1437e0be74823", "\"", " __dtid=\"","php/array-associative", "\"",">"," ... ","</span>");  }}})
 }
 };
   rep.__dbid = "4a95f694649c73f58a7f6356cfd1437e0be74823";
-  rep.__dtid = "insight.domplate.reps/php/array-associative";
+  rep.__dtid = "php/array-associative";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

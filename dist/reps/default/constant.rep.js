@@ -54,7 +54,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","3e909bde186a14516e0c86324d0f008fc71f2b2c", "\"", " __dtid=\"","insight.domplate.reps/default/constant", "\"", " class=\"","constant", " ", "\"",">",__escape__(node.value),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","3e909bde186a14516e0c86324d0f008fc71f2b2c", "\"", " __dtid=\"","default/constant", "\"", " class=\"","constant", " ", "\"",">",__escape__(node.value),"</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -63,11 +63,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","3e909bde186a14516e0c86324d0f008fc71f2b2c", "\"", " __dtid=\"","insight.domplate.reps/default/constant", "\"", " class=\"","constant", " ", "\"",">",__escape__(node.value),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","3e909bde186a14516e0c86324d0f008fc71f2b2c", "\"", " __dtid=\"","default/constant", "\"", " class=\"","constant", " ", "\"",">",__escape__(node.value),"</span>");  }}})
 }
 };
   rep.__dbid = "3e909bde186a14516e0c86324d0f008fc71f2b2c";
-  rep.__dtid = "insight.domplate.reps/default/constant";
+  rep.__dtid = "default/constant";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

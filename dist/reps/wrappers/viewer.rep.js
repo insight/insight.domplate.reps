@@ -53,11 +53,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " __dbid=\"","81dd6cc349cc607697b22148aa1809050c0fcda4", "\"", " __dtid=\"","insight.domplate.reps/wrappers/viewer", "\"", " class=\"","viewer-harness", " ", "\"",">");__link__(_getTag(context,node), __code__, __out__, {"node":node,"context":context});    __code__.push("","</div>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<div", " __dbid=\"","81dd6cc349cc607697b22148aa1809050c0fcda4", "\"", " __dtid=\"","wrappers/viewer", "\"", " class=\"","viewer-harness", " ", "\"",">");__link__(_getTag(context,node), __code__, __out__, {"node":node,"context":context});    __code__.push("","</div>");  }}})
 }
 };
   rep.__dbid = "81dd6cc349cc607697b22148aa1809050c0fcda4";
-  rep.__dtid = "insight.domplate.reps/wrappers/viewer";
+  rep.__dtid = "wrappers/viewer";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

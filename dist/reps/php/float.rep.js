@@ -70,7 +70,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","f0137b4e5003190e0ca62ea1c5350bfa1f3eb570", "\"", " __dtid=\"","insight.domplate.reps/php/float", "\"", " class=\"","float", " ", "\"",">",__escape__(getValue(node)),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","f0137b4e5003190e0ca62ea1c5350bfa1f3eb570", "\"", " __dtid=\"","php/float", "\"", " class=\"","float", " ", "\"",">",__escape__(getValue(node)),"</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -79,11 +79,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","f0137b4e5003190e0ca62ea1c5350bfa1f3eb570", "\"", " __dtid=\"","insight.domplate.reps/php/float", "\"", " class=\"","float", " ", "\"",">",__escape__(getValue(node)),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","f0137b4e5003190e0ca62ea1c5350bfa1f3eb570", "\"", " __dtid=\"","php/float", "\"", " class=\"","float", " ", "\"",">",__escape__(getValue(node)),"</span>");  }}})
 }
 };
   rep.__dbid = "f0137b4e5003190e0ca62ea1c5350bfa1f3eb570";
-  rep.__dtid = "insight.domplate.reps/php/float";
+  rep.__dtid = "php/float";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

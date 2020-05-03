@@ -2,21 +2,19 @@
 >>>TEST_IGNORE_LINE:\d milliseconds.$<<<
 >>>TEST_IGNORE_LINE:\d+\spassing\s\([^\)]+\)<<<
 environments: default
+>>>TEST_IGNORE_LINE:\[pinf.it\].+Writing to:<<<
 >>>TEST_IGNORE_LINE:\[bash.origin.express\] Routing request /<<<
 >>>TEST_IGNORE_LINE:^[\d\.]+\s<<<
+>>>TEST_IGNORE_LINE:\[domplate\] Load style: <<<
 
+
+- [0;36mConnecting to localhost on port 4444...
+[0m
 
   Suite
-[bash.origin.express] Adding route: /dist/insight-domplate-renderer.browser.js
-[bash.origin.express] Adding route: /domplate-eval.browser.js
-[bash.origin.express] Adding route: /default/string.rep.js
-[bash.origin.express] Adding route: /default/trace.rep.js
-[bash.origin.express] Adding route: /domplate.browser.js
-[bash.origin.express] Adding route: /^\//
-[bash.origin.express] Adding route: /^\/reps\//
+[bash.origin.express] Adding route: /^\/test-reps\//
 [bash.origin.express] Adding route: /
 Server: http://localhost:8080/
-[READY]
 
 
 

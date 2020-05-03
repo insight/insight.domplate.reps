@@ -57,7 +57,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a4960b1fa287b63ab13aa5373caa1f7076ff7e5", "\"", " __dtid=\"","insight.domplate.reps/php/resource", "\"", " class=\"","resource", " ", "\"",">","[",__escape__(getValue(node)),"]","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a4960b1fa287b63ab13aa5373caa1f7076ff7e5", "\"", " __dtid=\"","php/resource", "\"", " class=\"","resource", " ", "\"",">","[",__escape__(getValue(node)),"]","</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -66,11 +66,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a4960b1fa287b63ab13aa5373caa1f7076ff7e5", "\"", " __dtid=\"","insight.domplate.reps/php/resource", "\"", " class=\"","resource", " ", "\"",">","[",__escape__(getValue(node)),"]","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","4a4960b1fa287b63ab13aa5373caa1f7076ff7e5", "\"", " __dtid=\"","php/resource", "\"", " class=\"","resource", " ", "\"",">","[",__escape__(getValue(node)),"]","</span>");  }}})
 }
 };
   rep.__dbid = "4a4960b1fa287b63ab13aa5373caa1f7076ff7e5";
-  rep.__dtid = "insight.domplate.reps/php/resource";
+  rep.__dtid = "php/resource";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

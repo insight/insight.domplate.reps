@@ -1,0 +1,99 @@
+{
+    "#": "gi0.PINF.it/core/v0",
+
+    "#": {
+        "browserify": "it.pinf.org.browserify",
+        "sm.exports": "gi0.Sourcemint.org/exports.json",
+        "/dist/reps": "domplate"
+    },
+
+    ":run:": "browserify @ run/v1",
+    ":build:": "browserify @ build/v1",
+    ":exports:": "sm.exports @ exports/v1",
+    ":repify:": "/dist/reps @ build/v1",
+
+    "router/v1 #": "${__DIRNAME__}/tool.",
+    "builder/v1 #": "${__DIRNAME__}/tool.",
+
+    "builder/v1 # onHome()": (inf () >>>
+        {
+            "gi0.PINF.it/build/v0 @ # :build: write() /dist/insight-domplate-renderer.browser.js": {
+                "src": "../../lib/renderer.js",
+                "format": "browser",
+                "expose": {
+                    "window": {
+                        "insight-domplate-renderer": "Renderer"
+                    }
+                },
+                "prime": true
+            },
+
+            "gi0.PINF.it/build/v0 @ # :run: write() /dist/reps/reps.json": (run.javascript.method (LIB, result, build, target, instance, home, workspace) >>>
+
+//console.error("invocation::::", result, build, target, instance, home, workspace);                        
+
+                const repsBaseDir = LIB.PATH.join(build.path, "../../reps");        
+                let reps = LIB.GLOB.sync("**/*.rep.js", {
+                    "cwd": repsBaseDir
+                }).map(function (filepath) {
+                    return filepath.replace(/\.rep\.js$/, '');
+                });
+
+                // Only build a specific rep.
+                //reps = [ "default/string" ];
+
+                return JSON.stringify(reps, null, 4);
+            <<<),
+
+            "gi0.PINF.it/build/v0 @ # :repify: write() /dist/reps": {
+                "externalizeCss": true,
+                "compile": true,
+                "reps": (run.javascript (LIB, process, result, build, target, instance, home, workspace) >>>
+                    let reps = null;
+                    // TODO: Choose reps to be included based in arguments passed to pinf.it for this namespace instead of 'process.env'
+                    if (process.env.BUILD_INSIGHT_DOMPLATE_REPS) {
+                        reps = JSON.parse(process.env.BUILD_INSIGHT_DOMPLATE_REPS);
+                    } else {
+//console.error("invocation:::11:::", result, build, target, instance, home, workspace);
+// throw new Error("FIXME");
+                        const repsPath = LIB.PATH.join(home.path, "reps.json");
+                        reps = LIB.FS_EXTRA.readJSONSync(repsPath);
+                    }
+                    const routes = {};
+                    reps.forEach(function (uri) {
+                        routes[uri] = `../../reps/${uri}.rep.js`;
+                    });
+                    return routes;
+                <<<),
+                "injectStruct": (javascript (window) >>>
+
+                    return {
+                        "context": {
+                            "repForNode": function (node) {
+
+                                var tag = null;
+
+                                return {
+                                    tag: tag,
+                                    shortTag: tag,
+                                    collapsedTag: tag
+                                };
+                            }
+                        }
+                    };
+                <<<)
+            },
+
+            "gi0.PINF.it/build/v0 @ # :exports: write() /dist/exports.json": {
+                "js.browser": {
+                    "insight-domplate-renderer": {
+                        "core": {
+                            "path": "/dist/insight-domplate-renderer.browser.js",
+                            "summary": "Browser JavaScript source code to load and bootstrap reps."
+                        }
+                    }
+                }
+            }
+        }
+    <<<)    
+}

@@ -11,7 +11,7 @@
         
         return {
 
-            tag: T.SPAN({"class": "string",},
+            tag: T.SPAN({"class": "string"},
                 T.FOR("line", "$node.value|lineIterator", "$line.value",
                     T.IF("$line.more", T.BR())
                 )
@@ -19,12 +19,18 @@
 
             shortTag: T.SPAN({"class": "string"}, "$node|getValue"),
 
+            collapsedTag: T.SPAN({"class": "string"}, "$node|cropNode"),
+
 
             getValue: function(node) {
                 if (!node.parentNode || (node.meta && typeof node.meta["string.trim.enabled"] !== "undefined" && node.meta["string.trim.enabled"]===false))
                     return node.value;
                 else
                     return this.cropString(node.value);
+            },
+
+            cropNode: function(node) {
+                return this.cropString(node.value);
             },
 
             cropString: function(text, limit){

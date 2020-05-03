@@ -155,7 +155,7 @@
                     message.meta.console &&
                     typeof message.meta.console["enableFileInspect"] !== "undefined"
                 ) {
-                    return message.meta.console["enableInspect"] ? "": "hidden";
+                    return message.meta.console["enableFileInspect"] ? "": "hidden";
                 }
                 return "hidden";
             },

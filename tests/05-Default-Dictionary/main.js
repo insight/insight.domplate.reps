@@ -9,6 +9,7 @@ module.config = {
 */
 
 console.log('>>>TEST_IGNORE_LINE:\\[bash.origin.express\\] Routing request /<<<');
+console.log(">>>TEST_IGNORE_LINE:\\[pinf.it\\].+Writing to:<<<");
 
 require("../helpers").describeRepSuite([
     "default/dictionary",

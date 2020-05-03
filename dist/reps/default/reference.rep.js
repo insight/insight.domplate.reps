@@ -98,7 +98,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","485215d9752c351011a71bdfb2f63d02f1ffbc0b", "\"", " __dtid=\"","insight.domplate.reps/default/reference", "\"", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Normal), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","485215d9752c351011a71bdfb2f63d02f1ffbc0b", "\"", " __dtid=\"","default/reference", "\"", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Normal), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -107,7 +107,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","485215d9752c351011a71bdfb2f63d02f1ffbc0b", "\"", " __dtid=\"","insight.domplate.reps/default/reference", "\"", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","485215d9752c351011a71bdfb2f63d02f1ffbc0b", "\"", " __dtid=\"","default/reference", "\"", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }}})
 }
 ,
 "collapsedTag":function (context) {
@@ -116,11 +116,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","485215d9752c351011a71bdfb2f63d02f1ffbc0b", "\"", " __dtid=\"","insight.domplate.reps/default/reference", "\"", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","485215d9752c351011a71bdfb2f63d02f1ffbc0b", "\"", " __dtid=\"","default/reference", "\"", " class=\"","reference", " ", "\"",">");__link__(getTag(context,node,CONST_Collapsed), __code__, __out__, {"context":context,"node":getInstanceNode(context,node)});    __code__.push("","</span>");  }}})
 }
 };
   rep.__dbid = "485215d9752c351011a71bdfb2f63d02f1ffbc0b";
-  rep.__dtid = "insight.domplate.reps/default/reference";
+  rep.__dtid = "default/reference";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

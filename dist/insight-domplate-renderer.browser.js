@@ -2504,6 +2504,21 @@ function Renderer(options) {
         }
       }
     };
+
+    self.forNode = function (rootNode) {
+      var context = Object.create(self);
+
+      context.getInstanceNode = function (node) {
+        if (!rootNode.instances || !rootNode.instances[node.value]) {
+          console.error("node", node);
+          throw new Error("Object instance for reference '" + node.value + "' not found in 'instances'!");
+        }
+
+        return rootNode.instances[node.value];
+      };
+
+      return context;
+    };
   }
 
   var context = new InsightDomplateContext();
@@ -2579,6 +2594,10 @@ function Renderer(options) {
                   loadTypes["default/string"] = true;
                 } else if (node.meta["lang.type"] === "trace") {
                   loadTypes["default/string"] = true;
+                } else if (node.meta["lang.type"] === "pathtree") {
+                  loadTypes["default/string"] = true;
+                } else if (node.meta["lang.type"] === "optiontree") {
+                  loadTypes["default/string"] = true;
                 }
               }
             }
@@ -2594,7 +2613,7 @@ function Renderer(options) {
         }
       }
 
-      if (typeof node.value !== 'undefined') {
+      if (node.value !== null && typeof node.value !== 'undefined') {
         var type = node.type || node.meta["lang.type"];
 
         if (type === "array") {
@@ -2613,6 +2632,8 @@ function Renderer(options) {
         } else if (type === "reference") {
           if (node.value.instance) {
             traverse(node.value.instance);
+          } else if (node.instances && typeof node.value === "number") {
+            traverse(node.instances[node.value]);
           } else if (typeof node.getInstance === 'function') {
             traverse(node.getInstance());
           }
@@ -2679,7 +2700,7 @@ function Renderer(options) {
         }
 
         wrapperRep[options.tagName || 'tag'].replace({
-          context: context,
+          context: context.forNode(node),
           node: node
         }, el);
         return;
@@ -2687,7 +2708,7 @@ function Renderer(options) {
 
       var rep = context.repForNode(node);
       rep[options.tagName || 'tag'].replace({
-        context: context,
+        context: context.forNode(node),
         node: node
       }, el);
     });

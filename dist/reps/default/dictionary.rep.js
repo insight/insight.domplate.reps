@@ -272,7 +272,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","91497e8f62a95c8946215eb31aaa2ffc2bf5cc84", "\"", " __dtid=\"","insight.domplate.reps/default/dictionary", "\"", " class=\"","dictionary", " ", "\"",">","<span",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Normal), __out__, function(member, __out__) {    __code__.push("","<div", " class=\"","member", " ", (member.expandable ? "expandable" + " " : ""), "\"",">","<span", " decorator=\"",__escape__(getMemberNameDecorator(member)), "\"", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,member,context);__link__(member.tag, __code__, __out__, {"context":context,"node":member.node,"member":member});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","91497e8f62a95c8946215eb31aaa2ffc2bf5cc84", "\"", " __dtid=\"","default/dictionary", "\"", " class=\"","dictionary", " ", "\"",">","<span",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Normal), __out__, function(member, __out__) {    __code__.push("","<div", " class=\"","member", " ", (member.expandable ? "expandable" + " " : ""), "\"",">","<span", " decorator=\"",__escape__(getMemberNameDecorator(member)), "\"", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__out__.push(onClick,member,context);__link__(member.tag, __code__, __out__, {"context":context,"node":member.node,"member":member});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</div>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -281,7 +281,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","91497e8f62a95c8946215eb31aaa2ffc2bf5cc84", "\"", " __dtid=\"","insight.domplate.reps/default/dictionary", "\"", " class=\"","dictionary", " ", "\"",">","<span",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Short), __out__, function(member, __out__) {    __code__.push("","<span", " class=\"","member", " ", "\"",">","<span", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__link__(member.tag, __code__, __out__, {"context":context,"node":member.node,"member":member});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","91497e8f62a95c8946215eb31aaa2ffc2bf5cc84", "\"", " __dtid=\"","default/dictionary", "\"", " class=\"","dictionary", " ", "\"",">","<span",">",__escape__(getLabel(node)),"(","</span>");    __loop__.apply(this, [dictionaryIterator(context,node,CONST_Short), __out__, function(member, __out__) {    __code__.push("","<span", " class=\"","member", " ", "\"",">","<span", " class=\"","name", " ", "\"",">",__escape__(member.name),"</span>","<span", " class=\"","delimiter", " ", "\"",">",":","</span>","<span", " class=\"","value", " ", "\"",">");__link__(member.tag, __code__, __out__, {"context":context,"node":member.node,"member":member});    __code__.push("","</span>");__if__.apply(this, [member.more, __out__, function(__out__) {    __code__.push("","<span", " class=\"","separator", " ", "\"",">",",","</span>");}]);    __code__.push("","</span>");    }]);    __code__.push("","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "collapsedTag":function (context) {
@@ -290,7 +290,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","91497e8f62a95c8946215eb31aaa2ffc2bf5cc84", "\"", " __dtid=\"","insight.domplate.reps/default/dictionary", "\"", " class=\"","dictionary", " ", "\"",">","<span",">",__escape__(getLabel(node)),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getMemberCount(node))," ...","</span>","<span",">",")","</span>","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","91497e8f62a95c8946215eb31aaa2ffc2bf5cc84", "\"", " __dtid=\"","default/dictionary", "\"", " class=\"","dictionary", " ", "\"",">","<span",">",__escape__(getLabel(node)),"(","</span>","<span", " class=\"","collapsed", " ", "\"",">","... ",__escape__(getMemberCount(node))," ...","</span>","<span",">",")","</span>","</span>");  }}})
 }
 ,
 "expandableStub":function (context) {
@@ -317,11 +317,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","91497e8f62a95c8946215eb31aaa2ffc2bf5cc84", "\"", " __dtid=\"","insight.domplate.reps/default/dictionary", "\"", " class=\"","more", " ", "\"",">"," ... ","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","91497e8f62a95c8946215eb31aaa2ffc2bf5cc84", "\"", " __dtid=\"","default/dictionary", "\"", " class=\"","more", " ", "\"",">"," ... ","</span>");  }}})
 }
 };
   rep.__dbid = "91497e8f62a95c8946215eb31aaa2ffc2bf5cc84";
-  rep.__dtid = "insight.domplate.reps/default/dictionary";
+  rep.__dtid = "default/dictionary";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

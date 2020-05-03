@@ -195,7 +195,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " wrapped=\"",__escape__(node.wrapped), "\"", " __dbid=\"","e8cfecc4a8618496bf811fa7fbd33dfc2338df59", "\"", " __dtid=\"","insight.domplate.reps/php/string", "\"", " class=\"","string", " ", "\"",">");__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __loop__.apply(this, [getValue(node), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.special, __out__, function(__out__) {    __code__.push("","<span", " class=\"","special", " ", "\"",">",__escape__(line.specialvalue),"</span>");}]);__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br","/>");}]);__if__.apply(this, [line.trimmed, __out__, function(__out__) {__link__(getTrimmedTag(node), __code__, __out__, {"node":node});}]);    }]);__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __code__.push("","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " wrapped=\"",__escape__(node.wrapped), "\"", " __dbid=\"","e8cfecc4a8618496bf811fa7fbd33dfc2338df59", "\"", " __dtid=\"","php/string", "\"", " class=\"","string", " ", "\"",">");__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __loop__.apply(this, [getValue(node), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.special, __out__, function(__out__) {    __code__.push("","<span", " class=\"","special", " ", "\"",">",__escape__(line.specialvalue),"</span>");}]);__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br","/>");}]);__if__.apply(this, [line.trimmed, __out__, function(__out__) {__link__(getTrimmedTag(node), __code__, __out__, {"node":node});}]);    }]);__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __code__.push("","</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -204,7 +204,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " wrapped=\"",__escape__(node.wrapped), "\"", " __dbid=\"","e8cfecc4a8618496bf811fa7fbd33dfc2338df59", "\"", " __dtid=\"","insight.domplate.reps/php/string", "\"", " class=\"","string", " ", "\"",">");__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __loop__.apply(this, [getShortValue(node), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.special, __out__, function(__out__) {    __code__.push("","<span", " class=\"","special", " ", "\"",">",__escape__(line.specialvalue),"</span>");}]);__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br","/>");}]);__if__.apply(this, [line.trimmed, __out__, function(__out__) {__link__(getTrimmedTag(node), __code__, __out__, {"node":node});}]);    }]);__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __code__.push("","</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " wrapped=\"",__escape__(node.wrapped), "\"", " __dbid=\"","e8cfecc4a8618496bf811fa7fbd33dfc2338df59", "\"", " __dtid=\"","php/string", "\"", " class=\"","string", " ", "\"",">");__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __loop__.apply(this, [getShortValue(node), __out__, function(line, __out__) {    __code__.push("",__escape__(line.value));__if__.apply(this, [line.special, __out__, function(__out__) {    __code__.push("","<span", " class=\"","special", " ", "\"",">",__escape__(line.specialvalue),"</span>");}]);__if__.apply(this, [line.more, __out__, function(__out__) {    __code__.push("","<br","/>");}]);__if__.apply(this, [line.trimmed, __out__, function(__out__) {__link__(getTrimmedTag(node), __code__, __out__, {"node":node});}]);    }]);__if__.apply(this, [node.wrapped, __out__, function(__out__) {    __code__.push("","'");}]);    __code__.push("","</span>");  }}})
 }
 ,
 "trimmedNoticeTag":function (context) {
@@ -213,11 +213,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","e8cfecc4a8618496bf811fa7fbd33dfc2338df59", "\"", " __dtid=\"","insight.domplate.reps/php/string", "\"", " class=\"","trimmed", " ", "\"",">",__escape__(getNotice(node)),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","e8cfecc4a8618496bf811fa7fbd33dfc2338df59", "\"", " __dtid=\"","php/string", "\"", " class=\"","trimmed", " ", "\"",">",__escape__(getNotice(node)),"</span>");  }}})
 }
 };
   rep.__dbid = "e8cfecc4a8618496bf811fa7fbd33dfc2338df59";
-  rep.__dtid = "insight.domplate.reps/php/string";
+  rep.__dtid = "php/string";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

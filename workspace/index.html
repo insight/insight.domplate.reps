@@ -1,0 +1,25 @@
+<html>
+    <body>
+        <h1>TODO</h1>
+        <ul>
+            <li>Links to reps on left. Navigate to rep and load.</li>
+            <li>Use devcomp UI framework.</li>
+            <li>Use #! :repify: for tests but only boot up reps depending on depends relationships.</li>
+        </ul>
+
+        <ul id="list"></ul>
+    </body>
+    <script>
+        async function main () {
+            const response = await fetch('../dist/reps/reps.json');
+            const reps = await response.json();
+            const el = document.querySelector('#list');
+            el.innerHTML = reps.map(function (uri) {
+                return `<li><a href="../dist/reps/${uri}.preview.htm">${uri}</a></li>`;
+            }).join("\n");
+        }
+        main().catch(function (err) {
+            console.error(err);
+        });
+    </script>
+</html>

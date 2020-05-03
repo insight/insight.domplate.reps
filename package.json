@@ -4,10 +4,11 @@
   "main": "lib/renderer.js",
   "scripts": {
     "test": "bash.origin.test tests",
-    "build": "pinf.it ./#_gi0.PINF.it_#.inf.json"
+    "dev": "pinf.it ./#!inf.json --watch",
+    "build": "pinf.it ./#!inf.json"
   },
   "devDependencies": {
-    "bash.origin.lib": "^0.4.0-pre.0"    
+    "bash.origin.lib": "^0.4.0-pre.20"
   },
   "dependencies": {
     "domplate": "^0.4.0-pre.0"

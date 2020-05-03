@@ -54,7 +54,7 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","28f0cad32e3f8c4b4123b834007ba004ed6057b2", "\"", " __dtid=\"","insight.domplate.reps/default/unknown", "\"", " class=\"","unknown", " ", "\"",">",__escape__(node.value),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","28f0cad32e3f8c4b4123b834007ba004ed6057b2", "\"", " __dtid=\"","default/unknown", "\"", " class=\"","unknown", " ", "\"",">",__escape__(node.value),"</span>");  }}})
 }
 ,
 "shortTag":function (context) {
@@ -63,11 +63,11 @@ var __escape__ = context.__escape__;
 var __if__ = context.__if__;
 var __loop__ = context.__loop__;
 var __link__ = context.__link__;
-return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","28f0cad32e3f8c4b4123b834007ba004ed6057b2", "\"", " __dtid=\"","insight.domplate.reps/default/unknown", "\"", " class=\"","unknown", " ", "\"",">",__escape__(node.value),"</span>");  }}})
+return (function (__code__, __context__, __in__, __out__) {  with (this) {  with (__in__) {    __code__.push("","<span", " __dbid=\"","28f0cad32e3f8c4b4123b834007ba004ed6057b2", "\"", " __dtid=\"","default/unknown", "\"", " class=\"","unknown", " ", "\"",">",__escape__(node.value),"</span>");  }}})
 }
 };
   rep.__dbid = "28f0cad32e3f8c4b4123b834007ba004ed6057b2";
-  rep.__dtid = "insight.domplate.reps/default/unknown";
+  rep.__dtid = "default/unknown";
   var res = domplate.domplate(rep);
   var injectedCss = false;
 

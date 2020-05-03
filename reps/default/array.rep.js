@@ -55,7 +55,7 @@
                         )
                     ),
                 T.SPAN(")")),
-    
+
             expandableStub:
                 T.TAG("$context,$element,$CONST_Collapsed|getTag", {"node": "$element.node", "context": "$context"}),
                 
