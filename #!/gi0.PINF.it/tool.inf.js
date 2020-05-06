@@ -72,10 +72,6 @@ exports['gi0.PINF.it/build/v0'] = async function (LIB, CLASSES) {
         async onHome (result, home, workspace) {
 
             await runHomeInstructions();
-
-            return {
-                "path": result.path
-            };
         }
     }
 
